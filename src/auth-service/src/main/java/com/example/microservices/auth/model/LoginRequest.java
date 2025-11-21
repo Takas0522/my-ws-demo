@@ -1,12 +1,13 @@
 package com.example.microservices.auth.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * ログインリクエストDTO
  */
 public class LoginRequest implements Serializable {
-    private Long userId;
+    private UUID userId;
     private String username;
     private String password;
 
@@ -19,17 +20,17 @@ public class LoginRequest implements Serializable {
         this.password = password;
     }
 
-    public LoginRequest(Long userId, String password) {
+    public LoginRequest(UUID userId, String password) {
         this.userId = userId;
         this.password = password;
     }
 
     // Getters and Setters
-    public Long getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 
