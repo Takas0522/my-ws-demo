@@ -228,12 +228,19 @@ public class BffResource {
             if (userIdIndex == -1) {
                 return null;
             }
-            String substring = jsonResponse.substring(userIdIndex + 10); // Skip ':"'
-            int quoteIndex = substring.indexOf("\"");
-            if (quoteIndex == -1) {
+            // Skip past "userId": to find the opening quote
+            String substring = jsonResponse.substring(userIdIndex + 9); // Skip '"userId":'
+            int openQuoteIndex = substring.indexOf("\"");
+            if (openQuoteIndex == -1) {
                 return null;
             }
-            String userIdStr = substring.substring(0, quoteIndex).trim();
+            // Find the closing quote after the opening quote
+            String afterOpenQuote = substring.substring(openQuoteIndex + 1);
+            int closeQuoteIndex = afterOpenQuote.indexOf("\"");
+            if (closeQuoteIndex == -1) {
+                return null;
+            }
+            String userIdStr = afterOpenQuote.substring(0, closeQuoteIndex).trim();
             return UUID.fromString(userIdStr);
         } catch (Exception e) {
             return null;
