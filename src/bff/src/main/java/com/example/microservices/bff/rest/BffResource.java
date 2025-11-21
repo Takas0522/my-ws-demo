@@ -1,6 +1,7 @@
 package com.example.microservices.bff.rest;
 
 import com.example.microservices.bff.client.AuthServiceClient;
+import com.example.microservices.bff.client.PointServiceClient;
 import com.example.microservices.bff.client.UserServiceClient;
 
 import javax.inject.Inject;
@@ -26,6 +27,9 @@ public class BffResource {
 
     @Inject
     private AuthServiceClient authServiceClient;
+
+    @Inject
+    private PointServiceClient pointServiceClient;
 
     // ==================== 認証エンドポイント ====================
 
@@ -204,6 +208,113 @@ public class BffResource {
         }
     }
 
+    // ==================== ポイントエンドポイント ====================
+
+    /**
+     * ポイント残高取得
+     * GET /api/points
+     */
+    @GET
+    @Path("/points")
+    public Response getPoints(@HeaderParam("Authorization") String authHeader) {
+        try {
+            // 認証チェック
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                        .entity(createErrorMap("Unauthorized"))
+                        .build();
+            }
+
+            String token = authHeader.substring(7);
+            
+            // JWT検証
+            Response verifyResponse = authServiceClient.verifyToken(token);
+            if (verifyResponse.getStatus() != 200) {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                        .entity(createErrorMap("Invalid token"))
+                        .build();
+            }
+
+            // Point Serviceにリクエストを転送
+            try {
+                Response pointResponse = pointServiceClient.getPoints(token);
+                String body = pointResponse.readEntity(String.class);
+                
+                // Point Service停止時のエラーハンドリング
+                if (isServiceUnavailable(pointResponse.getStatus())) {
+                    return Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                            .entity(createErrorMap("Service Unavailable"))
+                            .build();
+                }
+                
+                return Response.status(pointResponse.getStatus())
+                        .entity(body)
+                        .build();
+            } catch (javax.ws.rs.ProcessingException e) {
+                // Point Service接続エラー（停止時など）
+                return Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                        .entity(createErrorMap("Service Unavailable"))
+                        .build();
+            }
+        } catch (Exception e) {
+            return createErrorResponse("Failed to get points: " + e.getMessage());
+        }
+    }
+
+    /**
+     * ポイント履歴取得
+     * GET /api/points/history?page=1&limit=10
+     */
+    @GET
+    @Path("/points/history")
+    public Response getPointHistory(
+            @HeaderParam("Authorization") String authHeader,
+            @QueryParam("page") @DefaultValue("1") int page,
+            @QueryParam("limit") @DefaultValue("10") int limit) {
+        try {
+            // 認証チェック
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                        .entity(createErrorMap("Unauthorized"))
+                        .build();
+            }
+
+            String token = authHeader.substring(7);
+            
+            // JWT検証
+            Response verifyResponse = authServiceClient.verifyToken(token);
+            if (verifyResponse.getStatus() != 200) {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                        .entity(createErrorMap("Invalid token"))
+                        .build();
+            }
+
+            // Point Serviceにリクエストを転送
+            try {
+                Response pointResponse = pointServiceClient.getPointHistory(token, page, limit);
+                String body = pointResponse.readEntity(String.class);
+                
+                // Point Service停止時のエラーハンドリング
+                if (isServiceUnavailable(pointResponse.getStatus())) {
+                    return Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                            .entity(createErrorMap("Service Unavailable"))
+                            .build();
+                }
+                
+                return Response.status(pointResponse.getStatus())
+                        .entity(body)
+                        .build();
+            } catch (javax.ws.rs.ProcessingException e) {
+                // Point Service接続エラー（停止時など）
+                return Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                        .entity(createErrorMap("Service Unavailable"))
+                        .build();
+            }
+        } catch (Exception e) {
+            return createErrorResponse("Failed to get point history: " + e.getMessage());
+        }
+    }
+
     // ==================== ヘルパーメソッド ====================
 
     private boolean isAuthenticated(String authHeader) {
@@ -218,6 +329,10 @@ public class BffResource {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    private boolean isServiceUnavailable(int statusCode) {
+        return statusCode == 503 || statusCode == 502 || statusCode == 504;
     }
 
     private UUID extractUserIdFromVerifyResponse(String jsonResponse) {
