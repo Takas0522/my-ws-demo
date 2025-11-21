@@ -30,6 +30,9 @@ public class PointResource {
     private PointService pointService;
 
     // JWT検証用のシークレットキー（Auth Serviceと同じ値を使用）
+    // SECURITY NOTE: 本番環境では環境変数や暗号化された設定から取得すべき
+    // 環境変数例: System.getenv("JWT_SECRET_KEY")
+    // または AWS Secrets Manager, HashiCorp Vault などのシークレット管理サービスを使用
     private static final String SECRET_KEY = "your-secret-key-change-this-in-production";
     private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET_KEY);
 
