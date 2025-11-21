@@ -2,13 +2,14 @@ package com.example.microservices.auth.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * セッショントークンエンティティ
  */
 public class SessionToken implements Serializable {
     private Long id;
-    private Long userId;
+    private UUID userId;
     private String token;
     private LocalDateTime expiresAt;
     private LocalDateTime createdAt;
@@ -17,7 +18,7 @@ public class SessionToken implements Serializable {
     public SessionToken() {
     }
 
-    public SessionToken(Long userId, String token, LocalDateTime expiresAt) {
+    public SessionToken(UUID userId, String token, LocalDateTime expiresAt) {
         this.userId = userId;
         this.token = token;
         this.expiresAt = expiresAt;
@@ -32,11 +33,11 @@ public class SessionToken implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 

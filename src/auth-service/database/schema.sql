@@ -4,7 +4,7 @@
 -- 認証情報テーブル
 CREATE TABLE IF NOT EXISTS user_credentials (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER UNIQUE NOT NULL,
+    user_id UUID UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS user_credentials (
 -- セッショントークンテーブル
 CREATE TABLE IF NOT EXISTS session_tokens (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER NOT NULL,
+    user_id UUID NOT NULL,
     token VARCHAR(255) UNIQUE NOT NULL,
     expires_at TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -23,11 +23,12 @@ CREATE TABLE IF NOT EXISTS session_tokens (
 -- ログイン履歴テーブル
 CREATE TABLE IF NOT EXISTS login_history (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER NOT NULL,
+    user_id UUID NOT NULL,
     login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ip_address VARCHAR(45),
     user_agent TEXT,
-    success BOOLEAN NOT NULL DEFAULT TRUE
+    success BOOLEAN NOT NULL DEFAULT TRUE,
+    FOREIGN KEY (user_id) REFERENCES user_credentials(user_id) ON DELETE CASCADE
 );
 
 -- インデックス作成

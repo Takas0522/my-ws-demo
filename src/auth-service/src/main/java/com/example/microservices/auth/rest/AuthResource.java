@@ -1,9 +1,12 @@
 package com.example.microservices.auth.rest;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.microservices.auth.model.LoginRequest;
 import com.example.microservices.auth.model.SessionToken;
 import com.example.microservices.auth.repository.AuthRepository;
 import com.example.microservices.auth.service.AuthService;
+import com.example.microservices.auth.util.JwtUtil;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -16,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * 認証REST API
@@ -31,6 +35,9 @@ public class AuthResource {
     @Inject
     private AuthService authService;
 
+    @Inject
+    private JwtUtil jwtUtil;
+
     /**
      * ログイン
      */
@@ -45,7 +52,7 @@ public class AuthResource {
                         .build();
             }
 
-            Long userId = null;
+            UUID userId = null;
             String username = null;
 
             // userId または username のどちらかでログイン
@@ -60,7 +67,7 @@ public class AuthResource {
             } else if (loginRequest.getUsername() != null) {
                 // ユーザー名でログイン
                 username = loginRequest.getUsername();
-                Optional<Long> userIdOpt = authRepository.getUserIdByUsername(username);
+                Optional<UUID> userIdOpt = authRepository.getUserIdByUsername(username);
                 if (userIdOpt.isPresent()) {
                     userId = userIdOpt.get();
                 }
@@ -95,19 +102,22 @@ public class AuthResource {
                         .build();
             }
 
-            // セッショントークン生成
-            String token = authService.generateToken();
+            // JWT トークン生成
+            String jwtToken = jwtUtil.generateToken(userId, username);
+
+            // レガシーのセッショントークンも生成（移行期間中のみ）
+            String sessionToken = authService.generateToken();
             LocalDateTime expiresAt = LocalDateTime.now().plusDays(7);
             
-            SessionToken sessionToken = new SessionToken(userId, token, expiresAt);
-            sessionToken = authRepository.createSessionToken(sessionToken);
+            SessionToken session = new SessionToken(userId, sessionToken, expiresAt);
+            session = authRepository.createSessionToken(session);
 
             // ログイン成功記録
             recordLoginAttempt(userId, headers, true);
 
             Map<String, Object> response = new HashMap<>();
-            response.put("token", token);
-            response.put("userId", userId);
+            response.put("token", jwtToken);
+            response.put("userId", userId.toString());
             if (username != null) {
                 response.put("username", username);
             }
@@ -136,28 +146,44 @@ public class AuthResource {
             }
 
             String token = authHeader.substring(7);
-            Optional<SessionToken> sessionOpt = authRepository.findSessionByToken(token);
+            
+            // JWT トークン検証を試みる
+            try {
+                DecodedJWT jwt = jwtUtil.verifyToken(token);
+                String userIdStr = jwt.getClaim("userId").asString();
+                String username = jwt.getClaim("username").asString();
+                
+                Map<String, Object> response = new HashMap<>();
+                response.put("valid", true);
+                response.put("userId", userIdStr);
+                response.put("username", username);
 
-            if (!sessionOpt.isPresent()) {
-                return Response.status(Response.Status.UNAUTHORIZED)
-                        .entity(createErrorResponse("Invalid token"))
-                        .build();
+                return Response.ok(response).build();
+            } catch (JWTVerificationException e) {
+                // JWT 検証失敗の場合、レガシーセッショントークンを確認
+                Optional<SessionToken> sessionOpt = authRepository.findSessionByToken(token);
+
+                if (!sessionOpt.isPresent()) {
+                    return Response.status(Response.Status.UNAUTHORIZED)
+                            .entity(createErrorResponse("Invalid token"))
+                            .build();
+                }
+
+                SessionToken session = sessionOpt.get();
+                if (session.isExpired()) {
+                    authRepository.deleteSession(token);
+                    return Response.status(Response.Status.UNAUTHORIZED)
+                            .entity(createErrorResponse("Token expired"))
+                            .build();
+                }
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("valid", true);
+                response.put("userId", session.getUserId().toString());
+                response.put("expiresAt", session.getExpiresAt().toString());
+
+                return Response.ok(response).build();
             }
-
-            SessionToken session = sessionOpt.get();
-            if (session.isExpired()) {
-                authRepository.deleteSession(token);
-                return Response.status(Response.Status.UNAUTHORIZED)
-                        .entity(createErrorResponse("Token expired"))
-                        .build();
-            }
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("valid", true);
-            response.put("userId", session.getUserId());
-            response.put("expiresAt", session.getExpiresAt().toString());
-
-            return Response.ok(response).build();
         } catch (SQLException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(createErrorResponse("Verification failed: " + e.getMessage()))
@@ -179,7 +205,15 @@ public class AuthResource {
             }
 
             String token = authHeader.substring(7);
-            authRepository.deleteSession(token);
+            
+            // JWT トークンの場合は何もしない（ステートレスなので）
+            try {
+                jwtUtil.verifyToken(token);
+                // JWT トークンは有効だがステートレスなのでサーバー側で削除する必要はない
+            } catch (JWTVerificationException e) {
+                // レガシーセッショントークンの場合は削除
+                authRepository.deleteSession(token);
+            }
 
             Map<String, String> response = new HashMap<>();
             response.put("message", "Logged out successfully");
@@ -210,7 +244,7 @@ public class AuthResource {
         }
     }
 
-    private void recordLoginAttempt(Long userId, HttpHeaders headers, boolean success) {
+    private void recordLoginAttempt(UUID userId, HttpHeaders headers, boolean success) {
         try {
             String ipAddress = headers.getHeaderString("X-Forwarded-For");
             if (ipAddress == null) {

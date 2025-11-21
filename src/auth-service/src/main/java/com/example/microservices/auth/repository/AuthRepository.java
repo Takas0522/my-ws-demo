@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * 認証リポジトリ
@@ -28,7 +29,7 @@ public class AuthRepository {
     /**
      * ユーザー名からユーザーIDを取得
      */
-    public Optional<Long> getUserIdByUsername(String username) throws SQLException {
+    public Optional<UUID> getUserIdByUsername(String username) throws SQLException {
         // ユーザーサービスのデータベースに接続してユーザーIDを取得
         // 本来はマイクロサービス間通信で取得すべきですが、簡易的にDB直接接続
         String jdbcUrl = "jdbc:postgresql://localhost:5432/user_service_db";
@@ -44,7 +45,7 @@ public class AuthRepository {
             
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return Optional.of(rs.getLong("id"));
+                    return Optional.of((UUID) rs.getObject("id"));
                 }
             }
         }
@@ -54,7 +55,7 @@ public class AuthRepository {
     /**
      * ユーザーIDからユーザー名を取得
      */
-    public Optional<String> getUsernameByUserId(Long userId) throws SQLException {
+    public Optional<String> getUsernameByUserId(UUID userId) throws SQLException {
         // ユーザーサービスのデータベースに接続してユーザー名を取得
         String jdbcUrl = "jdbc:postgresql://localhost:5432/user_service_db";
         String dbUser = "postgres";
@@ -65,7 +66,7 @@ public class AuthRepository {
         try (Connection conn = java.sql.DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setLong(1, userId);
+            stmt.setObject(1, userId);
             
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -79,13 +80,13 @@ public class AuthRepository {
     /**
      * ユーザー認証情報の検証
      */
-    public boolean verifyCredentials(Long userId, String passwordHash) throws SQLException {
+    public boolean verifyCredentials(UUID userId, String passwordHash) throws SQLException {
         String sql = "SELECT COUNT(*) FROM user_credentials WHERE user_id = ? AND password_hash = ?";
         
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setLong(1, userId);
+            stmt.setObject(1, userId);
             stmt.setString(2, passwordHash);
             
             try (ResultSet rs = stmt.executeQuery()) {
@@ -100,13 +101,13 @@ public class AuthRepository {
     /**
      * パスワードハッシュ取得
      */
-    public Optional<String> getPasswordHash(Long userId) throws SQLException {
+    public Optional<String> getPasswordHash(UUID userId) throws SQLException {
         String sql = "SELECT password_hash FROM user_credentials WHERE user_id = ?";
         
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setLong(1, userId);
+            stmt.setObject(1, userId);
             
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -127,7 +128,7 @@ public class AuthRepository {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setLong(1, token.getUserId());
+            stmt.setObject(1, token.getUserId());
             stmt.setString(2, token.getToken());
             stmt.setTimestamp(3, Timestamp.valueOf(token.getExpiresAt()));
             
@@ -157,7 +158,7 @@ public class AuthRepository {
                 if (rs.next()) {
                     SessionToken sessionToken = new SessionToken();
                     sessionToken.setId(rs.getLong("id"));
-                    sessionToken.setUserId(rs.getLong("user_id"));
+                    sessionToken.setUserId((UUID) rs.getObject("user_id"));
                     sessionToken.setToken(rs.getString("token"));
                     sessionToken.setExpiresAt(rs.getTimestamp("expires_at").toLocalDateTime());
                     sessionToken.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
@@ -185,13 +186,13 @@ public class AuthRepository {
     /**
      * ログイン履歴記録
      */
-    public void recordLoginHistory(Long userId, String ipAddress, String userAgent, boolean success) throws SQLException {
+    public void recordLoginHistory(UUID userId, String ipAddress, String userAgent, boolean success) throws SQLException {
         String sql = "INSERT INTO login_history (user_id, ip_address, user_agent, success) VALUES (?, ?, ?, ?)";
         
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setLong(1, userId);
+            stmt.setObject(1, userId);
             stmt.setString(2, ipAddress);
             stmt.setString(3, userAgent);
             stmt.setBoolean(4, success);
