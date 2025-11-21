@@ -224,12 +224,13 @@ public class BffResource {
         // 簡易的な実装（実際は JSON ライブラリで適切にパースすべき）
         // 例: {"valid":true,"userId":"550e8400-e29b-41d4-a716-446655440000","expiresAt":"..."}
         try {
-            int userIdIndex = jsonResponse.indexOf("\"userId\":");
+            String userIdKey = "\"userId\":";
+            int userIdIndex = jsonResponse.indexOf(userIdKey);
             if (userIdIndex == -1) {
                 return null;
             }
             // Skip past "userId": to find the opening quote
-            String substring = jsonResponse.substring(userIdIndex + 9); // Skip '"userId":'
+            String substring = jsonResponse.substring(userIdIndex + userIdKey.length());
             int openQuoteIndex = substring.indexOf("\"");
             if (openQuoteIndex == -1) {
                 return null;
