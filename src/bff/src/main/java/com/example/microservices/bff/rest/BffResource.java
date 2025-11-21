@@ -240,7 +240,7 @@ public class BffResource {
             if (closeQuoteIndex == -1) {
                 return null;
             }
-            String userIdStr = afterOpenQuote.substring(0, closeQuoteIndex).trim();
+            String userIdStr = afterOpenQuote.substring(0, closeQuoteIndex);
             return UUID.fromString(userIdStr);
         } catch (Exception e) {
             return null;
