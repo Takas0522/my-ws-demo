@@ -38,15 +38,34 @@ apiClient.interceptors.response.use(
   }
 )
 
+/**
+ * UUID形式の妥当性を検証
+ */
+function isValidUUID(uuid) {
+  const regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+  return regex.test(uuid)
+}
+
 export const authService = {
   /**
    * ログイン
+   * userIdはUUID形式の文字列、またはusernameで認証
    */
-  async login(userId, password) {
-    const response = await apiClient.post('/login', {
-      userId: parseInt(userId),
+  async login(userIdOrUsername, password) {
+    // UUID形式かどうかチェック
+    const isUUID = isValidUUID(userIdOrUsername)
+    
+    const requestBody = {
       password
-    })
+    }
+    
+    if (isUUID) {
+      requestBody.userId = userIdOrUsername
+    } else {
+      requestBody.username = userIdOrUsername
+    }
+    
+    const response = await apiClient.post('/login', requestBody)
     return response.data
   },
 
@@ -82,9 +101,16 @@ export const userService = {
 
   /**
    * ユーザー情報取得
+   * @param {string} userId - UUID形式のユーザーID
    */
   async getUser(userId) {
+    if (!isValidUUID(userId)) {
+      throw new Error('Invalid UUID format')
+    }
     const response = await apiClient.get(`/users/${userId}`)
     return response.data
   }
 }
+
+// apiClientをexportして他のサービスファイルから使えるようにする
+export { apiClient }

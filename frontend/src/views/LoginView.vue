@@ -6,15 +6,15 @@
       <form @submit.prevent="handleLogin" class="space-y-4">
         <div>
           <label for="userId" class="block text-sm font-medium text-gray-700 mb-2">
-            ユーザーID
+            ユーザーID / ユーザー名
           </label>
           <input
             id="userId"
             v-model="userId"
-            type="number"
+            type="text"
             required
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="1"
+            placeholder="tanaka_taro または 123e4567-..."
           />
         </div>
 
@@ -48,9 +48,10 @@
       <div class="mt-6 p-4 bg-gray-50 rounded-lg">
         <p class="text-sm text-gray-600 mb-2">テストユーザー:</p>
         <ul class="text-xs text-gray-500 space-y-1">
-          <li>• ユーザーID: 1 (田中太郎)</li>
-          <li>• ユーザーID: 2 (鈴木花子)</li>
-          <li>• ユーザーID: 3 (山田次郎)</li>
+          <li>• ユーザー名: tanaka_taro (田中太郎)</li>
+          <li>• ユーザー名: suzuki_hanako (鈴木花子)</li>
+          <li>• ユーザー名: yamada_jiro (山田次郎)</li>
+          <li>• UUID: 123e4567-e89b-12d3-a456-426614174000 (田中太郎)</li>
           <li>• パスワード: password123</li>
         </ul>
       </div>

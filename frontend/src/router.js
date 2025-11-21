@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from './views/LoginView.vue'
 import AccountView from './views/AccountView.vue'
+import PointView from './views/PointView.vue'
+import PointHistoryView from './views/PointHistoryView.vue'
 
 const routes = [
   {
@@ -16,6 +18,18 @@ const routes = [
     path: '/account',
     name: 'Account',
     component: AccountView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/points',
+    name: 'Points',
+    component: PointView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/points/history',
+    name: 'PointHistory',
+    component: PointHistoryView,
     meta: { requiresAuth: true }
   }
 ]

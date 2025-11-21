@@ -3,13 +3,13 @@
     <!-- ヘッダー -->
     <header class="bg-white shadow">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-gray-900">会員マイページ</h1>
+        <h1 class="text-2xl font-bold text-gray-900">ポイント残高</h1>
         <div class="flex space-x-4">
           <router-link
-            to="/points"
-            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
+            to="/account"
+            class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-200"
           >
-            ポイント
+            アカウント
           </router-link>
           <button
             @click="handleLogout"
@@ -32,44 +32,34 @@
       </div>
 
       <div v-else class="space-y-6">
-        <!-- ユーザー情報カード -->
+        <!-- ポイント残高カード -->
         <div class="bg-white shadow rounded-lg p-6">
           <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
             <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            アカウント情報
+            現在のポイント残高
           </h2>
           
-          <div v-if="accountData?.user" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <p class="text-sm text-gray-600">ユーザーID</p>
-              <p class="text-lg font-medium text-gray-900">{{ accountData.user.id }}</p>
+          <div v-if="pointData" class="text-center">
+            <div class="text-5xl font-bold text-blue-600 mb-2">
+              {{ pointData.balance?.toLocaleString() || 0 }}
             </div>
-            <div>
-              <p class="text-sm text-gray-600">氏名</p>
-              <p class="text-lg font-medium text-gray-900">{{ accountData.user.fullName }}</p>
-            </div>
-            <div>
-              <p class="text-sm text-gray-600">ユーザー名</p>
-              <p class="text-lg font-medium text-gray-900">{{ accountData.user.username }}</p>
-            </div>
-            <div>
-              <p class="text-sm text-gray-600">メールアドレス</p>
-              <p class="text-lg font-medium text-gray-900">{{ accountData.user.email }}</p>
-            </div>
-            <div>
-              <p class="text-sm text-gray-600">登録日時</p>
-              <p class="text-lg font-medium text-gray-900">{{ formatDate(accountData.user.createdAt) }}</p>
-            </div>
-            <div>
-              <p class="text-sm text-gray-600">更新日時</p>
-              <p class="text-lg font-medium text-gray-900">{{ formatDate(accountData.user.updatedAt) }}</p>
-            </div>
+            <div class="text-gray-600">ポイント</div>
           </div>
         </div>
 
-        <!-- 機能説明カード -->
+        <!-- アクションボタン -->
+        <div class="bg-white shadow rounded-lg p-6">
+          <router-link
+            to="/points/history"
+            class="block w-full bg-blue-500 text-white text-center px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-200"
+          >
+            ポイント履歴を見る
+          </router-link>
+        </div>
+
+        <!-- 情報カード -->
         <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
           <div class="flex">
             <div class="flex-shrink-0">
@@ -79,7 +69,7 @@
             </div>
             <div class="ml-3">
               <p class="text-sm text-blue-700">
-                このページではアカウント情報を確認できます。
+                ポイントは様々なサービスでご利用いただけます。
               </p>
             </div>
           </div>
@@ -92,25 +82,30 @@
 <script>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { authService, userService } from '../services/api'
+import { authService } from '../services/api'
+import { pointApi } from '../services/pointApi'
 
 export default {
-  name: 'AccountView',
+  name: 'PointView',
   setup() {
     const router = useRouter()
-    const accountData = ref(null)
+    const pointData = ref(null)
     const loading = ref(true)
     const errorMessage = ref('')
 
-    const loadAccountData = async () => {
+    const loadPointData = async () => {
       loading.value = true
       errorMessage.value = ''
 
       try {
-        const data = await userService.getAccount()
-        accountData.value = data
+        const data = await pointApi.getPoints()
+        pointData.value = data
       } catch (error) {
-        errorMessage.value = error.response?.data?.error || 'アカウント情報の取得に失敗しました'
+        if (error.response?.status === 503) {
+          errorMessage.value = 'ポイントサービスが一時的に利用できません。しばらくしてからお試しください。'
+        } else {
+          errorMessage.value = error.response?.data?.error || 'ポイント情報の取得に失敗しました'
+        }
       } finally {
         loading.value = false
       }
@@ -126,28 +121,15 @@ export default {
       }
     }
 
-    const formatDate = (dateString) => {
-      if (!dateString) return '-'
-      const date = new Date(dateString)
-      return date.toLocaleString('ja-JP', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-      })
-    }
-
     onMounted(() => {
-      loadAccountData()
+      loadPointData()
     })
 
     return {
-      accountData,
+      pointData,
       loading,
       errorMessage,
-      handleLogout,
-      formatDate
+      handleLogout
     }
   }
 }
