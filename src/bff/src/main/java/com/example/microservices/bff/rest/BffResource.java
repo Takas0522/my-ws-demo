@@ -241,7 +241,7 @@ public class BffResource {
                 String body = pointResponse.readEntity(String.class);
                 
                 // Point Service停止時のエラーハンドリング
-                if (pointResponse.getStatus() == 503 || pointResponse.getStatus() == 502 || pointResponse.getStatus() == 504) {
+                if (isServiceUnavailable(pointResponse.getStatus())) {
                     return Response.status(Response.Status.SERVICE_UNAVAILABLE)
                             .entity(createErrorMap("Service Unavailable"))
                             .build();
@@ -295,7 +295,7 @@ public class BffResource {
                 String body = pointResponse.readEntity(String.class);
                 
                 // Point Service停止時のエラーハンドリング
-                if (pointResponse.getStatus() == 503 || pointResponse.getStatus() == 502 || pointResponse.getStatus() == 504) {
+                if (isServiceUnavailable(pointResponse.getStatus())) {
                     return Response.status(Response.Status.SERVICE_UNAVAILABLE)
                             .entity(createErrorMap("Service Unavailable"))
                             .build();
@@ -329,6 +329,10 @@ public class BffResource {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    private boolean isServiceUnavailable(int statusCode) {
+        return statusCode == 503 || statusCode == 502 || statusCode == 504;
     }
 
     private UUID extractUserIdFromVerifyResponse(String jsonResponse) {
