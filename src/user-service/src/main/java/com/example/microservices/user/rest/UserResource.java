@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * ユーザー管理REST API
@@ -44,7 +45,7 @@ public class UserResource {
      */
     @GET
     @Path("/{id}")
-    public Response getUserById(@PathParam("id") Long id) {
+    public Response getUserById(@PathParam("id") UUID id) {
         try {
             Optional<User> user = userRepository.findById(id);
             if (user.isPresent()) {
@@ -88,7 +89,7 @@ public class UserResource {
      */
     @GET
     @Path("/{id}/account")
-    public Response getUserAccount(@PathParam("id") Long id) {
+    public Response getUserAccount(@PathParam("id") UUID id) {
         try {
             Optional<User> userOpt = userRepository.findById(id);
             if (!userOpt.isPresent()) {
@@ -129,7 +130,7 @@ public class UserResource {
      */
     @PUT
     @Path("/{id}")
-    public Response updateUser(@PathParam("id") Long id, User user) {
+    public Response updateUser(@PathParam("id") UUID id, User user) {
         try {
             Optional<User> existingUser = userRepository.findById(id);
             if (!existingUser.isPresent()) {
@@ -153,7 +154,7 @@ public class UserResource {
      */
     @DELETE
     @Path("/{id}")
-    public Response deleteUser(@PathParam("id") Long id) {
+    public Response deleteUser(@PathParam("id") UUID id) {
         try {
             Optional<User> user = userRepository.findById(id);
             if (!user.isPresent()) {

@@ -2,12 +2,13 @@ package com.example.microservices.user.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * ユーザーエンティティ
  */
 public class User implements Serializable {
-    private Long id;
+    private UUID id;
     private String username;
     private String email;
     private String fullName;
@@ -18,7 +19,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(Long id, String username, String email, String fullName) {
+    public User(UUID id, String username, String email, String fullName) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -26,11 +27,11 @@ public class User implements Serializable {
     }
 
     // Getters and Setters
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

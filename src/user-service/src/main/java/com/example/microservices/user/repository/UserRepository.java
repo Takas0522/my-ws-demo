@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * ユーザーリポジトリ
@@ -34,13 +35,13 @@ public class UserRepository {
         return users;
     }
 
-    public Optional<User> findById(Long id) throws SQLException {
+    public Optional<User> findById(UUID id) throws SQLException {
         String sql = "SELECT id, username, email, full_name, created_at, updated_at FROM users WHERE id = ?";
         
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setLong(1, id);
+            stmt.setObject(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return Optional.of(mapResultSetToUser(rs));
@@ -78,7 +79,7 @@ public class UserRepository {
             
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    user.setId(rs.getLong("id"));
+                    user.setId((UUID) rs.getObject("id"));
                     user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
                     user.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
                 }
@@ -96,7 +97,7 @@ public class UserRepository {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getFullName());
-            stmt.setLong(4, user.getId());
+            stmt.setObject(4, user.getId());
             
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -107,20 +108,20 @@ public class UserRepository {
         return user;
     }
 
-    public void delete(Long id) throws SQLException {
+    public void delete(UUID id) throws SQLException {
         String sql = "DELETE FROM users WHERE id = ?";
         
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setLong(1, id);
+            stmt.setObject(1, id);
             stmt.executeUpdate();
         }
     }
 
     private User mapResultSetToUser(ResultSet rs) throws SQLException {
         User user = new User();
-        user.setId(rs.getLong("id"));
+        user.setId((UUID) rs.getObject("id"));
         user.setUsername(rs.getString("username"));
         user.setEmail(rs.getString("email"));
         user.setFullName(rs.getString("full_name"));
