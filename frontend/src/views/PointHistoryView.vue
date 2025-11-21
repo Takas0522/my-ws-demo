@@ -54,7 +54,7 @@
                         class="px-2 py-1 text-xs font-semibold rounded"
                         :class="{
                           'bg-green-100 text-green-800': item.type === 'EARN',
-                          'bg-red-100 text-red-800': item.type === 'SPEND'
+                          'bg-red-100 text-red-800': item.type === 'USE' || item.type === 'SPEND'
                         }"
                       >
                         {{ item.type === 'EARN' ? '獲得' : '使用' }}
@@ -68,13 +68,13 @@
                       class="text-lg font-bold"
                       :class="{
                         'text-green-600': item.type === 'EARN',
-                        'text-red-600': item.type === 'SPEND'
+                        'text-red-600': item.type === 'USE' || item.type === 'SPEND'
                       }"
                     >
-                      {{ item.type === 'EARN' ? '+' : '-' }}{{ item.amount.toLocaleString() }}
+                      {{ item.type === 'EARN' ? '+' : '-' }}{{ (item.amount || 0).toLocaleString() }}
                     </div>
                     <div class="text-xs text-gray-500 mt-1">
-                      残高: {{ item.balanceAfter.toLocaleString() }}
+                      残高: {{ (item.balanceAfter || 0).toLocaleString() }}
                     </div>
                   </div>
                 </div>

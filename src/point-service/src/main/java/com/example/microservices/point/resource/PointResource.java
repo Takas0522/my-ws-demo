@@ -102,14 +102,24 @@ public class PointResource {
             // ポイント履歴を取得
             List<PointHistory> histories = pointService.getPointHistory(userId, page, limit);
             int total = pointService.getPointHistoryCount(userId);
+            
+            // 現在のポイント残高を取得
+            int currentBalance = pointService.getPointBalance(userId)
+                    .map(point -> point.getBalance())
+                    .orElse(0);
 
-            // レスポンスを構築
+            // レスポンスを構築（ページネーション情報を含む）
             Map<String, Object> response = new HashMap<>();
             response.put("userId", userId.toString());
-            response.put("history", convertHistoriesToMap(histories));
-            response.put("page", page);
-            response.put("limit", limit);
-            response.put("total", total);
+            response.put("history", convertHistoriesToMap(histories, currentBalance, page));
+            
+            // ページネーション情報
+            Map<String, Object> pagination = new HashMap<>();
+            pagination.put("currentPage", page);
+            pagination.put("limit", limit);
+            pagination.put("totalItems", total);
+            pagination.put("totalPages", (int) Math.ceil((double) total / limit));
+            response.put("pagination", pagination);
 
             return Response.ok(response).build();
         } catch (SQLException e) {
@@ -146,17 +156,35 @@ public class PointResource {
 
     /**
      * PointHistoryのリストをMap形式に変換
+     * balanceAfterを計算するために、現在の残高から逆算していく
      */
-    private List<Map<String, Object>> convertHistoriesToMap(List<PointHistory> histories) {
+    private List<Map<String, Object>> convertHistoriesToMap(List<PointHistory> histories, int currentBalance, int page) {
         List<Map<String, Object>> result = new ArrayList<>();
+        
+        // 最初のページ（最新の履歴）の場合、現在の残高から逆算
+        // それ以外のページの場合、残高の逆算は正確でないため0とする
+        int balanceAfter = (page == 1) ? currentBalance : 0;
+        
         for (PointHistory history : histories) {
             Map<String, Object> historyMap = new HashMap<>();
             historyMap.put("id", history.getId());
-            historyMap.put("amount", history.getAmount());
-            historyMap.put("transactionType", history.getTransactionType());
+            historyMap.put("amount", Math.abs(history.getAmount())); // 常に正の値
+            historyMap.put("type", history.getTransactionType()); // EARN or USE -> そのまま使用
+            historyMap.put("transactionType", history.getTransactionType()); // 互換性のため残す
             historyMap.put("description", history.getDescription());
             historyMap.put("createdAt", history.getCreatedAt());
             historyMap.put("expiresAt", history.getExpiresAt());
+            historyMap.put("balanceAfter", balanceAfter);
+            
+            // 次の履歴の残高を計算（古い方向に遡る）
+            if (page == 1) {
+                if ("EARN".equals(history.getTransactionType())) {
+                    balanceAfter -= Math.abs(history.getAmount());
+                } else if ("USE".equals(history.getTransactionType())) {
+                    balanceAfter += Math.abs(history.getAmount());
+                }
+            }
+            
             result.add(historyMap);
         }
         return result;
