@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  title: BFF API
+  version: 1.0.0
+paths:
+  /api/points/{userId}:
+    get:
+      summary: Get user points via BFF
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /api/points/history/{userId}:
+    get:
+      summary: Get user point history via BFF
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response

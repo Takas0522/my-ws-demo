@@ -1,0 +1,13 @@
+openapi: 3.0.0
+info:
+  title: Auth Service API
+  version: 1.0.0
+paths:
+  /auth-service/api/auth/verify:
+    post:
+      summary: Verify JWT token
+      responses:
+        '200':
+          description: Token is valid
+        '401':
+          description: Unauthorized

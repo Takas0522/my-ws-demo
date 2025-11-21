@@ -1,0 +1,17 @@
+openapi: 3.0.0
+info:
+  title: User Service API
+  version: 1.0.0
+paths:
+  /user-service/api/users/{id}:
+    get:
+      summary: Get user information
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
