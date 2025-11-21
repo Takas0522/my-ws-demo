@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * BFF REST API
@@ -131,7 +132,7 @@ public class BffResource {
             // トークンから userId を取得
             String verifyBody = verifyResponse.readEntity(String.class);
             // 簡易的な実装（実際はJSON パースが必要）
-            Long userId = extractUserIdFromVerifyResponse(verifyBody);
+            UUID userId = extractUserIdFromVerifyResponse(verifyBody);
 
             // ユーザーアカウント情報取得
             Response userResponse = userServiceClient.getUserAccount(userId);
@@ -150,8 +151,18 @@ public class BffResource {
      */
     @GET
     @Path("/users/{id}")
-    public Response getUser(@PathParam("id") Long id, @HeaderParam("Authorization") String authHeader) {
+    public Response getUser(@PathParam("id") String idParam, @HeaderParam("Authorization") String authHeader) {
         try {
+            // UUIDバリデーション
+            UUID id;
+            try {
+                id = UUID.fromString(idParam);
+            } catch (IllegalArgumentException e) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(createErrorMap("Invalid UUID format"))
+                        .build();
+            }
+
             // 認証チェック
             if (!isAuthenticated(authHeader)) {
                 return Response.status(Response.Status.UNAUTHORIZED)
@@ -209,20 +220,21 @@ public class BffResource {
         }
     }
 
-    private Long extractUserIdFromVerifyResponse(String jsonResponse) {
+    private UUID extractUserIdFromVerifyResponse(String jsonResponse) {
         // 簡易的な実装（実際は JSON ライブラリで適切にパースすべき）
-        // 例: {"valid":true,"userId":1,"expiresAt":"..."}
+        // 例: {"valid":true,"userId":"550e8400-e29b-41d4-a716-446655440000","expiresAt":"..."}
         try {
             int userIdIndex = jsonResponse.indexOf("\"userId\":");
             if (userIdIndex == -1) {
                 return null;
             }
-            String substring = jsonResponse.substring(userIdIndex + 9);
-            int commaIndex = substring.indexOf(",");
-            int braceIndex = substring.indexOf("}");
-            int endIndex = commaIndex != -1 ? Math.min(commaIndex, braceIndex) : braceIndex;
-            String userIdStr = substring.substring(0, endIndex).trim();
-            return Long.parseLong(userIdStr);
+            String substring = jsonResponse.substring(userIdIndex + 10); // Skip ':"'
+            int quoteIndex = substring.indexOf("\"");
+            if (quoteIndex == -1) {
+                return null;
+            }
+            String userIdStr = substring.substring(0, quoteIndex).trim();
+            return UUID.fromString(userIdStr);
         } catch (Exception e) {
             return null;
         }

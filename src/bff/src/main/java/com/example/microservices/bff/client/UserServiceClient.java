@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * ユーザーサービスクライアント
@@ -26,7 +27,7 @@ public class UserServiceClient {
     /**
      * ユーザー情報取得
      */
-    public Response getUser(Long userId) {
+    public Response getUser(UUID userId) {
         WebTarget target = client.target(USER_SERVICE_URL)
                 .path("/user-service/api/users/" + userId);
         return target.request(MediaType.APPLICATION_JSON).get();
@@ -35,7 +36,7 @@ public class UserServiceClient {
     /**
      * ユーザーアカウント情報取得（ユーザー情報 + ポイント）
      */
-    public Response getUserAccount(Long userId) {
+    public Response getUserAccount(UUID userId) {
         WebTarget target = client.target(USER_SERVICE_URL)
                 .path("/user-service/api/users/" + userId + "/account");
         return target.request(MediaType.APPLICATION_JSON).get();
@@ -63,7 +64,7 @@ public class UserServiceClient {
     /**
      * ユーザー更新
      */
-    public Response updateUser(Long userId, Map<String, Object> userData) {
+    public Response updateUser(UUID userId, Map<String, Object> userData) {
         WebTarget target = client.target(USER_SERVICE_URL)
                 .path("/user-service/api/users/" + userId);
         return target.request(MediaType.APPLICATION_JSON)
@@ -73,7 +74,7 @@ public class UserServiceClient {
     /**
      * ユーザー削除
      */
-    public Response deleteUser(Long userId) {
+    public Response deleteUser(UUID userId) {
         WebTarget target = client.target(USER_SERVICE_URL)
                 .path("/user-service/api/users/" + userId);
         return target.request(MediaType.APPLICATION_JSON).delete();
