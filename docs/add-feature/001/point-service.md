@@ -65,14 +65,16 @@ flowchart TD
 3. **PointService**
    - 新しいマイクロサービスを作成。
      - REST API:
-       - `/points/{userId}`: ポイント残高取得。
-       - `/points/history/{userId}`: ポイント履歴取得。
+       - `GET /points/{userId}`: ポイント残高取得。
+       - `GET /points/history/{userId}`: ポイント履歴取得。
+       - `POST /points/register`: ポイント登録（内部向けAPI）。
+       - `POST /points/use`: ポイント利用（内部向けAPI、UI画面からの利用は不要）。
      - データベーススキーマ:
        - `points`: ユーザーのポイント残高を管理。
        - `point_history`: ポイント履歴を管理。
      - ポイントの仕様:
        - ポイントの単位は `pt`。
-       - ポイントは半年で失効。
+       - ポイントは半年で失効（失効予定日のみDB管理し、有効/失効判定はビジネスロジックで制御）。
 
 4. **AuthService**
    - JWTトークンの検証をポイント管理サービスに統合。
