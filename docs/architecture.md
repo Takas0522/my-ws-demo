@@ -78,8 +78,11 @@
 **主要コンポーネント**:
 - `LoginView`: ログイン画面
 - `AccountView`: 会員情報表示画面
+- `PointView`: ポイント残高表示画面
+- `PointHistoryView`: ポイント履歴表示画面
 - `router`: ルーティング＆認証ガード
 - `api.js`: API通信サービス
+- `pointApi.js`: ポイント管理API通信サービス
 
 ### BFF層
 

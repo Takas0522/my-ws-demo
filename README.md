@@ -39,14 +39,14 @@ Java 11 + Payara + PostgreSQL + Vue 3 で構築されたマイクロサービス
 
 ### サービス一覧
 
-| サービス | ポート | 説明 |
-|---------|-------|------|
-| Frontend | 3000 | Vue 3 フロントエンド |
-| BFF | 8082 | Backend For Frontend |
-| User Service | 8080 | ユーザー管理 |
-| Auth Service | 8081 | 認証・セッション管理 |
-| Point Service | 8083 | ポイント管理 |
-| PostgreSQL | 5432 | データベース |
+| サービス         | ポート | 説明                     |
+|------------------|-------|--------------------------|
+| Frontend         | 3000  | Vue 3 フロントエンド      |
+| BFF              | 8082  | Backend For Frontend     |
+| User Service     | 8080  | ユーザー管理             |
+| Auth Service     | 8081  | 認証・セッション管理     |
+| Point Service    | 8083  | ポイント管理             |
+| PostgreSQL       | 5432  | データベース             |
 
 ## 🚀 クイックスタート
 
@@ -140,7 +140,7 @@ POINT_SERVICE_URL="http://localhost:8083" java -jar /opt/payara-micro.jar --depl
 
 ターミナル5 - フロントエンド:
 ```bash
-cd /workspaces/my-ws-demo/frontend
+cd /workspaces/my-ws-demo/src/frontend
 npm install
 npm run dev
 ```

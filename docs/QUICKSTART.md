@@ -147,18 +147,13 @@ npm run dev
 
 ### API の動作確認
 
+#### ポイント管理
 ```bash
-# ユーザーサービス
-curl http://localhost:8080/api/users
+# ポイント残高取得
+curl http://localhost:8082/api/points -H "Authorization: Bearer <token>"
 
-# 認証サービス（ログイン）
-curl -X POST http://localhost:8081/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"userId": 1, "password": "password123"}'
-
-# BFF
-curl http://localhost:8082/api/users \
-  -H "Authorization: Bearer <token>"
+# ポイント履歴取得
+curl http://localhost:8082/api/points/history?page=1&limit=10 -H "Authorization: Bearer <token>"
 ```
 
 ### データベースの確認
