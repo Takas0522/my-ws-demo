@@ -153,6 +153,18 @@ public class AuthResource {
                 String userIdStr = jwt.getClaim("userId").asString();
                 String username = jwt.getClaim("username").asString();
                 
+                if (userIdStr == null || userIdStr.isEmpty()) {
+                    return Response.status(Response.Status.UNAUTHORIZED)
+                            .entity(createErrorResponse("Invalid token: userId claim missing"))
+                            .build();
+                }
+                
+                if (username == null || username.isEmpty()) {
+                    return Response.status(Response.Status.UNAUTHORIZED)
+                            .entity(createErrorResponse("Invalid token: username claim missing"))
+                            .build();
+                }
+                
                 Map<String, Object> response = new HashMap<>();
                 response.put("valid", true);
                 response.put("userId", userIdStr);
