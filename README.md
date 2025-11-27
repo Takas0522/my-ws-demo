@@ -18,7 +18,7 @@ Java 11 + Payara + PostgreSQL + Vue 3 で構築されたマイクロサービス
        │
        ↓
 ┌──────────────┐
-│     BFF      │  Backend For Frontend (Port: 8082)
+│     BFF      │  Backend For Frontend (Port: 8090)
 │ (Java/Payara)│
 └──────┬───────┘
        │
@@ -39,14 +39,14 @@ Java 11 + Payara + PostgreSQL + Vue 3 で構築されたマイクロサービス
 
 ### サービス一覧
 
-| サービス         | ポート | 説明                     |
-|------------------|-------|--------------------------|
-| Frontend         | 3000  | Vue 3 フロントエンド      |
-| BFF              | 8082  | Backend For Frontend     |
-| User Service     | 8080  | ユーザー管理             |
-| Auth Service     | 8081  | 認証・セッション管理     |
-| Point Service    | 8083  | ポイント管理             |
-| PostgreSQL       | 5432  | データベース             |
+| サービス         | ポート | 説明                     | デバッグポート |
+|------------------|-------|--------------------------|---------------|
+| Frontend         | 3000  | Vue 3 フロントエンド      | -             |
+| BFF              | 8090  | Backend For Frontend     | 5008          |
+| User Service     | 8080  | ユーザー管理             | 5005          |
+| Auth Service     | 8081  | 認証・セッション管理     | 5006          |
+| Point Service    | 8082  | ポイント管理             | 5007          |
+| PostgreSQL       | 5432  | データベース             | -             |
 
 ## 🚀 クイックスタート
 
@@ -54,6 +54,24 @@ Java 11 + Payara + PostgreSQL + Vue 3 で構築されたマイクロサービス
 
 - Docker & Docker Compose
 - VS Code with Dev Containers extension
+
+### VS Codeデバッグ実行（推奨）
+
+**F5キーまたはデバッグパネルから「Debug All Services」を選択して、全サービスを一括起動できます。**
+
+1. **VS Codeでプロジェクトを開く**
+2. **デバッグパネルを開く**（Ctrl+Shift+D / Cmd+Shift+D）
+3. **「Debug All Services」を選択**
+4. **F5キーを押す**か、デバッグ開始ボタンをクリック
+
+これにより以下が自動的に起動します：
+- User Service（8080ポート、デバッグ5005ポート）
+- Auth Service（8081ポート、デバッグ5006ポート）
+- Point Service（8082ポート、デバッグ5007ポート）
+- BFF（8090ポート、デバッグ5008ポート）
+- Vue Frontend（3000ポート）
+
+個別のサービスだけをデバッグする場合は、デバッグパネルから該当サービスを選択してください。
 
 ### 重要: 初回セットアップ
 
@@ -135,7 +153,7 @@ java -jar /opt/payara-micro.jar --deploy target/point-service.war --port 8083
 ターミナル4 - BFF:
 ```bash
 cd /workspaces/my-ws-demo/src/bff
-POINT_SERVICE_URL="http://localhost:8083" java -jar /opt/payara-micro.jar --deploy target/bff.war --port 8082
+POINT_SERVICE_URL="http://localhost:8082" java -jar /opt/payara-micro.jar --deploy target/bff.war --port 8090
 ```
 
 ターミナル5 - フロントエンド:
@@ -220,7 +238,7 @@ my-ws-demo/
 
 ## 📚 API エンドポイント
 
-### BFF API (Port 8082)
+### BFF API (Port 8090)
 
 #### 認証
 - `POST /api/login` - ログイン

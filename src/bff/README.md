@@ -8,7 +8,7 @@ BFF（Backend For Frontend）は、フロントエンドアプリケーション
 
 ## API エンドポイント
 
-ベースURL: `http://localhost:8082/api`
+ベースURL: `http://localhost:8090/api`
 
 ### 認証エンドポイント
 
@@ -68,10 +68,11 @@ Authorization: Bearer {token}
 ```
 Frontend (Vue 3)
     ↓
-   BFF (Port 8082)
+   BFF (Port 8090)
     ↓
     ├── User Service (Port 8080)
-    └── Auth Service (Port 8081)
+    ├── Auth Service (Port 8081)
+    └── Point Service (Port 8082)
 ```
 
 ### BFFの役割
@@ -130,23 +131,38 @@ JAX-RS Client API（Jersey）を使用してマイクロサービスと通信し
 
 ## ビルドと起動
 
-### ビルド
+### VS Codeデバッグ実行（推奨）
+
+VS Codeのデバッグパネルから「Debug bff」を選択してF5キーを押すと、自動的にビルド・起動・デバッガーアタッチが行われます。
+
+**デバッグポート**: 5008
+
+全サービスを一括起動する場合は「Debug All Services」を選択してください。
+
+### 手動ビルド
 ```bash
 cd /workspaces/my-ws-demo/src/bff
 mvn clean package
 ```
 
-### 起動
+### 手動起動
 ```bash
 cd /workspaces/my-ws-demo/src/bff
-java -jar /opt/payara-micro.jar --deploy target/bff.war --port 8082
+java -jar /opt/payara-micro.jar --deploy target/bff.war --port 8090
 ```
 
 または環境変数を指定して起動:
 ```bash
-USER_SERVICE_URL=http://user-service:8080 \
-AUTH_SERVICE_URL=http://auth-service:8081 \
-java -jar /opt/payara-micro.jar --deploy target/bff.war --port 8082
+USER_SERVICE_URL=http://localhost:8080 \
+AUTH_SERVICE_URL=http://localhost:8081 \
+POINT_SERVICE_URL=http://localhost:8082 \
+java -jar /opt/payara-micro.jar --deploy target/bff.war --port 8090
+```
+
+デバッグモードで起動:
+```bash
+java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008 \
+  -jar /opt/payara-micro.jar --deploy target/bff.war --port 8090
 ```
 
 ## テスト

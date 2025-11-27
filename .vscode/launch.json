@@ -1,0 +1,64 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "name": "Debug Vue App",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/src/frontend",
+            "sourceMaps": true,
+            "preLaunchTask": "start-frontend-dev",
+            "postDebugTask": "stop-frontend"
+        },
+        {
+            "type": "java",
+            "name": "Debug user-service",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 5005,
+            "preLaunchTask": "start-user-service-debug",
+            "postDebugTask": "stop-user-service"
+        },
+        {
+            "type": "java",
+            "name": "Debug auth-service",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 5006,
+            "preLaunchTask": "start-auth-service-debug",
+            "postDebugTask": "stop-auth-service"
+        },
+        {
+            "type": "java",
+            "name": "Debug point-service",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 5007,
+            "preLaunchTask": "start-point-service-debug",
+            "postDebugTask": "stop-point-service"
+        },
+        {
+            "type": "java",
+            "name": "Debug bff",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 5008,
+            "preLaunchTask": "start-bff-debug",
+            "postDebugTask": "stop-bff"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Debug All Services",
+            "configurations": [
+                "Debug user-service",
+                "Debug auth-service",
+                "Debug point-service",
+                "Debug bff",
+                "Debug Vue App"
+            ],
+            "stopAll": true
+        }
+    ]
+}

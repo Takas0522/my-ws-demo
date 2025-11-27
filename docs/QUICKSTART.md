@@ -74,17 +74,25 @@ java -jar /opt/payara-micro.jar --deploy target/auth-service.war --port 8081
 
 起動完了のメッセージを待つ（約30秒）
 
-#### ターミナル 3: BFF
+#### ターミナル 3: ポイントサービス
 ```bash
-cd /workspaces/my-ws-demo/src/bff
-java -jar /opt/payara-micro.jar --deploy target/bff.war --port 8082
+cd /workspaces/my-ws-demo/src/point-service
+java -jar /opt/payara-micro.jar --deploy target/point-service.war --port 8082
 ```
 
 起動完了のメッセージを待つ（約30秒）
 
-#### ターミナル 4: フロントエンド
+#### ターミナル 4: BFF
 ```bash
-cd /workspaces/my-ws-demo/frontend
+cd /workspaces/my-ws-demo/src/bff
+java -jar /opt/payara-micro.jar --deploy target/bff.war --port 8090
+```
+
+起動完了のメッセージを待つ（約30秒）
+
+#### ターミナル 5: フロントエンド
+```bash
+cd /workspaces/my-ws-demo/src/frontend
 npm install
 npm run dev
 ```
@@ -118,13 +126,25 @@ npm run dev
 既に起動中のサービスがある場合：
 ```bash
 # プロセス確認
-lsof -i :8080
-lsof -i :8081
-lsof -i :8082
+lsof -i :8080  # User Service
+lsof -i :8081  # Auth Service
+lsof -i :8082  # Point Service
+lsof -i :8090  # BFF
+lsof -i :3000  # Frontend
 
 # プロセス終了
 kill -9 <PID>
 ```
+
+### VS Codeデバッグ実行（推奨）
+
+手動起動の代わりに、VS Codeのデバッグ機能を使用することを推奨します：
+
+1. デバッグパネルを開く（Ctrl+Shift+D / Cmd+Shift+D）
+2. 「Debug All Services」を選択
+3. F5キーを押す
+
+これにより全サービスが自動的にビルド・起動され、デバッガーもアタッチされます。
 
 ### データベース接続エラー
 
@@ -150,10 +170,10 @@ npm run dev
 #### ポイント管理
 ```bash
 # ポイント残高取得
-curl http://localhost:8082/api/points -H "Authorization: Bearer <token>"
+curl http://localhost:8090/api/points -H "Authorization: Bearer <token>"
 
 # ポイント履歴取得
-curl http://localhost:8082/api/points/history?page=1&limit=10 -H "Authorization: Bearer <token>"
+curl http://localhost:8090/api/points/history?page=1&limit=10 -H "Authorization: Bearer <token>"
 ```
 
 ### データベースの確認

@@ -1,0 +1,241 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "start-frontend-dev",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "dev"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/src/frontend"
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^$",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "VITE.*ready in",
+                    "endsPattern": "Local:.*http://localhost:3000"
+                }
+            }
+        },
+        {
+            "label": "stop-frontend",
+            "type": "shell",
+            "command": "pkill",
+            "args": [
+                "-f",
+                "vite.*frontend"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "build-user-service",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "clean",
+                "package"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/src/user-service"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "start-user-service-debug",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "mvn clean package && java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar /opt/payara-micro.jar --deploy ${workspaceFolder}/src/user-service/target/user-service.war --port 8080"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/src/user-service"
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^$",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Listening for transport dt_socket",
+                    "endsPattern": "Payara Micro .* ready in"
+                }
+            }
+        },
+        {
+            "label": "stop-user-service",
+            "type": "shell",
+            "command": "pkill",
+            "args": [
+                "-f",
+                "payara-micro.*user-service"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "build-auth-service",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "clean",
+                "package"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/src/auth-service"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "start-auth-service-debug",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "mvn clean package && java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -jar /opt/payara-micro.jar --deploy ${workspaceFolder}/src/auth-service/target/auth-service.war --port 8081"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/src/auth-service"
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^$",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Listening for transport dt_socket",
+                    "endsPattern": "Payara Micro .* ready in"
+                }
+            }
+        },
+        {
+            "label": "stop-auth-service",
+            "type": "shell",
+            "command": "pkill",
+            "args": [
+                "-f",
+                "payara-micro.*auth-service"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "build-point-service",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "clean",
+                "package"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/src/point-service"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "start-point-service-debug",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "mvn clean package && java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007 -jar /opt/payara-micro.jar --deploy ${workspaceFolder}/src/point-service/target/point-service.war --port 8082"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/src/point-service"
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^$",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Listening for transport dt_socket",
+                    "endsPattern": "Payara Micro .* ready in"
+                }
+            }
+        },
+        {
+            "label": "stop-point-service",
+            "type": "shell",
+            "command": "pkill",
+            "args": [
+                "-f",
+                "payara-micro.*point-service"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "build-bff",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "clean",
+                "package"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/src/bff"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "start-bff-debug",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "mvn clean package && java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008 -jar /opt/payara-micro.jar --deploy ${workspaceFolder}/src/bff/target/bff.war --port 8090"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/src/bff"
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^$",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Listening for transport dt_socket",
+                    "endsPattern": "Payara Micro .* ready in"
+                }
+            }
+        },
+        {
+            "label": "stop-bff",
+            "type": "shell",
+            "command": "pkill",
+            "args": [
+                "-f",
+                "payara-micro.*bff"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
