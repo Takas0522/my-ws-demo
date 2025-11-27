@@ -26,7 +26,7 @@ Java 11 + Payara + PostgreSQL + Vue 3 で構築されたマイクロサービス
        ↓                 ↓                 ↓                 ↓
 ┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐
 │User Service │   │Auth Service │   │Point Service│   │  PostgreSQL │
-│ (Port: 8080)│   │ (Port: 8081)│   │ (Port: 8083)│   │ (Port: 5432)│
+│ (Port: 8080)│   │ (Port: 8081)│   │ (Port: 8082)│   │ (Port: 5432)│
 └─────────────┘   └─────────────┘   └─────────────┘   └─────────────┘
        │                 │                 │
        │                 │                 │
@@ -147,7 +147,7 @@ java -jar /opt/payara-micro.jar --deploy target/auth-service.war --port 8081
 ターミナル3 - ポイントサービス:
 ```bash
 cd /workspaces/my-ws-demo/src/point-service
-java -jar /opt/payara-micro.jar --deploy target/point-service.war --port 8083
+java -jar /opt/payara-micro.jar --deploy target/point-service.war --port 8082
 ```
 
 ターミナル4 - BFF:
