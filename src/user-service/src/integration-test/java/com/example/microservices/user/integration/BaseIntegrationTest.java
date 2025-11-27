@@ -27,7 +27,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 public abstract class BaseIntegrationTest {
 
     @Container
-    protected static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15-alpine")
+    protected static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
             .withDatabaseName("test_db")
             .withUsername("test_user")
             .withPassword("test_password");
