@@ -48,16 +48,28 @@ BeforeAll({ timeout: 300000 }, async function () {
       }
     });
     
-    // サービスが起動するまで待機（簡易チェック）
+    // サービスが起動するまでリトライしながら待機
     console.log('Waiting for services to start...');
-    await new Promise(resolve => setTimeout(resolve, 60000)); // 60秒待機
+    const maxRetries = 60; // 最大60回リトライ（約2分）
+    const retryInterval = 2000; // 2秒ごとにリトライ
     
-    // サービスの起動確認
-    const servicesReady = await checkServicesReady();
+    let servicesReady = false;
+    for (let i = 0; i < maxRetries; i++) {
+      await new Promise(resolve => setTimeout(resolve, retryInterval));
+      servicesReady = await checkServicesReady(i === 0); // 最初の試行のみログを表示
+      
+      if (servicesReady) {
+        console.log(`✓ All backend services are ready (attempt ${i + 1}/${maxRetries})`);
+        break;
+      }
+      
+      if ((i + 1) % 10 === 0) {
+        console.log(`  Still waiting... (attempt ${i + 1}/${maxRetries})`);
+      }
+    }
+    
     if (!servicesReady) {
-      console.warn('⚠ Some services may not be ready yet, but continuing...');
-    } else {
-      console.log('✓ All backend services are ready');
+      throw new Error('Services did not start within the expected time');
     }
   } catch (error: any) {
     console.error('Failed to start backend services:', error.message);
@@ -71,8 +83,9 @@ BeforeAll({ timeout: 300000 }, async function () {
 
 /**
  * サービスの起動確認
+ * @param showLogs - ログを表示するかどうか（リトライ時は最初の1回のみ表示）
  */
-async function checkServicesReady(): Promise<boolean> {
+async function checkServicesReady(showLogs: boolean = true): Promise<boolean> {
   const services = [
     { name: 'user-service', url: 'http://localhost:8080' },
     { name: 'auth-service', url: 'http://localhost:8081' },
@@ -83,10 +96,24 @@ async function checkServicesReady(): Promise<boolean> {
 
   for (const service of services) {
     try {
-      await execAsync(`curl -s -o /dev/null -w "%{http_code}" ${service.url}`, { timeout: 5000 });
-      console.log(`  ✓ ${service.name} is ready`);
+      const { stdout } = await execAsync(`curl -s -o /dev/null -w "%{http_code}" ${service.url}`, { timeout: 5000 });
+      const statusCode = stdout.trim();
+      
+      // 200番台または400番台のレスポンスがあればサービスは起動している
+      if (!statusCode.match(/^[24]\d{2}$/)) {
+        if (showLogs) {
+          console.log(`  ✗ ${service.name} returned status ${statusCode}`);
+        }
+        return false;
+      }
+      
+      if (showLogs) {
+        console.log(`  ✓ ${service.name} is ready`);
+      }
     } catch (error) {
-      console.log(`  ✗ ${service.name} is not ready`);
+      if (showLogs) {
+        console.log(`  ✗ ${service.name} is not ready`);
+      }
       return false;
     }
   }
