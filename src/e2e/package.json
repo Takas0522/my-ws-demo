@@ -11,7 +11,11 @@
   "devDependencies": {
     "@cucumber/cucumber": "^12.2.0",
     "@playwright/test": "^1.57.0",
+    "@testcontainers/postgresql": "^10.15.0",
     "@types/node": "^24.10.1",
+    "@types/pg": "^8.11.10",
+    "pg": "^8.13.1",
+    "testcontainers": "^10.15.0",
     "ts-node": "^10.9.2"
   },
   "scripts": {

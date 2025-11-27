@@ -9,3 +9,6 @@ target/
 .vscode/
 *.iml
 .idea/
+.env.e2e
+.e2e-pid
+e2e-test.log

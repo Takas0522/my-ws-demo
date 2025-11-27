@@ -1,54 +1,14 @@
-import { Given, When, Then, Before, After, setDefaultTimeout } from '@cucumber/cucumber';
-import { chromium, Browser, Page, BrowserContext } from '@playwright/test';
+import { Given, When, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 
-// タイムアウトを60秒に設定
-setDefaultTimeout(60000);
-
-// ブラウザ、コンテキスト、ページのインスタンスを保持
-let browser: Browser;
-let context: BrowserContext;
-let page: Page;
+// LoginPageインスタンスを保持
 let loginPage: LoginPage;
-
-// 各シナリオの前に実行
-Before(async function () {
-  // ブラウザを起動
-  browser = await chromium.launch({
-    headless: true, // CIで実行する場合はtrue、デバッグ時はfalse
-  });
-  
-  // コンテキストを作成
-  context = await browser.newContext();
-  
-  // ページを作成
-  page = await context.newPage();
-  
-  // LoginPageインスタンスを作成
-  loginPage = new LoginPage(page);
-});
-
-// 各シナリオの後に実行
-After(async function () {
-  // ページを閉じる
-  if (page) {
-    await page.close();
-  }
-  
-  // コンテキストを閉じる
-  if (context) {
-    await context.close();
-  }
-  
-  // ブラウザを閉じる
-  if (browser) {
-    await browser.close();
-  }
-});
 
 // 背景: ログインページを表示している
 Given('ログインページを表示している', async function () {
+  // hooksからページインスタンスを取得
+  loginPage = new LoginPage(this.page);
   await loginPage.ログインページへ移動();
 });
 
@@ -102,7 +62,7 @@ Then('アカウントページにリダイレクトされる', async function ()
 // エラーメッセージの確認
 Then('エラーメッセージが表示される', async function () {
   // エラーメッセージが表示されるまで少し待機
-  await page.waitForTimeout(1000);
+  await this.page.waitForTimeout(1000);
   const isVisible = await loginPage.エラーメッセージ表示確認();
   expect(isVisible).toBeTruthy();
 });

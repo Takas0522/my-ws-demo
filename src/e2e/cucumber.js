@@ -1,6 +1,9 @@
 module.exports = {
     default: {
-        require: ['step-definitions/**/*.ts'],  // テストスクリプトが格納される場所
+        require: [
+            'step-definitions/hooks.ts',       // フック処理（DB初期化など）を最初に読み込む
+            'step-definitions/**/*.ts'          // テストスクリプトが格納される場所
+        ],
         requireModule: ['ts-node/register'],    // TypeScript実行用の設定
         format: [
             'summary',

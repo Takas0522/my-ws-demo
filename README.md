@@ -300,6 +300,31 @@ npm run dev    # 開発サーバー起動
 npm run build  # プロダクションビルド
 ```
 
+## 🧪 テスト
+
+### E2Eテスト
+
+このプロジェクトでは、**TestContainers**を使用したE2Eテストを提供しています。
+テスト実行時に専用のDBコンテナを起動するため、開発用DBを汚すことなくテストを実行できます。
+
+```bash
+cd src/e2e
+npm install
+npm run test:cucumber
+```
+
+**特徴**:
+- TestContainersによるテスト専用DB（自動起動・停止）
+- 環境変数による開発環境とテスト環境の自動切り替え
+- Playwright + Cucumber によるBDDテスト
+- 各テスト実行前のDBリセットで独立したテスト環境
+
+**注意**:
+- 初回実行時は5〜7分かかります（Docker イメージの取得、サービスの起動）
+- 最低8GBのメモリが推奨されます
+
+詳細は [E2E README](./src/e2e/README.md) を参照してください。
+
 ## 📖 ドキュメント
 
 - [アーキテクチャ詳細](./docs/architecture.md)
