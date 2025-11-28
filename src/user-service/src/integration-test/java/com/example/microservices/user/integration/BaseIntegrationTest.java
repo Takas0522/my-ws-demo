@@ -69,9 +69,11 @@ public abstract class BaseIntegrationTest {
                 throw new IllegalArgumentException("Script not found: " + scriptName);
             }
 
-            String script = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))
-                    .lines()
-                    .collect(Collectors.joining("\n"));
+            String script;
+            try (InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 BufferedReader br = new BufferedReader(isr)) {
+                script = br.lines().collect(Collectors.joining("\n"));
+            }
 
             try (Connection conn = dataSource.getConnection();
                  Statement stmt = conn.createStatement()) {
