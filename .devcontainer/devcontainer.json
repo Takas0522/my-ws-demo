@@ -25,7 +25,8 @@
 				"vscjava.vscode-maven",
 				"Vue.volar",
 				"GitHub.copilot-chat",
-				"ms-playwright.playwright"
+				"ms-playwright.playwright",
+				"vscjava.migrate-java-to-azure"
 			]
 		}
 	},
