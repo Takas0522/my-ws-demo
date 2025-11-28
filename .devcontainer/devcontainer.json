@@ -8,7 +8,9 @@
 	"features": {
 		"ghcr.io/devcontainers/features/node:1": {},
 		"ghcr.io/devcontainers-extra/features/vue-cli:2": {},
-		"ghcr.io/devcontainers/features/github-cli:1": {}
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/schlich/devcontainer-features/playwright:0": {},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -22,7 +24,8 @@
 				"vscjava.vscode-java-pack",
 				"vscjava.vscode-maven",
 				"Vue.volar",
-				"GitHub.copilot-chat"
+				"GitHub.copilot-chat",
+				"ms-playwright.playwright"
 			]
 		}
 	},

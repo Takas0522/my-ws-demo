@@ -5,11 +5,11 @@
     <jdbc-connection-pool name="PointServicePool"
                           res-type="javax.sql.DataSource"
                           datasource-classname="org.postgresql.ds.PGSimpleDataSource">
-        <property name="serverName" value="localhost"/>
-        <property name="portNumber" value="5432"/>
-        <property name="databaseName" value="point_service_db"/>
-        <property name="user" value="postgres"/>
-        <property name="password" value="postgres"/>
+        <property name="serverName" value="${ENV=DB_POINT_SERVICE_HOST}"/>
+        <property name="portNumber" value="${ENV=DB_POINT_SERVICE_PORT}"/>
+        <property name="databaseName" value="${ENV=DB_POINT_SERVICE_NAME}"/>
+        <property name="user" value="${ENV=DB_POINT_SERVICE_USER}"/>
+        <property name="password" value="${ENV=DB_POINT_SERVICE_PASSWORD}"/>
     </jdbc-connection-pool>
 
     <!-- JDBC Resource -->

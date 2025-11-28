@@ -49,6 +49,7 @@ dist-ssr/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.e2e
 
 # Logs
 logs/
@@ -62,3 +63,5 @@ logs/
 # Temporary files
 tmp/
 temp/
+
+/**/cucumber-report.html
