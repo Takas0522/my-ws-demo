@@ -1,0 +1,3 @@
+[submodule "develop-standard"]
+	path = develop-standard
+	url = https://github.com/Takas0522/my-ws-demo-standard-docs
