@@ -5,7 +5,7 @@ Java 11 + Payara + PostgreSQL + Vue 3 で構築されたマイクロサービス
 **注意**:
 - 初回実行時は5〜7分かかります（Docker イメージの取得、サービスの起動）
 - 最低8GBのメモリが推奨されます
-- `Language Support for Java by Red Hat`の関係で、Javaは個別でターミナルから実行する必要があります
+- `Language Support for Java by Red Hat`の関係で、個別でターミナルから実行する必要があります
 
 詳細は [E2E README](./src/e2e/README.md) を参照してください。
 
@@ -47,6 +47,26 @@ cd src/bff && set -a && source <(grep -v '^#' .env) && set +a && mvn clean packa
 ```
 
 IDE (例: IntelliJ IDEA, VS Code) でリモートデバッガーを設定し、デバッグポートに接続してください。
+
+## 🧪 E2Eテスト
+
+E2Eテストは、Playwright + Cucumberを使用してブラウザの自動化テストを行います。TestContainersにより、テスト専用のPostgreSQLコンテナが自動的に起動し、開発用DBを汚しません。
+
+### E2Eテストの実行
+
+ルートディレクトリから以下のコマンドを実行してください：
+
+```bash
+cd src/e2e && npm test
+```
+
+または、Cucumberのテストを実行する場合：
+
+```bash
+cd src/e2e && npm run test:cucumber
+```
+
+詳細は [E2E README](./src/e2e/README.md) を参照してください。
 
 ## 🤝 貢献
 
