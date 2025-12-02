@@ -43,14 +43,6 @@ dist-ssr/
 *~
 .DS_Store
 
-# Environment
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env.e2e
-
 # Logs
 logs/
 *.log
@@ -65,3 +57,6 @@ tmp/
 temp/
 
 /**/cucumber-report.html
+
+/**/.env
+/**/.env.e2e
