@@ -6,6 +6,7 @@ Java 11 + Payara + PostgreSQL + Vue 3 で構築されたマイクロサービス
 - 初回実行時は5〜7分かかります（Docker イメージの取得、サービスの起動）
 - 最低8GBのメモリが推奨されます
 - `Language Support for Java by Red Hat`の関係で、個別でターミナルから実行する必要があります
+- 開発用のDatabaseはDevContainer立ち上げ時にDockerComposeで同時に立ち上がります。
 
 詳細は [E2E README](./src/e2e/README.md) を参照してください。
 
