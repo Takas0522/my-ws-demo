@@ -49,7 +49,8 @@
 				"Vue.volar",
 				"GitHub.copilot-chat",
 				"ms-playwright.playwright",
-				"vscjava.migrate-java-to-azure"
+				"vscjava.migrate-java-to-azure",
+				"bierner.markdown-mermaid"
 			]
 		}
 	},

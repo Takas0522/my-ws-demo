@@ -27,6 +27,7 @@ Java 11 + Payara + PostgreSQL + Vue 3 で構築されたマイクロサービス
 
 **注意**: 各サービスは`.env`ファイルからデータベース接続設定などを読み込みます。e2eテストやintegrationtテストを実行する際は別のenvを参照します。  
 `.env`ファイルはClone時は存在しませんので、 `.env.sample` をコピーしてリネームしてお使いください。
+開発時のDBはDevContainerで提供されます。シードデータもDevContainer展開時に登録されます。
 
 #### user-service
 ```bash

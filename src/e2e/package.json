@@ -20,7 +20,10 @@
   },
   "scripts": {
     "test": "playwright test",
-    "test:cucumber": "cucumber-js"
+    "test:cucumber": "cucumber-js",
+    "test:e2e": "cucumber-js features/**/*.feature",
+    "test:e2e:single": "cucumber-js",
+    "report": "echo '\n✅ E2E Test Report generated at: temp/e2e/cucumber-report.html\n' && if command -v xdg-open > /dev/null; then xdg-open ../../temp/e2e/cucumber-report.html; elif command -v open > /dev/null; then open ../../temp/e2e/cucumber-report.html; else echo 'Please open temp/e2e/cucumber-report.html in your browser'; fi"
   },
   "keywords": [],
   "author": "",

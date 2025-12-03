@@ -8,7 +8,8 @@ module.exports = {
         format: [
             'summary',
             'progress-bar',                     // 実行時にプログレスバーをログ表示する設定
-            'html:cucumber-report.html'         // テスト結果をHTMLファイルで出力する設定
+            'html:cucumber-report.html',        // テスト結果をHTMLファイルで出力する設定（tempディレクトリ）
+            'json:../../temp/e2e/cucumber-report.json'   // JSON形式でも出力
         ],
         formatOptions: {
             snippetInterface: 'async-await'     // async/await形式のスニペットを生成
