@@ -15,7 +15,30 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// 5432: PostgreSQL, 8080: User Service, 8081: Auth Service, 8082: BFF, 3000: Frontend
-	"forwardPorts": [5432, 8080, 8081, 8082, 3000],
+	"forwardPorts": [5432, 8080, 8081, 8082, 8090, 3000],
+
+	"portsAttributes": {
+		"3000": {
+			"label": "Frontend",
+			"onAutoForward": "notify"
+		},
+		"8090": {
+			"label": "BFF",
+			"onAutoForward": "notify"
+		},
+		"8080": {
+			"label": "User Service",
+			"onAutoForward": "notify"
+		},
+		"8081": {
+			"label": "Auth Service",
+			"onAutoForward": "notify"
+		},
+		"8082": {
+			"label": "Point Service",
+			"onAutoForward": "notify"
+		}
+	},
 
 	"customizations": {
 		"vscode": {
