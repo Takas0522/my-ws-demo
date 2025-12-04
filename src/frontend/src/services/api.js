@@ -29,10 +29,14 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // 認証エラーの場合、ログイン画面へリダイレクト
-      localStorage.removeItem('authToken')
-      localStorage.removeItem('userId')
-      window.location.href = '/login'
+      // ログインページにいる場合は、エラーを通常通り返す（リダイレクトしない）
+      const currentPath = window.location.pathname
+      if (currentPath !== '/login' && currentPath !== '/') {
+        // 認証エラーの場合、ログイン画面へリダイレクト
+        localStorage.removeItem('authToken')
+        localStorage.removeItem('userId')
+        window.location.href = '/login'
+      }
     }
     return Promise.reject(error)
   }

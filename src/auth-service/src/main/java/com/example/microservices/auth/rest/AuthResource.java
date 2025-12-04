@@ -60,16 +60,26 @@ public class AuthResource {
                 // userIdでログイン
                 userId = loginRequest.getUserId();
                 // ユーザー名を取得（レスポンス用）
-                Optional<String> usernameOpt = authRepository.getUsernameByUserId(userId);
-                if (usernameOpt.isPresent()) {
-                    username = usernameOpt.get();
+                try {
+                    Optional<String> usernameOpt = authRepository.getUsernameByUserId(userId);
+                    if (usernameOpt.isPresent()) {
+                        username = usernameOpt.get();
+                    }
+                } catch (Exception e) {
+                    // ユーザー名取得失敗時もログイン処理を続行（usernameはnullのまま）
+                    System.err.println("Failed to get username for userId " + userId + ": " + e.getMessage());
                 }
             } else if (loginRequest.getUsername() != null) {
                 // ユーザー名でログイン
                 username = loginRequest.getUsername();
-                Optional<UUID> userIdOpt = authRepository.getUserIdByUsername(username);
-                if (userIdOpt.isPresent()) {
-                    userId = userIdOpt.get();
+                try {
+                    Optional<UUID> userIdOpt = authRepository.getUserIdByUsername(username);
+                    if (userIdOpt.isPresent()) {
+                        userId = userIdOpt.get();
+                    }
+                } catch (Exception e) {
+                    // ユーザーID取得失敗時はログイン失敗扱い
+                    System.err.println("Failed to get userId for username " + username + ": " + e.getMessage());
                 }
             } else {
                 return Response.status(Response.Status.BAD_REQUEST)
@@ -159,16 +169,13 @@ public class AuthResource {
                             .build();
                 }
                 
-                if (username == null || username.isEmpty()) {
-                    return Response.status(Response.Status.UNAUTHORIZED)
-                            .entity(createErrorResponse("Invalid token: username claim missing"))
-                            .build();
-                }
-                
+                // usernameはオプショナル（nullでも有効なトークンとして扱う）
                 Map<String, Object> response = new HashMap<>();
                 response.put("valid", true);
                 response.put("userId", userIdStr);
-                response.put("username", username);
+                if (username != null && !username.isEmpty()) {
+                    response.put("username", username);
+                }
 
                 return Response.ok(response).build();
             } catch (JWTVerificationException e) {

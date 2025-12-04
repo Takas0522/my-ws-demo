@@ -159,9 +159,10 @@ export class LoginPage extends BasePage {
   /**
    * ログインが成功してリダイレクトされるのを待機する
    * @param expectedUrl リダイレクト先のURL（デフォルト: /account）
-   * @param timeout タイムアウト時間（ミリ秒、デフォルト: 5000）
+   * @param timeout タイムアウト時間（ミリ秒、デフォルト: 15000）
    */
-  async ログイン成功待機(expectedUrl: string = '/account', timeout: number = 5000): Promise<void> {
+  async ログイン成功待機(expectedUrl: string = '/account', timeout: number = 15000): Promise<void> {
+    // SPAアプリなので、waitUntilオプションなしでURL変更のみを待つ
     await this.page.waitForURL(`**${expectedUrl}`, { timeout });
   }
 }

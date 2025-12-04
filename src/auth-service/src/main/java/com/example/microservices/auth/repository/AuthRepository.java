@@ -32,10 +32,14 @@ public class AuthRepository {
     public Optional<UUID> getUserIdByUsername(String username) throws SQLException {
         // ユーザーサービスのデータベースに接続してユーザーIDを取得
         // 本来はマイクロサービス間通信で取得すべきですが、簡易的にDB直接接続
-        String jdbcUrl = "jdbc:postgresql://localhost:5432/user_service_db";
-        String dbUser = "postgres";
-        String dbPassword = "postgres";
+        // 環境変数から接続情報を取得（E2Eテスト対応）
+        String host = System.getenv().getOrDefault("USER_SERVICE_DB_HOST", "localhost");
+        String port = System.getenv().getOrDefault("USER_SERVICE_DB_PORT", "5432");
+        String dbName = System.getenv().getOrDefault("USER_SERVICE_DB_NAME", "user_service_db");
+        String dbUser = System.getenv().getOrDefault("USER_SERVICE_DB_USER", "postgres");
+        String dbPassword = System.getenv().getOrDefault("USER_SERVICE_DB_PASSWORD", "postgres");
         
+        String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", host, port, dbName);
         String sql = "SELECT id FROM users WHERE username = ?";
         
         try (Connection conn = java.sql.DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
@@ -57,10 +61,14 @@ public class AuthRepository {
      */
     public Optional<String> getUsernameByUserId(UUID userId) throws SQLException {
         // ユーザーサービスのデータベースに接続してユーザー名を取得
-        String jdbcUrl = "jdbc:postgresql://localhost:5432/user_service_db";
-        String dbUser = "postgres";
-        String dbPassword = "postgres";
+        // 環境変数から接続情報を取得（E2Eテスト対応）
+        String host = System.getenv().getOrDefault("USER_SERVICE_DB_HOST", "localhost");
+        String port = System.getenv().getOrDefault("USER_SERVICE_DB_PORT", "5432");
+        String dbName = System.getenv().getOrDefault("USER_SERVICE_DB_NAME", "user_service_db");
+        String dbUser = System.getenv().getOrDefault("USER_SERVICE_DB_USER", "postgres");
+        String dbPassword = System.getenv().getOrDefault("USER_SERVICE_DB_PASSWORD", "postgres");
         
+        String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", host, port, dbName);
         String sql = "SELECT username FROM users WHERE id = ?";
         
         try (Connection conn = java.sql.DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
