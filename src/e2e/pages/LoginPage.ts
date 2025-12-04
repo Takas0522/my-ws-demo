@@ -54,7 +54,23 @@ export class LoginPage extends BasePage {
    * ログインボタンをクリックする
    */
   async ログインボタンクリック(): Promise<void> {
+    // APIレスポンスを待つためのPromiseを作成（Cucumberと同じ処理）
+    const apiResponsePromise = this.page.waitForResponse(
+      (response) => response.url().includes('/api/login'),
+      { timeout: 10000 }
+    ).catch(() => null); // タイムアウトしても続行
+    
     await this.クリック(this.submitButton);
+    
+    // APIレスポンスを待つ
+    const response = await apiResponsePromise;
+    if (response) {
+      console.log(`✓ Login API called: ${response.status()} ${response.url()}`);
+      // レスポンス後、少し待ってからlocalStorageを確認
+      await this.page.waitForTimeout(1000);
+    } else {
+      console.log('⚠ Login API response timeout or not called');
+    }
   }
 
   /**
@@ -162,7 +178,23 @@ export class LoginPage extends BasePage {
    * @param timeout タイムアウト時間（ミリ秒、デフォルト: 15000）
    */
   async ログイン成功待機(expectedUrl: string = '/account', timeout: number = 15000): Promise<void> {
-    // SPAアプリなので、waitUntilオプションなしでURL変更のみを待つ
-    await this.page.waitForURL(`**${expectedUrl}`, { timeout });
+    // SPAアプリなので、DOM要素の変化を待つ（Cucumberと同じ処理）
+    console.log('Waiting for AccountView to appear...');
+    
+    // ログインページの要素が消えることを確認
+    await this.page.locator('#userId').waitFor({ 
+      state: 'hidden', 
+      timeout: 3000 
+    }).catch(() => {
+      console.log('⚠ Login form did not disappear as expected');
+    });
+    
+    // AccountView特有の要素が表示されるまで待つ
+    console.log('Waiting for "会員マイページ" heading...');
+    await this.page.locator('h1:has-text("会員マイページ")').waitFor({ 
+      state: 'visible', 
+      timeout: timeout 
+    });
+    console.log('✓ AccountView heading found!');
   }
 }

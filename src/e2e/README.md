@@ -138,13 +138,50 @@ cd ../bff && mvn clean package -DskipTests
 
 ## テスト実行
 
-### Cucumberテスト実行（推奨）
+このプロジェクトでは2種類のテスト実行方法をサポートしています：
+
+### 1. Cucumberテスト実行（BDD形式）
+
+Cucumberを使用したBDD形式のテストを実行します。
 
 ```bash
 npm run test:cucumber
 ```
 
-**⚠️ 注意**: 初回実行時は以下の処理が行われるため、5〜7分程度かかります：
+**特徴**:
+- Gherkin記法でテストシナリオを記述
+- 日本語でのシナリオ記述が可能
+- プログレスバーとHTML形式のレポート生成
+
+### 2. Playwrightテスト実行（標準形式）
+
+Playwrightの標準的なテスト形式で実行します。
+
+```bash
+# 通常実行（ヘッドレスモード）
+npm test
+
+# ブラウザを表示して実行
+npm run test:headed
+
+# デバッグモード（ステップ実行）
+npm run test:debug
+
+# UIモード（インタラクティブ）
+npm run test:ui
+
+# テストレポートを表示
+npm run test:report
+```
+
+**特徴**:
+- TypeScriptで直接テストを記述
+- Playwrightの全機能を活用可能
+- スクリーンショット・動画の自動記録
+- 詳細なHTMLレポート
+
+**⚠️ 共通の注意点**: 
+初回実行時は以下の処理が行われるため、5〜7分程度かかります：
 1. TestContainersの起動（PostgreSQL × 3）
 2. バックエンドサービスの起動（Payara Micro × 4）
 3. フロントエンドの起動（Vite）
@@ -153,12 +190,6 @@ npm run test:cucumber
 - セットアップ: 約2〜3分
 - テスト実行: 約1〜2分
 - クリーンアップ: 約30秒
-
-### Playwrightテスト実行
-
-```bash
-npm test
-```
 
 ## ディレクトリ構成
 
