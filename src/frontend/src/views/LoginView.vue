@@ -14,7 +14,7 @@
             type="text"
             required
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="tanaka_taro または 123e4567-..."
+            placeholder="tanaka_taro または 05c66ceb-..."
           />
         </div>
 
@@ -51,7 +51,7 @@
           <li>• ユーザー名: tanaka_taro (田中太郎)</li>
           <li>• ユーザー名: suzuki_hanako (鈴木花子)</li>
           <li>• ユーザー名: yamada_jiro (山田次郎)</li>
-          <li>• UUID: 123e4567-e89b-12d3-a456-426614174000 (田中太郎)</li>
+          <li>• UUID: 05c66ceb-6ddc-4ada-b736-08702615ff48 (田中太郎)</li>
           <li>• パスワード: password123</li>
         </ul>
       </div>
@@ -78,16 +78,48 @@ export default {
       loading.value = true
 
       try {
+        console.log('[LOGIN] Step 1: Login attempt with:', userId.value)
         const response = await authService.login(userId.value, password.value)
+        console.log('[LOGIN] Step 2: Login response received:', { userId: response.userId, hasToken: !!response.token, tokenLength: response.token?.length })
         
-        // トークンとユーザーIDを保存
-        localStorage.setItem('authToken', response.token)
-        localStorage.setItem('userId', response.userId)
-        
-        // アカウント画面へ遷移
-        router.push('/account')
+        try {
+          // トークンとユーザーIDを保存
+          console.log('[LOGIN] Step 3: Saving token to localStorage...')
+          localStorage.setItem('authToken', response.token)
+          console.log('[LOGIN] Step 4: authToken saved successfully')
+          
+          localStorage.setItem('userId', response.userId)
+          console.log('[LOGIN] Step 5: userId saved successfully')
+          
+          // アカウント画面へ遷移
+          console.log('[LOGIN] Step 6: Attempting to navigate to /account')
+          await router.push('/account')
+          console.log('[LOGIN] Step 7: Navigation to /account completed')
+        } catch (innerError) {
+          console.error('[LOGIN] Inner error during token save or navigation:', innerError)
+          throw innerError
+        }
       } catch (error) {
-        errorMessage.value = error.response?.data?.error || 'ログインに失敗しました'
+        console.error('[LOGIN] Main catch block - Login error:', error)
+        console.error('[LOGIN] Error details:', { name: error.name, message: error.message })
+        // エラーメッセージを設定
+        if (error.response) {
+          // レスポンスがある場合
+          const data = error.response.data
+          if (typeof data === 'string') {
+            errorMessage.value = data
+          } else if (data && data.error) {
+            errorMessage.value = data.error
+          } else if (data && data.message) {
+            errorMessage.value = data.message
+          } else {
+            errorMessage.value = `ログインに失敗しました (${error.response.status})`
+          }
+        } else if (error.message) {
+          errorMessage.value = error.message
+        } else {
+          errorMessage.value = 'ログインに失敗しました'
+        }
       } finally {
         loading.value = false
       }
