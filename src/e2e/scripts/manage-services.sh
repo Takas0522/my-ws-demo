@@ -60,13 +60,25 @@ start_service() {
         fi
     fi
     
-    # サービスを起動
+    # サービスを起動（環境変数ファイルを明示的に渡す）
     cd "$service_dir"
-    nohup java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:$debug_port \
-        -jar /opt/payara-micro.jar \
-        --deploy "$war_file" \
-        --port $service_port \
-        > "$service_dir/e2e-test.log" 2>&1 &
+    
+    # 環境変数をJavaに渡すため、envコマンドで起動
+    if [ -f "$env_file" ]; then
+        # .envファイルを読み込んでenvコマンドで渡す
+        nohup env $(cat "$env_file" | grep -v '^#' | xargs) \
+            java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:$debug_port \
+            -jar /opt/payara-micro.jar \
+            --deploy "$war_file" \
+            --port $service_port \
+            > "$service_dir/e2e-test.log" 2>&1 &
+    else
+        nohup java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:$debug_port \
+            -jar /opt/payara-micro.jar \
+            --deploy "$war_file" \
+            --port $service_port \
+            > "$service_dir/e2e-test.log" 2>&1 &
+    fi
     
     local pid=$!
     echo $pid > "$service_dir/.e2e-pid"

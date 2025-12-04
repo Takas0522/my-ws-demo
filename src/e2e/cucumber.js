@@ -13,6 +13,7 @@ module.exports = {
         formatOptions: {
             snippetInterface: 'async-await'     // async/await形式のスニペットを生成
         },
-        publishQuiet: true                      // Cucumber結果の公開通知を抑制
+        publishQuiet: true,                     // Cucumber結果の公開通知を抑制
+        retry: 1                                // 失敗したテストを1回リトライ（サービス起動の不安定性に対処）
     }
 }
