@@ -108,10 +108,26 @@ public class PointResource {
                     .map(point -> point.getBalance())
                     .orElse(0);
 
+            // 現在のページの最初の履歴時点での残高を計算
+            int balanceAtPageStart = currentBalance;
+            if (page > 1) {
+                // page=1からpage-1までの全履歴を取得して残高を逆算
+                int offset = 0;
+                int itemsToSkip = (page - 1) * limit;
+                List<PointHistory> previousHistories = pointService.getPointHistory(userId, 1, itemsToSkip);
+                for (PointHistory h : previousHistories) {
+                    if ("EARN".equals(h.getTransactionType())) {
+                        balanceAtPageStart -= Math.abs(h.getAmount());
+                    } else if ("USE".equals(h.getTransactionType()) || "SPEND".equals(h.getTransactionType())) {
+                        balanceAtPageStart += Math.abs(h.getAmount());
+                    }
+                }
+            }
+
             // レスポンスを構築（ページネーション情報を含む）
             Map<String, Object> response = new HashMap<>();
             response.put("userId", userId.toString());
-            response.put("history", convertHistoriesToMap(histories, currentBalance, page));
+            response.put("history", convertHistoriesToMap(histories, balanceAtPageStart));
             
             // ページネーション情報
             Map<String, Object> pagination = new HashMap<>();
@@ -156,14 +172,11 @@ public class PointResource {
 
     /**
      * PointHistoryのリストをMap形式に変換
-     * balanceAfterを計算するために、現在の残高から逆算していく
+     * balanceAfterを計算するために、指定された開始残高から逆算していく
      */
-    private List<Map<String, Object>> convertHistoriesToMap(List<PointHistory> histories, int currentBalance, int page) {
+    private List<Map<String, Object>> convertHistoriesToMap(List<PointHistory> histories, int startingBalance) {
         List<Map<String, Object>> result = new ArrayList<>();
-        
-        // 最初のページ（最新の履歴）の場合、現在の残高から逆算
-        // それ以外のページの場合、残高の逆算は正確でないため0とする
-        int balanceAfter = (page == 1) ? currentBalance : 0;
+        int balanceAfter = startingBalance;
         
         for (PointHistory history : histories) {
             Map<String, Object> historyMap = new HashMap<>();
@@ -177,12 +190,10 @@ public class PointResource {
             historyMap.put("balanceAfter", balanceAfter);
             
             // 次の履歴の残高を計算（古い方向に遡る）
-            if (page == 1) {
-                if ("EARN".equals(history.getTransactionType())) {
-                    balanceAfter -= Math.abs(history.getAmount());
-                } else if ("USE".equals(history.getTransactionType())) {
-                    balanceAfter += Math.abs(history.getAmount());
-                }
+            if ("EARN".equals(history.getTransactionType())) {
+                balanceAfter -= Math.abs(history.getAmount());
+            } else if ("USE".equals(history.getTransactionType()) || "SPEND".equals(history.getTransactionType())) {
+                balanceAfter += Math.abs(history.getAmount());
             }
             
             result.add(historyMap);
