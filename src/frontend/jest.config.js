@@ -19,5 +19,7 @@ module.exports = {
     'src/**/*.{js,vue}',
     '!src/main.js',
     '!**/node_modules/**'
-  ]
+  ],
+  coverageDirectory: '../../temp/test-reports/unit/frontend/coverage',
+  coverageReporters: ['html', 'text', 'lcov']
 };
