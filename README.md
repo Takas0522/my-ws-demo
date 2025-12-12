@@ -49,6 +49,11 @@ cd src/point-service && set -a && source <(grep -v '^#' .env) && set +a && mvn c
 cd src/bff && set -a && source <(grep -v '^#' .env) && set +a && mvn clean package && java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008 -jar /opt/payara-micro.jar --deploy target/bff.war --port 8090
 ```
 
+#### frontend
+```bash
+cd src/frontend && npm run dev
+```
+
 IDE (例: IntelliJ IDEA, VS Code) でリモートデバッガーを設定し、デバッグポートに接続してください。
 
 ## 🧪 E2Eテスト

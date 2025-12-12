@@ -142,6 +142,8 @@ cd ../bff && mvn clean package -DskipTests
 
 ```bash
 npm run test:cucumber
+# または
+npm run test:e2e
 ```
 
 **⚠️ 注意**: 初回実行時は以下の処理が行われるため、5〜7分程度かかります：
@@ -160,6 +162,16 @@ npm run test:cucumber
 npm test
 ```
 
+### テストレポートの表示
+
+```bash
+npm run report
+```
+
+HTMLレポートは以下の場所に生成されます：
+- `cucumber-report.html` (e2eディレクトリ直下)
+- `../../temp/e2e/cucumber-report.json` (JSON形式)
+
 ## ディレクトリ構成
 
 ```
@@ -176,7 +188,9 @@ src/e2e/
 ├── scripts/                 # サービス管理スクリプト
 │   └── manage-services.sh   # バックエンドサービス起動・停止
 ├── tests/                   # Playwrightテスト
-│   └── login.spec.ts        # ログインテスト
+│   ├── login.spec.ts        # ログインテスト
+│   └── example.spec.ts      # サンプルテスト
+├── cucumber-report.html     # Cucumberテストレポート（自動生成）
 ├── cucumber.js              # Cucumber設定
 ├── playwright.config.ts     # Playwright設定
 └── package.json
@@ -340,6 +354,13 @@ curl http://localhost:3000  # frontend
 # E2Eテスト実行
 cd src/e2e && npm run test:cucumber
 ```
+
+## テストの安定性
+
+### 自動リトライ機能
+
+サービス起動の不安定性に対処するため、失敗したテストは自動的に1回リトライされます。
+これは `cucumber.js` の `retry: 1` 設定により実現されています。
 
 ## 既知の制限事項
 
