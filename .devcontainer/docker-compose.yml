@@ -15,7 +15,7 @@ services:
         POSTGRES_USER: postgres
         POSTGRES_DB: postgres
         POSTGRES_HOSTNAME: postgresdb
-
+    
     volumes:
       - ../..:/workspaces:cached
       
@@ -36,6 +36,7 @@ services:
     container_name: my-ws-demo-postgresdb
     image: postgres:latest
     restart: unless-stopped
+  
     volumes:
       - postgres-data:/var/lib/postgresql
       - ./init-db.sql:/docker-entrypoint-initdb.d/01-init-db.sql

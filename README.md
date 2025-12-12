@@ -6,6 +6,7 @@ Java 11 + Payara + PostgreSQL + Vue 3 で構築されたマイクロサービス
 - 初回実行時は5〜7分かかります（Docker イメージの取得、サービスの起動）
 - 最低8GBのメモリが推奨されます
 - `Language Support for Java by Red Hat`の関係で、個別でターミナルから実行する必要があります
+- 開発用のDatabaseはDevContainer立ち上げ時にDockerComposeで同時に立ち上がります。
 
 詳細は [E2E README](./src/e2e/README.md) を参照してください。
 
@@ -26,6 +27,7 @@ Java 11 + Payara + PostgreSQL + Vue 3 で構築されたマイクロサービス
 
 **注意**: 各サービスは`.env`ファイルからデータベース接続設定などを読み込みます。e2eテストやintegrationtテストを実行する際は別のenvを参照します。  
 `.env`ファイルはClone時は存在しませんので、 `.env.sample` をコピーしてリネームしてお使いください。
+開発時のDBはDevContainerで提供されます。シードデータもDevContainer展開時に登録されます。
 
 #### user-service
 ```bash
@@ -45,6 +47,11 @@ cd src/point-service && set -a && source <(grep -v '^#' .env) && set +a && mvn c
 #### bff
 ```bash
 cd src/bff && set -a && source <(grep -v '^#' .env) && set +a && mvn clean package && java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008 -jar /opt/payara-micro.jar --deploy target/bff.war --port 8090
+```
+
+#### frontend
+```bash
+cd src/frontend && npm run dev
 ```
 
 IDE (例: IntelliJ IDEA, VS Code) でリモートデバッガーを設定し、デバッグポートに接続してください。

@@ -1,0 +1,893 @@
+[
+  {
+    "description": "  ユーザーとして\n  アプリケーションにログインしたい\n  アカウント情報にアクセスするために",
+    "elements": [
+      {
+        "description": "",
+        "id": "ログイン機能;ログインページの表示確認",
+        "keyword": "シナリオ",
+        "line": 10,
+        "name": "ログインページの表示確認",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 358980865
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "前提",
+            "line": 8,
+            "name": "ログインページを表示している",
+            "match": {
+              "location": "step-definitions/login.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2267249915
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "ならば",
+            "line": 11,
+            "name": "ページタイトルが \"ログイン\" と表示される",
+            "match": {
+              "location": "step-definitions/login.steps.ts:32"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 40997984
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 12,
+            "name": "ユーザーID入力欄が表示される",
+            "match": {
+              "location": "step-definitions/login.steps.ts:38"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10840678
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 13,
+            "name": "パスワード入力欄が表示される",
+            "match": {
+              "location": "step-definitions/login.steps.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 5395340
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 14,
+            "name": "ログインボタンが表示される",
+            "match": {
+              "location": "step-definitions/login.steps.ts:48"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15640457
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 15,
+            "name": "テストユーザー情報が表示される",
+            "match": {
+              "location": "step-definitions/login.steps.ts:53"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 36409607
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 453307400
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "ログイン機能;ユーザー名で正常にログインできる",
+        "keyword": "シナリオ",
+        "line": 17,
+        "name": "ユーザー名で正常にログインできる",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 335915501
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "前提",
+            "line": 8,
+            "name": "ログインページを表示している",
+            "match": {
+              "location": "step-definitions/login.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2345584979
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "もし",
+            "line": 18,
+            "name": "ユーザーIDに \"tanaka_taro\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:59"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 78074547
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 19,
+            "name": "パスワードに \"password123\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:63"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 25137822
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 20,
+            "name": "ログインボタンをクリックする",
+            "match": {
+              "location": "step-definitions/login.steps.ts:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3290118190
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "ならば",
+            "line": 21,
+            "name": "アカウントページにリダイレクトされる",
+            "match": {
+              "location": "step-definitions/login.steps.ts:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1049806358
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 329984653
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "ログイン機能;uuidで正常にログインできる",
+        "keyword": "シナリオ",
+        "line": 23,
+        "name": "UUIDで正常にログインできる",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 230929180
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "前提",
+            "line": 8,
+            "name": "ログインページを表示している",
+            "match": {
+              "location": "step-definitions/login.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2226013242
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "もし",
+            "line": 24,
+            "name": "ユーザーIDに \"05c66ceb-6ddc-4ada-b736-08702615ff48\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:59"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 63707405
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 25,
+            "name": "パスワードに \"password123\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:63"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 37023259
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 26,
+            "name": "ログインボタンをクリックする",
+            "match": {
+              "location": "step-definitions/login.steps.ts:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2257149377
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "ならば",
+            "line": 27,
+            "name": "アカウントページにリダイレクトされる",
+            "match": {
+              "location": "step-definitions/login.steps.ts:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1050163616
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 601993020
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "ログイン機能;無効な認証情報でログインに失敗する",
+        "keyword": "シナリオ",
+        "line": 29,
+        "name": "無効な認証情報でログインに失敗する",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 238079048
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "前提",
+            "line": 8,
+            "name": "ログインページを表示している",
+            "match": {
+              "location": "step-definitions/login.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2151049397
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "もし",
+            "line": 30,
+            "name": "ユーザーIDに \"invalid_user\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:59"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 41901530
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 31,
+            "name": "パスワードに \"wrong_password\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:63"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 24245975
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 32,
+            "name": "ログインボタンをクリックする",
+            "match": {
+              "location": "step-definitions/login.steps.ts:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2201015105
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "ならば",
+            "line": 33,
+            "name": "エラーメッセージが表示される",
+            "match": {
+              "location": "step-definitions/login.steps.ts:217"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 25496709
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 471799779
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "ログイン機能;フォームの入力値をクリアできる",
+        "keyword": "シナリオ",
+        "line": 35,
+        "name": "フォームの入力値をクリアできる",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 217258638
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "前提",
+            "line": 8,
+            "name": "ログインページを表示している",
+            "match": {
+              "location": "step-definitions/login.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2184096155
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "もし",
+            "line": 36,
+            "name": "ユーザーIDに \"test_user\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:59"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 27179666
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 37,
+            "name": "パスワードに \"test_pass\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:63"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 16719593
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "ならば",
+            "line": 38,
+            "name": "ユーザーID入力欄の値が \"test_user\" である",
+            "match": {
+              "location": "step-definitions/login.steps.ts:237"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 13002446
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 39,
+            "name": "パスワード入力欄の値が \"test_pass\" である",
+            "match": {
+              "location": "step-definitions/login.steps.ts:242"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 5173953
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "もし",
+            "line": 40,
+            "name": "フォームをクリアする",
+            "match": {
+              "location": "step-definitions/login.steps.ts:248"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28661466
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "ならば",
+            "line": 41,
+            "name": "ユーザーID入力欄の値が \"\" である",
+            "match": {
+              "location": "step-definitions/login.steps.ts:237"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3234738
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 42,
+            "name": "パスワード入力欄の値が \"\" である",
+            "match": {
+              "location": "step-definitions/login.steps.ts:242"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2944802
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 388431147
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "ログイン機能;複数のユーザーでログインできる",
+        "keyword": "シナリオアウトライン",
+        "line": 52,
+        "name": "複数のユーザーでログインできる",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 220957691
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "前提",
+            "line": 8,
+            "name": "ログインページを表示している",
+            "match": {
+              "location": "step-definitions/login.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2125931859
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "もし",
+            "line": 45,
+            "name": "ユーザーIDに \"tanaka_taro\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:59"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 50511429
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 46,
+            "name": "パスワードに \"password123\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:63"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22830694
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 47,
+            "name": "ログインボタンをクリックする",
+            "match": {
+              "location": "step-definitions/login.steps.ts:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2223813762
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "ならば",
+            "line": 48,
+            "name": "アカウントページにリダイレクトされる",
+            "match": {
+              "location": "step-definitions/login.steps.ts:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1074605048
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 591899699
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "ログイン機能;複数のユーザーでログインできる",
+        "keyword": "シナリオアウトライン",
+        "line": 53,
+        "name": "複数のユーザーでログインできる",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 242698634
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "前提",
+            "line": 8,
+            "name": "ログインページを表示している",
+            "match": {
+              "location": "step-definitions/login.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2157039981
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "もし",
+            "line": 45,
+            "name": "ユーザーIDに \"suzuki_hanako\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:59"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 57298786
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 46,
+            "name": "パスワードに \"password123\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:63"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 31066063
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 47,
+            "name": "ログインボタンをクリックする",
+            "match": {
+              "location": "step-definitions/login.steps.ts:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2255349107
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "ならば",
+            "line": 48,
+            "name": "アカウントページにリダイレクトされる",
+            "match": {
+              "location": "step-definitions/login.steps.ts:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1047546280
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 506106625
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "ログイン機能;複数のユーザーでログインできる",
+        "keyword": "シナリオアウトライン",
+        "line": 54,
+        "name": "複数のユーザーでログインできる",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 291499319
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "前提",
+            "line": 8,
+            "name": "ログインページを表示している",
+            "match": {
+              "location": "step-definitions/login.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2159713919
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "もし",
+            "line": 45,
+            "name": "ユーザーIDに \"yamada_jiro\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:59"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 71851761
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 46,
+            "name": "パスワードに \"password123\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:63"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 96474044
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 47,
+            "name": "ログインボタンをクリックする",
+            "match": {
+              "location": "step-definitions/login.steps.ts:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2209289541
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "ならば",
+            "line": 48,
+            "name": "アカウントページにリダイレクトされる",
+            "match": {
+              "location": "step-definitions/login.steps.ts:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1047132832
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 552141205
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "ログイン機能;複数のユーザーでログインできる",
+        "keyword": "シナリオアウトライン",
+        "line": 55,
+        "name": "複数のユーザーでログインできる",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 221701180
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "前提",
+            "line": 8,
+            "name": "ログインページを表示している",
+            "match": {
+              "location": "step-definitions/login.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2212730201
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "もし",
+            "line": 45,
+            "name": "ユーザーIDに \"05c66ceb-6ddc-4ada-b736-08702615ff48\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:59"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 37913486
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 46,
+            "name": "パスワードに \"password123\" を入力する",
+            "match": {
+              "location": "step-definitions/login.steps.ts:63"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28856822
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "かつ",
+            "line": 47,
+            "name": "ログインボタンをクリックする",
+            "match": {
+              "location": "step-definitions/login.steps.ts:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2196959472
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "ならば",
+            "line": 48,
+            "name": "アカウントページにリダイレクトされる",
+            "match": {
+              "location": "step-definitions/login.steps.ts:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1047133298
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 474993642
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "ログイン機能",
+    "line": 2,
+    "keyword": "機能",
+    "name": "ログイン機能",
+    "tags": [],
+    "uri": "features/login.feature"
+  }
+]

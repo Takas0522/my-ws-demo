@@ -153,14 +153,36 @@ AfterAll(async function () {
  * 各シナリオの前に実行
  * ブラウザを起動し、データベースをリセット
  */
-Before(async function () {
+Before(async function (scenario) {
   // ブラウザを起動
   browser = await chromium.launch({
     headless: true, // CIで実行する場合はtrue、デバッグ時はfalse
   });
   
-  // コンテキストを作成
-  context = await browser.newContext();
+  // 出力ディレクトリを準備
+  const outputDir = path.join(__dirname, '../../../temp/e2e');
+  const videosDir = path.join(outputDir, 'videos');
+  const screenshotsDir = path.join(outputDir, 'screenshots');
+  
+  // ディレクトリが存在しない場合は作成
+  const fs = require('fs');
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+  }
+  if (!fs.existsSync(videosDir)) {
+    fs.mkdirSync(videosDir, { recursive: true });
+  }
+  if (!fs.existsSync(screenshotsDir)) {
+    fs.mkdirSync(screenshotsDir, { recursive: true });
+  }
+  
+  // コンテキストを作成（動画記録を有効化）
+  context = await browser.newContext({
+    recordVideo: {
+      dir: videosDir,
+      size: { width: 1280, height: 720 }
+    }
+  });
   
   // ページを作成
   page = await context.newPage();
@@ -169,6 +191,8 @@ Before(async function () {
   this.page = page;
   this.context = context;
   this.browser = browser;
+  this.scenario = scenario;
+  this.screenshotsDir = screenshotsDir;
   
   // データベースをクリーンな状態にリセット
   await testDatabase.resetAll();
@@ -178,13 +202,26 @@ Before(async function () {
  * 各シナリオの後に実行
  * ブラウザを閉じる
  */
-After(async function () {
+After(async function (scenario) {
+  // スクリーンショットを撮影（成功・失敗に関わらず）
+  if (page && this.screenshotsDir) {
+    try {
+      const scenarioName = scenario.pickle.name.replace(/[^a-zA-Z0-9_\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/g, '_');
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const screenshotPath = path.join(this.screenshotsDir, `${scenarioName}_${timestamp}.png`);
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      console.log(`Screenshot saved: ${screenshotPath}`);
+    } catch (error) {
+      console.error('Failed to take screenshot:', error);
+    }
+  }
+  
   // ページを閉じる
   if (page) {
     await page.close();
   }
   
-  // コンテキストを閉じる
+  // コンテキストを閉じる（動画の保存を完了させる）
   if (context) {
     await context.close();
   }
