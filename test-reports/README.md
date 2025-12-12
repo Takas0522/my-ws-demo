@@ -18,7 +18,9 @@ test-reports/
 │   └── java/
 │       └── user-service/   # ユーザーサービスのインテグレーションテスト
 └── e2e/                    # E2Eテストレポート
-    └── playwright-report/  # Playwright HTMLレポート
+    ├── playwright-report/  # Playwright HTMLレポート
+    ├── cucumber-report.html # Cucumber HTMLレポート
+    └── cucumber-report.json # Cucumber JSONレポート
 ```
 
 ## テスト結果概要
@@ -45,9 +47,18 @@ test-reports/
 ### E2Eテスト
 
 #### Playwright
-- **実行環境**: Chromium, Firefox, WebKit
-- **ステータス**: テストは実行されましたが、サーバーが起動していないため失敗
+- **実行環境**: Chromium
+- **テスト数**: 9件のテストが全て成功
+- **実行時間**: 約1分20秒
 - **レポート**: `e2e/playwright-report/index.html`で詳細を確認可能
+
+#### Cucumber
+- **シナリオ数**: 9シナリオ全て成功
+- **ステップ数**: 49ステップ全て成功
+- **実行時間**: 約1分40秒
+- **レポート**: 
+  - HTML: `e2e/cucumber-report.html`
+  - JSON: `e2e/cucumber-report.json`
 
 ## レポートの閲覧方法
 
@@ -64,6 +75,9 @@ open test-reports/unit/frontend/coverage/lcov-report/index.html
 ```bash
 # PlaywrightのHTMLレポートを開く
 open test-reports/e2e/playwright-report/index.html
+
+# CucumberのHTMLレポートを開く
+open test-reports/e2e/cucumber-report.html
 ```
 
 ## テストの再実行
@@ -87,11 +101,19 @@ cd src/user-service && mvn verify -DskipUnitTests
 
 ### E2Eテスト
 ```bash
-# サーバーを起動してから実行
-cd src/e2e && npx playwright test
+# Playwrightテスト
+cd src/e2e && npm run test
+
+# Cucumberテスト
+cd src/e2e && npm run test:cucumber
+
+# 両方のレポートを確認
+cd src/e2e && npm run test:report  # Playwright
+open src/e2e/cucumber-report.html   # Cucumber
 ```
 
 ## 注意事項
 
-- E2Eテストを実行する前に、必要なサービス（フロントエンド、バックエンド、データベース）が起動していることを確認してください
+- E2Eテストは自動的にTestContainersとバックエンドサービスを起動します。手動でサービスを起動する必要はありません
 - テストレポートは実行時のスナップショットです。最新の結果を得るには、テストを再実行してください
+- E2EテストはPlaywrightとCucumberの両方のフレームワークで実装されています。それぞれ異なる視点でテストを実行します
