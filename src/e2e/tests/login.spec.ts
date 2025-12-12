@@ -1,12 +1,32 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
+import { testDatabase } from '../setup/database';
 
 test.describe('ログインページ', () => {
   let loginPage: LoginPage;
 
   test.beforeEach(async ({ page }) => {
+    // 各テストの前にデータベースをリセット
+    await testDatabase.resetAll();
+    
+    // フロントエンドの接続確認とキャッシュクリア（Cucumberと同じ処理）
+    console.log('\n=== Checking Frontend Connection ===');
+    const frontendResponse = await page.goto('http://localhost:3000/login', { 
+      waitUntil: 'networkidle', 
+      timeout: 30000 
+    });
+    console.log(`Frontend status: ${frontendResponse?.status()}`);
+    
+    // ハードリロードしてキャッシュをクリア
+    await page.reload({ waitUntil: 'networkidle' });
+    console.log('Page reloaded to clear cache');
+    
+    // ViteのHMRが安定するまで待つ
+    await page.waitForTimeout(1000);
+    
+    console.log('====================================\n');
+    
     loginPage = new LoginPage(page);
-    await loginPage.ログインページへ移動();
   });
 
   test('ログインページが正しく表示される', async () => {
@@ -34,7 +54,7 @@ test.describe('ログインページ', () => {
 
   test('UUIDでログインできる', async () => {
     // UUIDとパスワードを入力してログイン
-    await loginPage.ログイン実行('123e4567-e89b-12d3-a456-426614174000', 'password123');
+    await loginPage.ログイン実行('05c66ceb-6ddc-4ada-b736-08702615ff48', 'password123');
 
     // アカウントページにリダイレクトされることを確認
     await loginPage.ログイン成功待機('/account');

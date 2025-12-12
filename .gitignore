@@ -60,3 +60,4 @@ temp/
 
 /**/.env
 /**/.env.e2e
+/**/.e2e-pid
