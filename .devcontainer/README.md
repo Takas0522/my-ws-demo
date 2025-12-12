@@ -16,7 +16,7 @@
 
 ## データベース接続情報
 
-- **ホスト**: localhost (または postgresdb)
+- **ホスト**: localhost
 - **ポート**: 5432
 - **データベース名**: postgres
 - **ユーザー名**: postgres
@@ -29,7 +29,7 @@ PostgreSQL Client拡張機能がインストールされています。左側の
 
 ### コマンドラインから
 ```bash
-psql -h postgresdb -U postgres -d postgres
+psql -h localhost -U postgres -d postgres
 ```
 
 ### データの確認
