@@ -1,7 +1,7 @@
 ---
 name: frontend-unit-test-orchestrator
 description: Vue+Jest Frontend Unit Test の計画、生成、修正を統括するオーケストレーターエージェント
-argument-hint: テスト対象のVueコンポーネントまたはサービスを指定してください (例: src/frontend/src/views/AccountView.vue)
+argument-hint: "テスト対象のVueコンポーネントまたはサービスを指定してください (例: src/frontend/src/views/AccountView.vue)"
 tools:
   [
     "runCommands",
