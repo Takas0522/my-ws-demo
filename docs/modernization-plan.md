@@ -23,7 +23,7 @@
 | Java | 21 | LTS版 |
 | Payara Micro | 6.2024.10 | Jakarta EE 10対応 |
 | Jakarta EE | 10.0.0 | jakarta.* パッケージ |
-| Jersey | 3.1.x | Jakarta namespace対応 |
+| Jersey | 3.1.5 | Jakarta namespace対応 |
 | bcrypt | 0.10.2 (at.favre.lib) | 互換APIを持つモダン実装 |
 | PostgreSQL Driver | 42.7.x | Java 21対応版 |
 | TestContainers | 1.19.x | 維持 |
@@ -698,7 +698,7 @@ psql -h localhost -p 5432 -U postgres user_service_db < backup_user_service.sql
 
 ### 関連Issue
 
-- **親Issue**: [Takas0522/my-ws-demo#27] Java 21、Payara 6、Jakarta EE 10への移行
+- **親Issue**: [#27](https://github.com/Takas0522/my-ws-demo/issues/27) - Java 21、Payara 6、Jakarta EE 10への移行
 
 ---
 
