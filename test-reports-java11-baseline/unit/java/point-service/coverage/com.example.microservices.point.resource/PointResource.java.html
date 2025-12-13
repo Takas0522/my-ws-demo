@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PointResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Point Service</a> &gt; <a href="index.source.html" class="el_package">com.example.microservices.point.resource</a> &gt; <span class="el_source">PointResource.java</span></div><h1>PointResource.java</h1><pre class="source lang-java linenums">package com.example.microservices.point.resource;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.microservices.point.model.Point;
+import com.example.microservices.point.model.PointHistory;
+import com.example.microservices.point.service.PointService;
+
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.sql.SQLException;
+import java.util.*;
+
+/**
+ * ポイント管理REST API
+ */
+@Path(&quot;/points&quot;)
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+<span class="nc" id="L27">public class PointResource {</span>
+
+    @Inject
+    private PointService pointService;
+
+    // JWT検証用のシークレットキー（Auth Serviceと同じ値を使用）
+    // SECURITY NOTE: 本番環境では環境変数や暗号化された設定から取得すべき
+    // 環境変数例: System.getenv(&quot;JWT_SECRET_KEY&quot;)
+    // または AWS Secrets Manager, HashiCorp Vault などのシークレット管理サービスを使用
+    private static final String SECRET_KEY = &quot;your-secret-key-change-this-in-production&quot;;
+<span class="nc" id="L37">    private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET_KEY);</span>
+
+    /**
+     * ポイント残高取得
+     * GET /api/points
+     */
+    @GET
+    public Response getPointBalance(@Context HttpHeaders headers) {
+        try {
+            // JWTトークンを検証してuserIdを取得
+<span class="nc" id="L47">            UUID userId = extractUserIdFromToken(headers);</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">            if (userId == null) {</span>
+<span class="nc" id="L49">                return Response.status(Response.Status.UNAUTHORIZED)</span>
+<span class="nc" id="L50">                        .entity(createErrorResponse(&quot;Invalid or missing JWT token&quot;))</span>
+<span class="nc" id="L51">                        .build();</span>
+            }
+
+            // ポイント残高を取得
+<span class="nc" id="L55">            Optional&lt;Point&gt; point = pointService.getPointBalance(userId);</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">            if (point.isPresent()) {</span>
+<span class="nc" id="L57">                Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L58">                response.put(&quot;userId&quot;, point.get().getUserId().toString());</span>
+<span class="nc" id="L59">                response.put(&quot;balance&quot;, point.get().getBalance());</span>
+<span class="nc" id="L60">                response.put(&quot;lastUpdated&quot;, point.get().getLastUpdated());</span>
+<span class="nc" id="L61">                return Response.ok(response).build();</span>
+            } else {
+                // ポイント残高がない場合は0として返す
+<span class="nc" id="L64">                Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L65">                response.put(&quot;userId&quot;, userId.toString());</span>
+<span class="nc" id="L66">                response.put(&quot;balance&quot;, 0);</span>
+<span class="nc" id="L67">                response.put(&quot;lastUpdated&quot;, null);</span>
+<span class="nc" id="L68">                return Response.ok(response).build();</span>
+            }
+<span class="nc" id="L70">        } catch (SQLException e) {</span>
+<span class="nc" id="L71">            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L72">                    .entity(createErrorResponse(&quot;Failed to fetch point balance: &quot; + e.getMessage()))</span>
+<span class="nc" id="L73">                    .build();</span>
+        }
+    }
+
+    /**
+     * ポイント履歴取得
+     * GET /api/points/history?page=1&amp;limit=10
+     */
+    @GET
+    @Path(&quot;/history&quot;)
+    public Response getPointHistory(
+            @Context HttpHeaders headers,
+            @QueryParam(&quot;page&quot;) @DefaultValue(&quot;1&quot;) int page,
+            @QueryParam(&quot;limit&quot;) @DefaultValue(&quot;10&quot;) int limit) {
+        
+        try {
+            // JWTトークンを検証してuserIdを取得
+<span class="nc" id="L90">            UUID userId = extractUserIdFromToken(headers);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">            if (userId == null) {</span>
+<span class="nc" id="L92">                return Response.status(Response.Status.UNAUTHORIZED)</span>
+<span class="nc" id="L93">                        .entity(createErrorResponse(&quot;Invalid or missing JWT token&quot;))</span>
+<span class="nc" id="L94">                        .build();</span>
+            }
+
+            // ページネーションのバリデーション
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            if (page &lt; 1) page = 1;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">            if (limit &lt; 1) limit = 10;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            if (limit &gt; 100) limit = 100;</span>
+
+            // ポイント履歴を取得
+<span class="nc" id="L103">            List&lt;PointHistory&gt; histories = pointService.getPointHistory(userId, page, limit);</span>
+<span class="nc" id="L104">            int total = pointService.getPointHistoryCount(userId);</span>
+            
+            // 現在のポイント残高を取得
+<span class="nc" id="L107">            int currentBalance = pointService.getPointBalance(userId)</span>
+<span class="nc" id="L108">                    .map(point -&gt; point.getBalance())</span>
+<span class="nc" id="L109">                    .orElse(0);</span>
+
+            // 現在のページの最初の履歴時点での残高を計算
+<span class="nc" id="L112">            int balanceAtPageStart = currentBalance;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">            if (page &gt; 1) {</span>
+                // page=1からpage-1までの全履歴を取得して残高を逆算
+<span class="nc" id="L115">                int offset = 0;</span>
+<span class="nc" id="L116">                int itemsToSkip = (page - 1) * limit;</span>
+<span class="nc" id="L117">                List&lt;PointHistory&gt; previousHistories = pointService.getPointHistory(userId, 1, itemsToSkip);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                for (PointHistory h : previousHistories) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                    if (&quot;EARN&quot;.equals(h.getTransactionType())) {</span>
+<span class="nc" id="L120">                        balanceAtPageStart -= Math.abs(h.getAmount());</span>
+<span class="nc bnc" id="L121" title="All 4 branches missed.">                    } else if (&quot;USE&quot;.equals(h.getTransactionType()) || &quot;SPEND&quot;.equals(h.getTransactionType())) {</span>
+<span class="nc" id="L122">                        balanceAtPageStart += Math.abs(h.getAmount());</span>
+                    }
+<span class="nc" id="L124">                }</span>
+            }
+
+            // レスポンスを構築（ページネーション情報を含む）
+<span class="nc" id="L128">            Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L129">            response.put(&quot;userId&quot;, userId.toString());</span>
+<span class="nc" id="L130">            response.put(&quot;history&quot;, convertHistoriesToMap(histories, balanceAtPageStart));</span>
+            
+            // ページネーション情報
+<span class="nc" id="L133">            Map&lt;String, Object&gt; pagination = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L134">            pagination.put(&quot;currentPage&quot;, page);</span>
+<span class="nc" id="L135">            pagination.put(&quot;limit&quot;, limit);</span>
+<span class="nc" id="L136">            pagination.put(&quot;totalItems&quot;, total);</span>
+<span class="nc" id="L137">            pagination.put(&quot;totalPages&quot;, (int) Math.ceil((double) total / limit));</span>
+<span class="nc" id="L138">            response.put(&quot;pagination&quot;, pagination);</span>
+
+<span class="nc" id="L140">            return Response.ok(response).build();</span>
+<span class="nc" id="L141">        } catch (SQLException e) {</span>
+<span class="nc" id="L142">            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L143">                    .entity(createErrorResponse(&quot;Failed to fetch point history: &quot; + e.getMessage()))</span>
+<span class="nc" id="L144">                    .build();</span>
+        }
+    }
+
+    /**
+     * JWTトークンからuserIdを抽出
+     */
+    private UUID extractUserIdFromToken(HttpHeaders headers) {
+        try {
+<span class="nc" id="L153">            String authHeader = headers.getHeaderString(HttpHeaders.AUTHORIZATION);</span>
+<span class="nc bnc" id="L154" title="All 4 branches missed.">            if (authHeader == null || !authHeader.startsWith(&quot;Bearer &quot;)) {</span>
+<span class="nc" id="L155">                return null;</span>
+            }
+
+<span class="nc" id="L158">            String token = authHeader.substring(7); // &quot;Bearer &quot; を除去</span>
+<span class="nc" id="L159">            JWTVerifier verifier = JWT.require(ALGORITHM).build();</span>
+<span class="nc" id="L160">            DecodedJWT jwt = verifier.verify(token);</span>
+            
+<span class="nc" id="L162">            String userIdStr = jwt.getClaim(&quot;userId&quot;).asString();</span>
+<span class="nc bnc" id="L163" title="All 4 branches missed.">            if (userIdStr == null || userIdStr.isEmpty()) {</span>
+<span class="nc" id="L164">                return null;</span>
+            }
+
+<span class="nc" id="L167">            return UUID.fromString(userIdStr);</span>
+<span class="nc" id="L168">        } catch (JWTVerificationException | IllegalArgumentException e) {</span>
+<span class="nc" id="L169">            return null;</span>
+        }
+    }
+
+    /**
+     * PointHistoryのリストをMap形式に変換
+     * balanceAfterを計算するために、指定された開始残高から逆算していく
+     */
+    private List&lt;Map&lt;String, Object&gt;&gt; convertHistoriesToMap(List&lt;PointHistory&gt; histories, int startingBalance) {
+<span class="nc" id="L178">        List&lt;Map&lt;String, Object&gt;&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L179">        int balanceAfter = startingBalance;</span>
+        
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        for (PointHistory history : histories) {</span>
+<span class="nc" id="L182">            Map&lt;String, Object&gt; historyMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L183">            historyMap.put(&quot;id&quot;, history.getId());</span>
+<span class="nc" id="L184">            historyMap.put(&quot;amount&quot;, Math.abs(history.getAmount())); // 常に正の値</span>
+<span class="nc" id="L185">            historyMap.put(&quot;type&quot;, history.getTransactionType()); // EARN or USE -&gt; そのまま使用</span>
+<span class="nc" id="L186">            historyMap.put(&quot;transactionType&quot;, history.getTransactionType()); // 互換性のため残す</span>
+<span class="nc" id="L187">            historyMap.put(&quot;description&quot;, history.getDescription());</span>
+<span class="nc" id="L188">            historyMap.put(&quot;createdAt&quot;, history.getCreatedAt());</span>
+<span class="nc" id="L189">            historyMap.put(&quot;expiresAt&quot;, history.getExpiresAt());</span>
+<span class="nc" id="L190">            historyMap.put(&quot;balanceAfter&quot;, balanceAfter);</span>
+            
+            // 次の履歴の残高を計算（古い方向に遡る）
+<span class="nc bnc" id="L193" title="All 2 branches missed.">            if (&quot;EARN&quot;.equals(history.getTransactionType())) {</span>
+<span class="nc" id="L194">                balanceAfter -= Math.abs(history.getAmount());</span>
+<span class="nc bnc" id="L195" title="All 4 branches missed.">            } else if (&quot;USE&quot;.equals(history.getTransactionType()) || &quot;SPEND&quot;.equals(history.getTransactionType())) {</span>
+<span class="nc" id="L196">                balanceAfter += Math.abs(history.getAmount());</span>
+            }
+            
+<span class="nc" id="L199">            result.add(historyMap);</span>
+<span class="nc" id="L200">        }</span>
+<span class="nc" id="L201">        return result;</span>
+    }
+
+    /**
+     * エラーレスポンスを生成
+     */
+    private Map&lt;String, String&gt; createErrorResponse(String message) {
+<span class="nc" id="L208">        Map&lt;String, String&gt; error = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L209">        error.put(&quot;error&quot;, message);</span>
+<span class="nc" id="L210">        return error;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

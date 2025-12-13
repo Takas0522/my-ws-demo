@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">User Service</a> &gt; <a href="index.source.html" class="el_package">com.example.microservices.user.repository</a> &gt; <span class="el_source">UserRepository.java</span></div><h1>UserRepository.java</h1><pre class="source lang-java linenums">package com.example.microservices.user.repository;
+
+import com.example.microservices.user.model.User;
+import javax.annotation.Resource;
+import javax.enterprise.context.ApplicationScoped;
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * ユーザーリポジトリ
+ */
+@ApplicationScoped
+<span class="nc" id="L17">public class UserRepository {</span>
+
+    @Resource(lookup = &quot;java:app/jdbc/userServiceDB&quot;)
+    private DataSource dataSource;
+
+    public List&lt;User&gt; findAll() throws SQLException {
+<span class="nc" id="L23">        List&lt;User&gt; users = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L24">        String sql = &quot;SELECT id, username, email, full_name, created_at, updated_at FROM users ORDER BY id&quot;;</span>
+        
+<span class="nc" id="L26">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L27">             Statement stmt = conn.createStatement();</span>
+<span class="nc" id="L28">             ResultSet rs = stmt.executeQuery(sql)) {</span>
+            
+<span class="nc bnc" id="L30" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L31">                User user = mapResultSetToUser(rs);</span>
+<span class="nc" id="L32">                users.add(user);</span>
+<span class="nc" id="L33">            }</span>
+        }
+<span class="nc" id="L35">        return users;</span>
+    }
+
+    public Optional&lt;User&gt; findById(UUID id) throws SQLException {
+<span class="nc" id="L39">        String sql = &quot;SELECT id, username, email, full_name, created_at, updated_at FROM users WHERE id = ?&quot;;</span>
+        
+<span class="nc" id="L41">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L42">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L44">            stmt.setObject(1, id);</span>
+<span class="nc" id="L45">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L47">                    return Optional.of(mapResultSetToUser(rs));</span>
+                }
+<span class="nc bnc" id="L49" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L50" title="All 4 branches missed.">        }</span>
+<span class="nc" id="L51">        return Optional.empty();</span>
+    }
+
+    public Optional&lt;User&gt; findByUsername(String username) throws SQLException {
+<span class="nc" id="L55">        String sql = &quot;SELECT id, username, email, full_name, created_at, updated_at FROM users WHERE username = ?&quot;;</span>
+        
+<span class="nc" id="L57">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L58">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L60">            stmt.setString(1, username);</span>
+<span class="nc" id="L61">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L63">                    return Optional.of(mapResultSetToUser(rs));</span>
+                }
+<span class="nc bnc" id="L65" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L66" title="All 4 branches missed.">        }</span>
+<span class="nc" id="L67">        return Optional.empty();</span>
+    }
+
+    public User create(User user) throws SQLException {
+<span class="nc" id="L71">        String sql = &quot;INSERT INTO users (username, email, full_name) VALUES (?, ?, ?) RETURNING id, created_at, updated_at&quot;;</span>
+        
+<span class="nc" id="L73">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L74">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L76">            stmt.setString(1, user.getUsername());</span>
+<span class="nc" id="L77">            stmt.setString(2, user.getEmail());</span>
+<span class="nc" id="L78">            stmt.setString(3, user.getFullName());</span>
+            
+<span class="nc" id="L80">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L82">                    user.setId((UUID) rs.getObject(&quot;id&quot;));</span>
+<span class="nc" id="L83">                    user.setCreatedAt(rs.getTimestamp(&quot;created_at&quot;).toLocalDateTime());</span>
+<span class="nc" id="L84">                    user.setUpdatedAt(rs.getTimestamp(&quot;updated_at&quot;).toLocalDateTime());</span>
+                }
+            }
+        }
+<span class="nc" id="L88">        return user;</span>
+    }
+
+    public User update(User user) throws SQLException {
+<span class="nc" id="L92">        String sql = &quot;UPDATE users SET username = ?, email = ?, full_name = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? RETURNING updated_at&quot;;</span>
+        
+<span class="nc" id="L94">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L95">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L97">            stmt.setString(1, user.getUsername());</span>
+<span class="nc" id="L98">            stmt.setString(2, user.getEmail());</span>
+<span class="nc" id="L99">            stmt.setString(3, user.getFullName());</span>
+<span class="nc" id="L100">            stmt.setObject(4, user.getId());</span>
+            
+<span class="nc" id="L102">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L104">                    user.setUpdatedAt(rs.getTimestamp(&quot;updated_at&quot;).toLocalDateTime());</span>
+                }
+            }
+        }
+<span class="nc" id="L108">        return user;</span>
+    }
+
+    public void delete(UUID id) throws SQLException {
+<span class="nc" id="L112">        String sql = &quot;DELETE FROM users WHERE id = ?&quot;;</span>
+        
+<span class="nc" id="L114">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L115">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L117">            stmt.setObject(1, id);</span>
+<span class="nc" id="L118">            stmt.executeUpdate();</span>
+        }
+<span class="nc" id="L120">    }</span>
+
+    private User mapResultSetToUser(ResultSet rs) throws SQLException {
+<span class="nc" id="L123">        User user = new User();</span>
+<span class="nc" id="L124">        user.setId((UUID) rs.getObject(&quot;id&quot;));</span>
+<span class="nc" id="L125">        user.setUsername(rs.getString(&quot;username&quot;));</span>
+<span class="nc" id="L126">        user.setEmail(rs.getString(&quot;email&quot;));</span>
+<span class="nc" id="L127">        user.setFullName(rs.getString(&quot;full_name&quot;));</span>
+<span class="nc" id="L128">        user.setCreatedAt(rs.getTimestamp(&quot;created_at&quot;).toLocalDateTime());</span>
+<span class="nc" id="L129">        user.setUpdatedAt(rs.getTimestamp(&quot;updated_at&quot;).toLocalDateTime());</span>
+<span class="nc" id="L130">        return user;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

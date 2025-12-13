@@ -1,0 +1,789 @@
+-------------------------------------------------------------------------------
+Test set: com.example.microservices.bff.rest.BffResourceTest
+-------------------------------------------------------------------------------
+Tests run: 29, Failures: 0, Errors: 29, Skipped: 0, Time elapsed: 1.471 s <<< FAILURE! - in com.example.microservices.bff.rest.BffResourceTest
+givenNoAuthHeader_whenGettingPoints_thenShouldReturnUnauthorized  Time elapsed: 0.952 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.ClassNotFoundException: javax.xml.bind.annotation.adapters.XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenNoAuth_whenGettingUser_thenShouldReturnUnauthorized  Time elapsed: 0.053 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenValidToken_whenGettingAccount_thenShouldReturnAccountData  Time elapsed: 0.034 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenValidToken_whenVerifyingToken_thenShouldReturnSuccessResponse  Time elapsed: 0.054 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenMissingPassword_whenLoggingIn_thenShouldReturnErrorResponse  Time elapsed: 0.02 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenValidCredentials_whenLoggingIn_thenShouldReturnSuccessResponse  Time elapsed: 0.017 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenCustomPageAndLimit_whenGettingPointHistory_thenShouldUseCorrectParameters  Time elapsed: 0.016 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenValidToken_whenGettingPoints_thenShouldReturnPointBalance  Time elapsed: 0.016 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenPointServiceReturns502_whenGettingPointHistory_thenShouldReturnServiceUnavailable  Time elapsed: 0.013 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenInvalidToken_whenVerifyingToken_thenShouldReturnUnauthorized  Time elapsed: 0.019 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenValidAuth_whenGettingAllUsers_thenShouldReturnUsersList  Time elapsed: 0.02 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenAuthServiceFailure_whenLoggingIn_thenShouldReturnErrorResponse  Time elapsed: 0.018 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenNoAuthHeader_whenGettingAccount_thenShouldReturnUnauthorized  Time elapsed: 0.016 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenInvalidToken_whenGettingAccount_thenShouldReturnUnauthorized  Time elapsed: 0.016 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenNoAuthHeader_whenGettingPointHistory_thenShouldReturnUnauthorized  Time elapsed: 0.01 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenExpiredToken_whenGettingPoints_thenShouldReturnUnauthorized  Time elapsed: 0.017 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenValidToken_whenLoggingOut_thenShouldReturnSuccessResponse  Time elapsed: 0.013 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenValidUserIdAndAuth_whenGettingUser_thenShouldReturnUserData  Time elapsed: 0.009 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenNullLoginData_whenLoggingIn_thenShouldReturnErrorResponse  Time elapsed: 0.012 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenNoAuth_whenGettingAllUsers_thenShouldReturnUnauthorized  Time elapsed: 0.013 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenInvalidToken_whenGettingPointHistory_thenShouldReturnUnauthorized  Time elapsed: 0.008 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenInvalidTokenFormat_whenGettingPoints_thenShouldReturnUnauthorized  Time elapsed: 0.01 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenPointServiceConnectionError_whenGettingPointHistory_thenShouldReturnServiceUnavailable  Time elapsed: 0.012 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenNullAuthHeader_whenLoggingOut_thenShouldReturnErrorResponse  Time elapsed: 0.006 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenInvalidAuthHeader_whenLoggingOut_thenShouldReturnErrorResponse  Time elapsed: 0.015 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenValidParameters_whenGettingPointHistory_thenShouldReturnHistoryList  Time elapsed: 0.014 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenPointServiceReturns503_whenGettingPoints_thenShouldReturnServiceUnavailable  Time elapsed: 0.008 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenInvalidUUID_whenGettingUser_thenShouldReturnBadRequest  Time elapsed: 0.01 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+
+givenPointServiceUnavailable_whenGettingPoints_thenShouldReturnServiceUnavailable  Time elapsed: 0.009 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.rest.BffResourceTest.setUp(BffResourceTest.java:46)
+

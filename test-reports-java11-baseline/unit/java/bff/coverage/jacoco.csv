@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Backend For Frontend (BFF),com.example.microservices.bff.rest,BffResource,645,0,68,0,184,0,49,0,15,0
+Backend For Frontend (BFF),com.example.microservices.bff.rest,RestApplication,3,0,0,0,1,0,1,0,1,0
+Backend For Frontend (BFF),com.example.microservices.bff.filter,CorsFilter,29,0,0,0,7,0,2,0,2,0
+Backend For Frontend (BFF),com.example.microservices.bff.client,UserServiceClient,129,0,0,0,24,0,8,0,8,0
+Backend For Frontend (BFF),com.example.microservices.bff.client,PointServiceClient,73,0,0,0,16,0,4,0,4,0
+Backend For Frontend (BFF),com.example.microservices.bff.client,AuthServiceClient,79,0,0,0,18,0,5,0,5,0

@@ -34,7 +34,7 @@ services:
 
   db:
     container_name: my-ws-demo-postgresdb
-    image: postgres:latest
+    image: postgres:16
     restart: unless-stopped
   
     volumes:
@@ -57,6 +57,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+
+    shm_size: '256mb'
 
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)

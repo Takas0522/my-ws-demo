@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.microservices.auth.repository.AuthRepositoryIT
+-------------------------------------------------------------------------------
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.245 s - in com.example.microservices.auth.repository.AuthRepositoryIT

@@ -1,0 +1,5 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+User Service,com.example.microservices.user.rest,RestApplication,3,0,0,0,1,0,1,0,1,0
+User Service,com.example.microservices.user.rest,UserResource,22,220,0,10,8,63,0,14,0,9
+User Service,com.example.microservices.user.model,User,0,60,0,0,0,26,0,14,0,14
+User Service,com.example.microservices.user.repository,UserRepository,268,0,22,0,68,0,19,0,8,0

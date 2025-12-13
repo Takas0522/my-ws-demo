@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PointHistoryRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Point Service</a> &gt; <a href="index.source.html" class="el_package">com.example.microservices.point.repository</a> &gt; <span class="el_source">PointHistoryRepository.java</span></div><h1>PointHistoryRepository.java</h1><pre class="source lang-java linenums">package com.example.microservices.point.repository;
+
+import com.example.microservices.point.model.PointHistory;
+import javax.annotation.Resource;
+import javax.enterprise.context.ApplicationScoped;
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * ポイント履歴リポジトリ
+ */
+@ApplicationScoped
+<span class="nc" id="L16">public class PointHistoryRepository {</span>
+
+    @Resource(lookup = &quot;java:app/jdbc/pointServiceDB&quot;)
+    private DataSource dataSource;
+
+    /**
+     * ユーザーIDでポイント履歴を取得（ページネーション対応）
+     */
+    public List&lt;PointHistory&gt; findByUserId(UUID userId, int page, int limit) throws SQLException {
+<span class="nc" id="L25">        List&lt;PointHistory&gt; histories = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L26">        int offset = (page - 1) * limit;</span>
+        
+<span class="nc" id="L28">        String sql = &quot;SELECT id, user_id, amount, transaction_type, description, created_at, expires_at &quot; +</span>
+                     &quot;FROM point_history WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?&quot;;
+        
+<span class="nc" id="L31">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L32">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L34">            stmt.setObject(1, userId);</span>
+<span class="nc" id="L35">            stmt.setInt(2, limit);</span>
+<span class="nc" id="L36">            stmt.setInt(3, offset);</span>
+            
+<span class="nc" id="L38">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">                while (rs.next()) {</span>
+<span class="nc" id="L40">                    histories.add(mapResultSetToPointHistory(rs));</span>
+                }
+            }
+        }
+<span class="nc" id="L44">        return histories;</span>
+    }
+
+    /**
+     * ユーザーの履歴総数を取得
+     */
+    public int countByUserId(UUID userId) throws SQLException {
+<span class="nc" id="L51">        String sql = &quot;SELECT COUNT(*) as total FROM point_history WHERE user_id = ?&quot;;</span>
+        
+<span class="nc" id="L53">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L54">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L56">            stmt.setObject(1, userId);</span>
+            
+<span class="nc" id="L58">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L60">                    return rs.getInt(&quot;total&quot;);</span>
+                }
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L63" title="All 4 branches missed.">        }</span>
+<span class="nc" id="L64">        return 0;</span>
+    }
+
+    /**
+     * 新規履歴を作成
+     */
+    public PointHistory create(PointHistory history) throws SQLException {
+<span class="nc" id="L71">        String sql = &quot;INSERT INTO point_history (user_id, amount, transaction_type, description, created_at, expires_at) &quot; +</span>
+                     &quot;VALUES (?, ?, ?, ?, ?, ?) RETURNING id, user_id, amount, transaction_type, description, created_at, expires_at&quot;;
+        
+<span class="nc" id="L74">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L75">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L77">            stmt.setObject(1, history.getUserId());</span>
+<span class="nc" id="L78">            stmt.setInt(2, history.getAmount());</span>
+<span class="nc" id="L79">            stmt.setString(3, history.getTransactionType());</span>
+<span class="nc" id="L80">            stmt.setString(4, history.getDescription());</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">            stmt.setTimestamp(5, history.getCreatedAt() != null ? Timestamp.valueOf(history.getCreatedAt()) : new Timestamp(System.currentTimeMillis()));</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">            stmt.setTimestamp(6, history.getExpiresAt() != null ? Timestamp.valueOf(history.getExpiresAt()) : null);</span>
+            
+<span class="nc" id="L84">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L86">                    return mapResultSetToPointHistory(rs);</span>
+                }
+<span class="nc bnc" id="L88" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L89" title="All 4 branches missed.">        }</span>
+<span class="nc" id="L90">        throw new SQLException(&quot;Failed to create point history&quot;);</span>
+    }
+
+    private PointHistory mapResultSetToPointHistory(ResultSet rs) throws SQLException {
+<span class="nc" id="L94">        PointHistory history = new PointHistory();</span>
+<span class="nc" id="L95">        history.setId(rs.getLong(&quot;id&quot;));</span>
+<span class="nc" id="L96">        history.setUserId((UUID) rs.getObject(&quot;user_id&quot;));</span>
+<span class="nc" id="L97">        history.setAmount(rs.getInt(&quot;amount&quot;));</span>
+<span class="nc" id="L98">        history.setTransactionType(rs.getString(&quot;transaction_type&quot;));</span>
+<span class="nc" id="L99">        history.setDescription(rs.getString(&quot;description&quot;));</span>
+        
+<span class="nc" id="L101">        Timestamp createdAt = rs.getTimestamp(&quot;created_at&quot;);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (createdAt != null) {</span>
+<span class="nc" id="L103">            history.setCreatedAt(createdAt.toLocalDateTime());</span>
+        }
+        
+<span class="nc" id="L106">        Timestamp expiresAt = rs.getTimestamp(&quot;expires_at&quot;);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        if (expiresAt != null) {</span>
+<span class="nc" id="L108">            history.setExpiresAt(expiresAt.toLocalDateTime());</span>
+        }
+        
+<span class="nc" id="L111">        return history;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

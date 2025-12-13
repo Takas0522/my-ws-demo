@@ -1,0 +1,222 @@
+-------------------------------------------------------------------------------
+Test set: com.example.microservices.bff.client.AuthServiceClientTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 0, Errors: 8, Skipped: 0, Time elapsed: 0.924 s <<< FAILURE! - in com.example.microservices.bff.client.AuthServiceClientTest
+givenUserIdInLoginData_whenCallingLogin_thenShouldIncludeUserId  Time elapsed: 0.813 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.ClassNotFoundException: javax.xml.bind.annotation.adapters.XmlAdapter
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+
+givenEmptyLoginData_whenCallingLogin_thenShouldStillAttemptRequest  Time elapsed: 0.027 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+
+givenValidToken_whenVerifyingToken_thenShouldReturnSuccessResponse  Time elapsed: 0.016 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+
+givenTokenForLogout_whenServiceIsUnavailable_thenShouldHandleError  Time elapsed: 0.014 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+
+givenEmptyToken_whenVerifyingToken_thenShouldStillAttemptRequest  Time elapsed: 0.014 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+
+givenValidToken_whenCallingLogout_thenShouldReturnSuccessResponse  Time elapsed: 0.011 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+
+givenExpiredToken_whenVerifyingToken_thenShouldReturnUnauthorizedResponse  Time elapsed: 0.013 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+
+givenValidLoginData_whenCallingLogin_thenShouldReturnSuccessResponse  Time elapsed: 0.015 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.AuthServiceClientTest.setUp(AuthServiceClientTest.java:37)
+

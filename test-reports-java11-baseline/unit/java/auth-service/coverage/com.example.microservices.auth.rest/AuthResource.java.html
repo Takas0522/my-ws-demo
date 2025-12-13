@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Auth Service</a> &gt; <a href="index.source.html" class="el_package">com.example.microservices.auth.rest</a> &gt; <span class="el_source">AuthResource.java</span></div><h1>AuthResource.java</h1><pre class="source lang-java linenums">package com.example.microservices.auth.rest;
+
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.microservices.auth.model.LoginRequest;
+import com.example.microservices.auth.model.SessionToken;
+import com.example.microservices.auth.repository.AuthRepository;
+import com.example.microservices.auth.service.AuthService;
+import com.example.microservices.auth.util.JwtUtil;
+
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * 認証REST API
+ */
+@Path(&quot;/auth&quot;)
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+<span class="nc" id="L30">public class AuthResource {</span>
+
+    @Inject
+    private AuthRepository authRepository;
+
+    @Inject
+    private AuthService authService;
+
+    @Inject
+    private JwtUtil jwtUtil;
+
+    /**
+     * ログイン
+     */
+    @POST
+    @Path(&quot;/login&quot;)
+    public Response login(LoginRequest loginRequest, @Context HttpHeaders headers) {
+        try {
+            // 入力検証
+<span class="nc bnc" id="L49" title="All 4 branches missed.">            if (loginRequest == null || loginRequest.getPassword() == null) {</span>
+<span class="nc" id="L50">                return Response.status(Response.Status.BAD_REQUEST)</span>
+<span class="nc" id="L51">                        .entity(createErrorResponse(&quot;Username and password are required&quot;))</span>
+<span class="nc" id="L52">                        .build();</span>
+            }
+
+<span class="nc" id="L55">            UUID userId = null;</span>
+<span class="nc" id="L56">            String username = null;</span>
+
+            // userId または username のどちらかでログイン
+<span class="nc bnc" id="L59" title="All 2 branches missed.">            if (loginRequest.getUserId() != null) {</span>
+                // userIdでログイン
+<span class="nc" id="L61">                userId = loginRequest.getUserId();</span>
+                // ユーザー名を取得（レスポンス用）
+                try {
+<span class="nc" id="L64">                    Optional&lt;String&gt; usernameOpt = authRepository.getUsernameByUserId(userId);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">                    if (usernameOpt.isPresent()) {</span>
+<span class="nc" id="L66">                        username = usernameOpt.get();</span>
+                    }
+<span class="nc" id="L68">                } catch (Exception e) {</span>
+                    // ユーザー名取得失敗時もログイン処理を続行（usernameはnullのまま）
+<span class="nc" id="L70">                    System.err.println(&quot;Failed to get username for userId &quot; + userId + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L71">                }</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            } else if (loginRequest.getUsername() != null) {</span>
+                // ユーザー名でログイン
+<span class="nc" id="L74">                username = loginRequest.getUsername();</span>
+                try {
+<span class="nc" id="L76">                    Optional&lt;UUID&gt; userIdOpt = authRepository.getUserIdByUsername(username);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">                    if (userIdOpt.isPresent()) {</span>
+<span class="nc" id="L78">                        userId = userIdOpt.get();</span>
+                    }
+<span class="nc" id="L80">                } catch (Exception e) {</span>
+                    // ユーザーID取得失敗時はログイン失敗扱い
+<span class="nc" id="L82">                    System.err.println(&quot;Failed to get userId for username &quot; + username + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L83">                }</span>
+            } else {
+<span class="nc" id="L85">                return Response.status(Response.Status.BAD_REQUEST)</span>
+<span class="nc" id="L86">                        .entity(createErrorResponse(&quot;Username and password are required&quot;))</span>
+<span class="nc" id="L87">                        .build();</span>
+            }
+
+<span class="nc bnc" id="L90" title="All 2 branches missed.">            if (userId == null) {</span>
+<span class="nc" id="L91">                return Response.status(Response.Status.UNAUTHORIZED)</span>
+<span class="nc" id="L92">                        .entity(createErrorResponse(&quot;Invalid credentials&quot;))</span>
+<span class="nc" id="L93">                        .build();</span>
+            }
+
+            // パスワードハッシュ取得
+<span class="nc" id="L97">            Optional&lt;String&gt; hashedPasswordOpt = authRepository.getPasswordHash(userId);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            if (!hashedPasswordOpt.isPresent()) {</span>
+<span class="nc" id="L99">                recordLoginAttempt(userId, headers, false);</span>
+<span class="nc" id="L100">                return Response.status(Response.Status.UNAUTHORIZED)</span>
+<span class="nc" id="L101">                        .entity(createErrorResponse(&quot;Invalid credentials&quot;))</span>
+<span class="nc" id="L102">                        .build();</span>
+            }
+
+            // パスワード検証
+<span class="nc" id="L106">            boolean isValid = authService.verifyPassword(loginRequest.getPassword(), hashedPasswordOpt.get());</span>
+            
+<span class="nc bnc" id="L108" title="All 2 branches missed.">            if (!isValid) {</span>
+<span class="nc" id="L109">                recordLoginAttempt(userId, headers, false);</span>
+<span class="nc" id="L110">                return Response.status(Response.Status.UNAUTHORIZED)</span>
+<span class="nc" id="L111">                        .entity(createErrorResponse(&quot;Invalid credentials&quot;))</span>
+<span class="nc" id="L112">                        .build();</span>
+            }
+
+            // JWT トークン生成
+<span class="nc" id="L116">            String jwtToken = jwtUtil.generateToken(userId, username);</span>
+
+            // レガシーのセッショントークンも生成（移行期間中のみ）
+<span class="nc" id="L119">            String sessionToken = authService.generateToken();</span>
+<span class="nc" id="L120">            LocalDateTime expiresAt = LocalDateTime.now().plusDays(7);</span>
+            
+<span class="nc" id="L122">            SessionToken session = new SessionToken(userId, sessionToken, expiresAt);</span>
+<span class="nc" id="L123">            session = authRepository.createSessionToken(session);</span>
+
+            // ログイン成功記録
+<span class="nc" id="L126">            recordLoginAttempt(userId, headers, true);</span>
+
+<span class="nc" id="L128">            Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L129">            response.put(&quot;token&quot;, jwtToken);</span>
+<span class="nc" id="L130">            response.put(&quot;userId&quot;, userId.toString());</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">            if (username != null) {</span>
+<span class="nc" id="L132">                response.put(&quot;username&quot;, username);</span>
+            }
+<span class="nc" id="L134">            response.put(&quot;expiresAt&quot;, expiresAt.toString());</span>
+
+<span class="nc" id="L136">            return Response.ok(response).build();</span>
+<span class="nc" id="L137">        } catch (SQLException e) {</span>
+<span class="nc" id="L138">            e.printStackTrace();</span>
+<span class="nc" id="L139">            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L140">                    .entity(createErrorResponse(&quot;Login failed: &quot; + e.getMessage()))</span>
+<span class="nc" id="L141">                    .build();</span>
+        }
+    }
+
+    /**
+     * トークン検証
+     */
+    @POST
+    @Path(&quot;/verify&quot;)
+    public Response verifyToken(@HeaderParam(&quot;Authorization&quot;) String authHeader) {
+        try {
+<span class="nc bnc" id="L152" title="All 4 branches missed.">            if (authHeader == null || !authHeader.startsWith(&quot;Bearer &quot;)) {</span>
+<span class="nc" id="L153">                return Response.status(Response.Status.UNAUTHORIZED)</span>
+<span class="nc" id="L154">                        .entity(createErrorResponse(&quot;Invalid authorization header&quot;))</span>
+<span class="nc" id="L155">                        .build();</span>
+            }
+
+<span class="nc" id="L158">            String token = authHeader.substring(7);</span>
+            
+            // JWT トークン検証を試みる
+            try {
+<span class="nc" id="L162">                DecodedJWT jwt = jwtUtil.verifyToken(token);</span>
+<span class="nc" id="L163">                String userIdStr = jwt.getClaim(&quot;userId&quot;).asString();</span>
+<span class="nc" id="L164">                String username = jwt.getClaim(&quot;username&quot;).asString();</span>
+                
+<span class="nc bnc" id="L166" title="All 4 branches missed.">                if (userIdStr == null || userIdStr.isEmpty()) {</span>
+<span class="nc" id="L167">                    return Response.status(Response.Status.UNAUTHORIZED)</span>
+<span class="nc" id="L168">                            .entity(createErrorResponse(&quot;Invalid token: userId claim missing&quot;))</span>
+<span class="nc" id="L169">                            .build();</span>
+                }
+                
+                // usernameはオプショナル（nullでも有効なトークンとして扱う）
+<span class="nc" id="L173">                Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L174">                response.put(&quot;valid&quot;, true);</span>
+<span class="nc" id="L175">                response.put(&quot;userId&quot;, userIdStr);</span>
+<span class="nc bnc" id="L176" title="All 4 branches missed.">                if (username != null &amp;&amp; !username.isEmpty()) {</span>
+<span class="nc" id="L177">                    response.put(&quot;username&quot;, username);</span>
+                }
+
+<span class="nc" id="L180">                return Response.ok(response).build();</span>
+<span class="nc" id="L181">            } catch (JWTVerificationException e) {</span>
+                // JWT 検証失敗の場合、レガシーセッショントークンを確認
+<span class="nc" id="L183">                Optional&lt;SessionToken&gt; sessionOpt = authRepository.findSessionByToken(token);</span>
+
+<span class="nc bnc" id="L185" title="All 2 branches missed.">                if (!sessionOpt.isPresent()) {</span>
+<span class="nc" id="L186">                    return Response.status(Response.Status.UNAUTHORIZED)</span>
+<span class="nc" id="L187">                            .entity(createErrorResponse(&quot;Invalid token&quot;))</span>
+<span class="nc" id="L188">                            .build();</span>
+                }
+
+<span class="nc" id="L191">                SessionToken session = sessionOpt.get();</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">                if (session.isExpired()) {</span>
+<span class="nc" id="L193">                    authRepository.deleteSession(token);</span>
+<span class="nc" id="L194">                    return Response.status(Response.Status.UNAUTHORIZED)</span>
+<span class="nc" id="L195">                            .entity(createErrorResponse(&quot;Token expired&quot;))</span>
+<span class="nc" id="L196">                            .build();</span>
+                }
+
+<span class="nc" id="L199">                Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L200">                response.put(&quot;valid&quot;, true);</span>
+<span class="nc" id="L201">                response.put(&quot;userId&quot;, session.getUserId().toString());</span>
+<span class="nc" id="L202">                response.put(&quot;expiresAt&quot;, session.getExpiresAt().toString());</span>
+
+<span class="nc" id="L204">                return Response.ok(response).build();</span>
+            }
+<span class="nc" id="L206">        } catch (SQLException e) {</span>
+<span class="nc" id="L207">            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L208">                    .entity(createErrorResponse(&quot;Verification failed: &quot; + e.getMessage()))</span>
+<span class="nc" id="L209">                    .build();</span>
+        }
+    }
+
+    /**
+     * ログアウト
+     */
+    @POST
+    @Path(&quot;/logout&quot;)
+    public Response logout(@HeaderParam(&quot;Authorization&quot;) String authHeader) {
+        try {
+<span class="nc bnc" id="L220" title="All 4 branches missed.">            if (authHeader == null || !authHeader.startsWith(&quot;Bearer &quot;)) {</span>
+<span class="nc" id="L221">                return Response.status(Response.Status.BAD_REQUEST)</span>
+<span class="nc" id="L222">                        .entity(createErrorResponse(&quot;Invalid authorization header&quot;))</span>
+<span class="nc" id="L223">                        .build();</span>
+            }
+
+<span class="nc" id="L226">            String token = authHeader.substring(7);</span>
+            
+            // JWT トークンの場合は何もしない（ステートレスなので）
+            try {
+<span class="nc" id="L230">                jwtUtil.verifyToken(token);</span>
+                // JWT トークンは有効だがステートレスなのでサーバー側で削除する必要はない
+<span class="nc" id="L232">            } catch (JWTVerificationException e) {</span>
+                // レガシーセッショントークンの場合は削除
+<span class="nc" id="L234">                authRepository.deleteSession(token);</span>
+<span class="nc" id="L235">            }</span>
+
+<span class="nc" id="L237">            Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L238">            response.put(&quot;message&quot;, &quot;Logged out successfully&quot;);</span>
+
+<span class="nc" id="L240">            return Response.ok(response).build();</span>
+<span class="nc" id="L241">        } catch (SQLException e) {</span>
+<span class="nc" id="L242">            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L243">                    .entity(createErrorResponse(&quot;Logout failed: &quot; + e.getMessage()))</span>
+<span class="nc" id="L244">                    .build();</span>
+        }
+    }
+
+    /**
+     * 期限切れセッションのクリーンアップ
+     */
+    @POST
+    @Path(&quot;/cleanup&quot;)
+    public Response cleanupExpiredSessions() {
+        try {
+<span class="nc" id="L255">            authRepository.cleanupExpiredSessions();</span>
+<span class="nc" id="L256">            Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L257">            response.put(&quot;message&quot;, &quot;Expired sessions cleaned up successfully&quot;);</span>
+<span class="nc" id="L258">            return Response.ok(response).build();</span>
+<span class="nc" id="L259">        } catch (SQLException e) {</span>
+<span class="nc" id="L260">            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L261">                    .entity(createErrorResponse(&quot;Cleanup failed: &quot; + e.getMessage()))</span>
+<span class="nc" id="L262">                    .build();</span>
+        }
+    }
+
+    private void recordLoginAttempt(UUID userId, HttpHeaders headers, boolean success) {
+        try {
+<span class="nc" id="L268">            String ipAddress = headers.getHeaderString(&quot;X-Forwarded-For&quot;);</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">            if (ipAddress == null) {</span>
+<span class="nc" id="L270">                ipAddress = headers.getHeaderString(&quot;X-Real-IP&quot;);</span>
+            }
+<span class="nc bnc" id="L272" title="All 2 branches missed.">            if (ipAddress == null) {</span>
+<span class="nc" id="L273">                ipAddress = &quot;unknown&quot;;</span>
+            }
+
+<span class="nc" id="L276">            String userAgent = headers.getHeaderString(&quot;User-Agent&quot;);</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">            if (userAgent == null) {</span>
+<span class="nc" id="L278">                userAgent = &quot;unknown&quot;;</span>
+            }
+
+<span class="nc" id="L281">            authRepository.recordLoginHistory(userId, ipAddress, userAgent, success);</span>
+<span class="nc" id="L282">        } catch (SQLException e) {</span>
+            // ログ記録失敗は致命的なエラーではないので無視
+<span class="nc" id="L284">            System.err.println(&quot;Failed to record login history: &quot; + e.getMessage());</span>
+<span class="nc" id="L285">        }</span>
+<span class="nc" id="L286">    }</span>
+
+    private Map&lt;String, String&gt; createErrorResponse(String message) {
+<span class="nc" id="L289">        Map&lt;String, String&gt; error = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L290">        error.put(&quot;error&quot;, message);</span>
+<span class="nc" id="L291">        return error;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

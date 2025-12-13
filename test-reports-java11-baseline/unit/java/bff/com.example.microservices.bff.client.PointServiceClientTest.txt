@@ -1,0 +1,274 @@
+-------------------------------------------------------------------------------
+Test set: com.example.microservices.bff.client.PointServiceClientTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 0, Errors: 10, Skipped: 0, Time elapsed: 0.104 s <<< FAILURE! - in com.example.microservices.bff.client.PointServiceClientTest
+givenServiceUnavailable_whenGettingPoints_thenShouldReturnServiceUnavailable  Time elapsed: 0.004 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+
+givenValidToken_whenGettingPoints_thenShouldReturnPointBalance  Time elapsed: 0.009 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+
+givenServiceUnavailable_whenGettingPointHistory_thenShouldReturnServiceUnavailable  Time elapsed: 0.009 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+
+givenZeroPage_whenGettingPointHistory_thenShouldStillMakeRequest  Time elapsed: 0.007 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+
+givenExpiredToken_whenGettingPoints_thenShouldReturnUnauthorized  Time elapsed: 0.014 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+
+givenPage2AndLimit20_whenGettingPointHistory_thenShouldUseCorrectParameters  Time elapsed: 0.012 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+
+givenInvalidToken_whenGettingPoints_thenShouldReturnUnauthorized  Time elapsed: 0.008 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+
+givenInvalidToken_whenGettingPointHistory_thenShouldReturnUnauthorized  Time elapsed: 0.009 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+
+givenValidParameters_whenGettingPointHistory_thenShouldReturnHistoryList  Time elapsed: 0.01 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+
+givenNegativeLimit_whenGettingPointHistory_thenShouldStillMakeRequest  Time elapsed: 0.012 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.PointServiceClientTest.setUp(PointServiceClientTest.java:36)
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PointServiceClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Backend For Frontend (BFF)</a> &gt; <a href="index.source.html" class="el_package">com.example.microservices.bff.client</a> &gt; <span class="el_source">PointServiceClient.java</span></div><h1>PointServiceClient.java</h1><pre class="source lang-java linenums">package com.example.microservices.bff.client;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+/**
+ * ポイントサービスクライアント
+ */
+@ApplicationScoped
+public class PointServiceClient {
+
+<span class="nc" id="L16">    private static final String POINT_SERVICE_URL = System.getenv().getOrDefault(&quot;POINT_SERVICE_URL&quot;, &quot;http://localhost:8084&quot;);</span>
+    private final Client client;
+
+<span class="nc" id="L19">    public PointServiceClient() {</span>
+<span class="nc" id="L20">        this.client = ClientBuilder.newClient();</span>
+<span class="nc" id="L21">    }</span>
+
+    /**
+     * ポイント残高取得
+     * GET /api/points
+     */
+    public Response getPoints(String jwtToken) {
+<span class="nc" id="L28">        WebTarget target = client.target(POINT_SERVICE_URL)</span>
+<span class="nc" id="L29">                .path(&quot;/point-service/api/points&quot;);</span>
+<span class="nc" id="L30">        return target.request(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L31">                .header(&quot;Authorization&quot;, &quot;Bearer &quot; + jwtToken)</span>
+<span class="nc" id="L32">                .get();</span>
+    }
+
+    /**
+     * ポイント履歴取得
+     * GET /api/points/history?page={page}&amp;limit={limit}
+     */
+    public Response getPointHistory(String jwtToken, int page, int limit) {
+<span class="nc" id="L40">        WebTarget target = client.target(POINT_SERVICE_URL)</span>
+<span class="nc" id="L41">                .path(&quot;/point-service/api/points/history&quot;)</span>
+<span class="nc" id="L42">                .queryParam(&quot;page&quot;, page)</span>
+<span class="nc" id="L43">                .queryParam(&quot;limit&quot;, limit);</span>
+<span class="nc" id="L44">        return target.request(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L45">                .header(&quot;Authorization&quot;, &quot;Bearer &quot; + jwtToken)</span>
+<span class="nc" id="L46">                .get();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

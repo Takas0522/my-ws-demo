@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Auth Service</a> &gt; <a href="index.source.html" class="el_package">com.example.microservices.auth.repository</a> &gt; <span class="el_source">AuthRepository.java</span></div><h1>AuthRepository.java</h1><pre class="source lang-java linenums">package com.example.microservices.auth.repository;
+
+import com.example.microservices.auth.model.SessionToken;
+import javax.annotation.Resource;
+import javax.enterprise.context.ApplicationScoped;
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * 認証リポジトリ
+ */
+@ApplicationScoped
+<span class="nc" id="L15">public class AuthRepository {</span>
+
+    @Resource(lookup = &quot;java:app/jdbc/authServiceDB&quot;)
+    private DataSource dataSource;
+
+    static {
+        try {
+            // PostgreSQLドライバーを明示的にロード
+<span class="nc" id="L23">            Class.forName(&quot;org.postgresql.Driver&quot;);</span>
+<span class="nc" id="L24">        } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L25">            throw new RuntimeException(&quot;PostgreSQL JDBC Driver not found&quot;, e);</span>
+<span class="nc" id="L26">        }</span>
+<span class="nc" id="L27">    }</span>
+
+    /**
+     * 設定値を取得（システムプロパティ優先、次に環境変数、最後にデフォルト値）
+     * テスト時にはシステムプロパティで動的な値を設定可能
+     */
+    private String getConfigValue(String key, String defaultValue) {
+        // システムプロパティを優先（テスト用）
+<span class="nc" id="L35">        String sysProp = System.getProperty(key);</span>
+<span class="nc bnc" id="L36" title="All 4 branches missed.">        if (sysProp != null &amp;&amp; !sysProp.isEmpty()) {</span>
+<span class="nc" id="L37">            return sysProp;</span>
+        }
+        // 次に環境変数
+<span class="nc" id="L40">        String envVar = System.getenv(key);</span>
+<span class="nc bnc" id="L41" title="All 4 branches missed.">        if (envVar != null &amp;&amp; !envVar.isEmpty()) {</span>
+<span class="nc" id="L42">            return envVar;</span>
+        }
+        // デフォルト値
+<span class="nc" id="L45">        return defaultValue;</span>
+    }
+
+    /**
+     * ユーザー名からユーザーIDを取得
+     */
+    public Optional&lt;UUID&gt; getUserIdByUsername(String username) throws SQLException {
+        // ユーザーサービスのデータベースに接続してユーザーIDを取得
+        // 本来はマイクロサービス間通信で取得すべきですが、簡易的にDB直接接続
+        // 設定値を取得（システムプロパティまたは環境変数から）
+<span class="nc" id="L55">        String host = getConfigValue(&quot;USER_SERVICE_DB_HOST&quot;, &quot;localhost&quot;);</span>
+<span class="nc" id="L56">        String port = getConfigValue(&quot;USER_SERVICE_DB_PORT&quot;, &quot;5432&quot;);</span>
+<span class="nc" id="L57">        String dbName = getConfigValue(&quot;USER_SERVICE_DB_NAME&quot;, &quot;user_service_db&quot;);</span>
+<span class="nc" id="L58">        String dbUser = getConfigValue(&quot;USER_SERVICE_DB_USER&quot;, &quot;postgres&quot;);</span>
+<span class="nc" id="L59">        String dbPassword = getConfigValue(&quot;USER_SERVICE_DB_PASSWORD&quot;, &quot;postgres&quot;);</span>
+        
+<span class="nc" id="L61">        String jdbcUrl = String.format(&quot;jdbc:postgresql://%s:%s/%s&quot;, host, port, dbName);</span>
+<span class="nc" id="L62">        String sql = &quot;SELECT id FROM users WHERE username = ?&quot;;</span>
+        
+<span class="nc" id="L64">        try (Connection conn = java.sql.DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);</span>
+<span class="nc" id="L65">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L67">            stmt.setString(1, username);</span>
+            
+<span class="nc" id="L69">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L71">                    return Optional.of((UUID) rs.getObject(&quot;id&quot;));</span>
+                }
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">        }</span>
+<span class="nc" id="L75">        return Optional.empty();</span>
+    }
+
+    /**
+     * ユーザーIDからユーザー名を取得
+     */
+    public Optional&lt;String&gt; getUsernameByUserId(UUID userId) throws SQLException {
+        // ユーザーサービスのデータベースに接続してユーザー名を取得
+        // 設定値を取得（システムプロパティまたは環境変数から）
+<span class="nc" id="L84">        String host = getConfigValue(&quot;USER_SERVICE_DB_HOST&quot;, &quot;localhost&quot;);</span>
+<span class="nc" id="L85">        String port = getConfigValue(&quot;USER_SERVICE_DB_PORT&quot;, &quot;5432&quot;);</span>
+<span class="nc" id="L86">        String dbName = getConfigValue(&quot;USER_SERVICE_DB_NAME&quot;, &quot;user_service_db&quot;);</span>
+<span class="nc" id="L87">        String dbUser = getConfigValue(&quot;USER_SERVICE_DB_USER&quot;, &quot;postgres&quot;);</span>
+<span class="nc" id="L88">        String dbPassword = getConfigValue(&quot;USER_SERVICE_DB_PASSWORD&quot;, &quot;postgres&quot;);</span>
+        
+<span class="nc" id="L90">        String jdbcUrl = String.format(&quot;jdbc:postgresql://%s:%s/%s&quot;, host, port, dbName);</span>
+<span class="nc" id="L91">        String sql = &quot;SELECT username FROM users WHERE id = ?&quot;;</span>
+        
+<span class="nc" id="L93">        try (Connection conn = java.sql.DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);</span>
+<span class="nc" id="L94">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L96">            stmt.setObject(1, userId);</span>
+            
+<span class="nc" id="L98">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L100">                    return Optional.of(rs.getString(&quot;username&quot;));</span>
+                }
+<span class="nc bnc" id="L102" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L103" title="All 4 branches missed.">        }</span>
+<span class="nc" id="L104">        return Optional.empty();</span>
+    }
+
+    /**
+     * ユーザー認証情報の検証
+     */
+    public boolean verifyCredentials(UUID userId, String passwordHash) throws SQLException {
+<span class="nc" id="L111">        String sql = &quot;SELECT COUNT(*) FROM user_credentials WHERE user_id = ? AND password_hash = ?&quot;;</span>
+        
+<span class="nc" id="L113">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L114">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L116">            stmt.setObject(1, userId);</span>
+<span class="nc" id="L117">            stmt.setString(2, passwordHash);</span>
+            
+<span class="nc" id="L119">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">                    return rs.getInt(1) &gt; 0;</span>
+                }
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L124" title="All 4 branches missed.">        }</span>
+<span class="nc" id="L125">        return false;</span>
+    }
+
+    /**
+     * パスワードハッシュ取得
+     */
+    public Optional&lt;String&gt; getPasswordHash(UUID userId) throws SQLException {
+<span class="nc" id="L132">        String sql = &quot;SELECT password_hash FROM user_credentials WHERE user_id = ?&quot;;</span>
+        
+<span class="nc" id="L134">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L135">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L137">            stmt.setObject(1, userId);</span>
+            
+<span class="nc" id="L139">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L141">                    return Optional.of(rs.getString(&quot;password_hash&quot;));</span>
+                }
+<span class="nc bnc" id="L143" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L144" title="All 4 branches missed.">        }</span>
+<span class="nc" id="L145">        return Optional.empty();</span>
+    }
+
+    /**
+     * セッショントークン作成
+     */
+    public SessionToken createSessionToken(SessionToken token) throws SQLException {
+<span class="nc" id="L152">        String sql = &quot;INSERT INTO session_tokens (user_id, token, expires_at) &quot; +</span>
+                    &quot;VALUES (?, ?, ?) RETURNING id, created_at&quot;;
+        
+<span class="nc" id="L155">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L156">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L158">            stmt.setObject(1, token.getUserId());</span>
+<span class="nc" id="L159">            stmt.setString(2, token.getToken());</span>
+<span class="nc" id="L160">            stmt.setTimestamp(3, Timestamp.valueOf(token.getExpiresAt()));</span>
+            
+<span class="nc" id="L162">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L164">                    token.setId(rs.getLong(&quot;id&quot;));</span>
+<span class="nc" id="L165">                    token.setCreatedAt(rs.getTimestamp(&quot;created_at&quot;).toLocalDateTime());</span>
+                }
+            }
+        }
+<span class="nc" id="L169">        return token;</span>
+    }
+
+    /**
+     * トークンによるセッション取得
+     */
+    public Optional&lt;SessionToken&gt; findSessionByToken(String token) throws SQLException {
+<span class="nc" id="L176">        String sql = &quot;SELECT id, user_id, token, expires_at, created_at &quot; +</span>
+                    &quot;FROM session_tokens WHERE token = ?&quot;;
+        
+<span class="nc" id="L179">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L180">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L182">            stmt.setString(1, token);</span>
+            
+<span class="nc" id="L184">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L186">                    SessionToken sessionToken = new SessionToken();</span>
+<span class="nc" id="L187">                    sessionToken.setId(rs.getLong(&quot;id&quot;));</span>
+<span class="nc" id="L188">                    sessionToken.setUserId((UUID) rs.getObject(&quot;user_id&quot;));</span>
+<span class="nc" id="L189">                    sessionToken.setToken(rs.getString(&quot;token&quot;));</span>
+<span class="nc" id="L190">                    sessionToken.setExpiresAt(rs.getTimestamp(&quot;expires_at&quot;).toLocalDateTime());</span>
+<span class="nc" id="L191">                    sessionToken.setCreatedAt(rs.getTimestamp(&quot;created_at&quot;).toLocalDateTime());</span>
+<span class="nc" id="L192">                    return Optional.of(sessionToken);</span>
+                }
+<span class="nc bnc" id="L194" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L195" title="All 4 branches missed.">        }</span>
+<span class="nc" id="L196">        return Optional.empty();</span>
+    }
+
+    /**
+     * セッション削除
+     */
+    public void deleteSession(String token) throws SQLException {
+<span class="nc" id="L203">        String sql = &quot;DELETE FROM session_tokens WHERE token = ?&quot;;</span>
+        
+<span class="nc" id="L205">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L206">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L208">            stmt.setString(1, token);</span>
+<span class="nc" id="L209">            stmt.executeUpdate();</span>
+        }
+<span class="nc" id="L211">    }</span>
+
+    /**
+     * ログイン履歴記録
+     */
+    public void recordLoginHistory(UUID userId, String ipAddress, String userAgent, boolean success) throws SQLException {
+<span class="nc" id="L217">        String sql = &quot;INSERT INTO login_history (user_id, ip_address, user_agent, success) VALUES (?, ?, ?, ?)&quot;;</span>
+        
+<span class="nc" id="L219">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L220">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L222">            stmt.setObject(1, userId);</span>
+<span class="nc" id="L223">            stmt.setString(2, ipAddress);</span>
+<span class="nc" id="L224">            stmt.setString(3, userAgent);</span>
+<span class="nc" id="L225">            stmt.setBoolean(4, success);</span>
+<span class="nc" id="L226">            stmt.executeUpdate();</span>
+        }
+<span class="nc" id="L228">    }</span>
+
+    /**
+     * 期限切れセッションの削除
+     */
+    public void cleanupExpiredSessions() throws SQLException {
+<span class="nc" id="L234">        String sql = &quot;DELETE FROM session_tokens WHERE expires_at &lt; CURRENT_TIMESTAMP&quot;;</span>
+        
+<span class="nc" id="L236">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L237">             Statement stmt = conn.createStatement()) {</span>
+<span class="nc" id="L238">            stmt.executeUpdate(sql);</span>
+        }
+<span class="nc" id="L240">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,301 @@
+-------------------------------------------------------------------------------
+Test set: com.example.microservices.bff.client.UserServiceClientTest
+-------------------------------------------------------------------------------
+Tests run: 11, Failures: 0, Errors: 11, Skipped: 0, Time elapsed: 0.14 s <<< FAILURE! - in com.example.microservices.bff.client.UserServiceClientTest
+givenRequestForAllUsers_whenCallingGetAllUsers_thenShouldReturnUsersList  Time elapsed: 0.017 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+
+givenValidUserId_whenGettingUser_thenShouldReturnUserData  Time elapsed: 0.017 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+
+givenValidUserData_whenCreatingUser_thenShouldReturnCreatedUser  Time elapsed: 0.016 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+
+givenValidUserId_whenGettingUserAccount_thenShouldReturnAccountData  Time elapsed: 0.015 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+
+givenNonExistentUserId_whenDeletingUser_thenShouldReturnNotFound  Time elapsed: 0.012 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+
+givenValidUpdateData_whenUpdatingUser_thenShouldReturnUpdatedUser  Time elapsed: 0.011 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+
+givenValidUserId_whenDeletingUser_thenShouldReturnSuccess  Time elapsed: 0.015 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+
+givenNoUsersExist_whenCallingGetAllUsers_thenShouldReturnEmptyList  Time elapsed: 0.008 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+
+givenNonExistentUserId_whenUpdatingUser_thenShouldReturnNotFound  Time elapsed: 0.011 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+
+givenNonExistentUserId_whenGettingUser_thenShouldReturnNotFound  Time elapsed: 0.01 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+
+givenInvalidUserData_whenCreatingUser_thenShouldReturnBadRequest  Time elapsed: 0.007 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Mockito cannot mock this class: class javax.ws.rs.core.Response.
+
+Mockito can only mock non-private & non-final classes, but the root cause of this error might be different.
+Please check the full stacktrace to understand what the issue is.
+If you're still not sure why you're getting this error, please open an issue on GitHub.
+
+
+Java               : 11
+JVM vendor name    : Microsoft
+JVM vendor version : 11.0.28+6-LTS
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 11.0.28+6-LTS
+JVM info           : mixed mode, sharing
+OS name            : Linux
+OS version         : 6.6.87.2-microsoft-standard-WSL2
+
+
+Underlying exception : java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.IllegalArgumentException: Could not create type
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/annotation/adapters/XmlAdapter
+	at com.example.microservices.bff.client.UserServiceClientTest.setUp(UserServiceClientTest.java:39)
+

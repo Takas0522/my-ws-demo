@@ -1,0 +1,15 @@
+# Created at 2025-12-12T07:16:05.629
+WARNING: An illegal reflective access operation has occurred
+
+# Created at 2025-12-12T07:16:05.630
+WARNING: Illegal reflective access by com.example.microservices.auth.repository.AuthRepositoryIT (file:/workspaces/my-ws-demo/src/auth-service/target/test-classes/) to field java.lang.ProcessEnvironment.theEnvironment
+
+# Created at 2025-12-12T07:16:05.630
+WARNING: Please consider reporting this to the maintainers of com.example.microservices.auth.repository.AuthRepositoryIT
+
+# Created at 2025-12-12T07:16:05.630
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+
+# Created at 2025-12-12T07:16:05.631
+WARNING: All illegal access operations will be denied in a future release
+

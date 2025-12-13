@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Auth Service</a> &gt; <a href="index.source.html" class="el_package">com.example.microservices.auth.service</a> &gt; <span class="el_source">AuthService.java</span></div><h1>AuthService.java</h1><pre class="source lang-java linenums">package com.example.microservices.auth.service;
+
+import org.mindrot.jbcrypt.BCrypt;
+import javax.enterprise.context.ApplicationScoped;
+import java.security.SecureRandom;
+import java.util.Base64;
+
+/**
+ * 認証ユーティリティサービス
+ */
+@ApplicationScoped
+<span class="fc" id="L12">public class AuthService {</span>
+
+    private static final int TOKEN_LENGTH = 32;
+<span class="fc" id="L15">    private static final SecureRandom secureRandom = new SecureRandom();</span>
+
+    /**
+     * パスワードをハッシュ化
+     */
+    public String hashPassword(String password) {
+<span class="fc" id="L21">        return BCrypt.hashpw(password, BCrypt.gensalt(10));</span>
+    }
+
+    /**
+     * パスワード検証
+     */
+    public boolean verifyPassword(String password, String hashedPassword) {
+        try {
+<span class="fc" id="L29">            return BCrypt.checkpw(password, hashedPassword);</span>
+<span class="fc" id="L30">        } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L31">            return false;</span>
+        }
+    }
+
+    /**
+     * ランダムなセッショントークン生成
+     */
+    public String generateToken() {
+<span class="fc" id="L39">        byte[] randomBytes = new byte[TOKEN_LENGTH];</span>
+<span class="fc" id="L40">        secureRandom.nextBytes(randomBytes);</span>
+<span class="fc" id="L41">        return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.microservices.user.repository.UserRepositoryIT
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.177 s - in com.example.microservices.user.repository.UserRepositoryIT

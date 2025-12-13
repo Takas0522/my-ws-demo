@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PointService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Point Service</a> &gt; <a href="index.source.html" class="el_package">com.example.microservices.point.service</a> &gt; <span class="el_source">PointService.java</span></div><h1>PointService.java</h1><pre class="source lang-java linenums">package com.example.microservices.point.service;
+
+import com.example.microservices.point.model.Point;
+import com.example.microservices.point.model.PointHistory;
+import com.example.microservices.point.repository.PointRepository;
+import com.example.microservices.point.repository.PointHistoryRepository;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * ポイント管理サービス
+ */
+@ApplicationScoped
+<span class="fc" id="L19">public class PointService {</span>
+
+    @Inject
+    private PointRepository pointRepository;
+
+    @Inject
+    private PointHistoryRepository pointHistoryRepository;
+
+    /**
+     * ユーザーのポイント残高を取得
+     */
+    public Optional&lt;Point&gt; getPointBalance(UUID userId) throws SQLException {
+<span class="fc" id="L31">        return pointRepository.findByUserId(userId);</span>
+    }
+
+    /**
+     * ユーザーのポイント履歴を取得
+     */
+    public List&lt;PointHistory&gt; getPointHistory(UUID userId, int page, int limit) throws SQLException {
+<span class="fc" id="L38">        return pointHistoryRepository.findByUserId(userId, page, limit);</span>
+    }
+
+    /**
+     * ユーザーのポイント履歴総数を取得
+     */
+    public int getPointHistoryCount(UUID userId) throws SQLException {
+<span class="fc" id="L45">        return pointHistoryRepository.countByUserId(userId);</span>
+    }
+
+    /**
+     * ポイントを付与
+     */
+    public Point earnPoints(UUID userId, Integer amount, String description) throws SQLException {
+<span class="fc" id="L52">        Optional&lt;Point&gt; existingPoint = pointRepository.findByUserId(userId);</span>
+        Point updatedPoint;
+        
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (existingPoint.isPresent()) {</span>
+<span class="fc" id="L56">            int newBalance = existingPoint.get().getBalance() + amount;</span>
+<span class="fc" id="L57">            updatedPoint = pointRepository.updateBalance(userId, newBalance);</span>
+<span class="fc" id="L58">        } else {</span>
+<span class="fc" id="L59">            updatedPoint = pointRepository.create(userId, amount);</span>
+        }
+
+        // 履歴を記録
+<span class="fc" id="L63">        PointHistory history = new PointHistory();</span>
+<span class="fc" id="L64">        history.setUserId(userId);</span>
+<span class="fc" id="L65">        history.setAmount(amount);</span>
+<span class="fc" id="L66">        history.setTransactionType(&quot;EARN&quot;);</span>
+<span class="fc" id="L67">        history.setDescription(description);</span>
+<span class="fc" id="L68">        pointHistoryRepository.create(history);</span>
+
+<span class="fc" id="L70">        return updatedPoint;</span>
+    }
+
+    /**
+     * ポイントを使用
+     */
+    public Point usePoints(UUID userId, Integer amount, String description) throws SQLException {
+<span class="fc" id="L77">        Optional&lt;Point&gt; existingPoint = pointRepository.findByUserId(userId);</span>
+        
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (!existingPoint.isPresent()) {</span>
+<span class="fc" id="L80">            throw new IllegalStateException(&quot;Point record not found for user: &quot; + userId);</span>
+        }
+
+<span class="fc" id="L83">        Point point = existingPoint.get();</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (point.getBalance() &lt; amount) {</span>
+<span class="fc" id="L85">            throw new IllegalArgumentException(&quot;Insufficient point balance&quot;);</span>
+        }
+
+<span class="fc" id="L88">        int newBalance = point.getBalance() - amount;</span>
+<span class="fc" id="L89">        Point updatedPoint = pointRepository.updateBalance(userId, newBalance);</span>
+
+        // 履歴を記録
+<span class="fc" id="L92">        PointHistory history = new PointHistory();</span>
+<span class="fc" id="L93">        history.setUserId(userId);</span>
+<span class="fc" id="L94">        history.setAmount(amount);</span>
+<span class="fc" id="L95">        history.setTransactionType(&quot;USE&quot;);</span>
+<span class="fc" id="L96">        history.setDescription(description);</span>
+<span class="fc" id="L97">        pointHistoryRepository.create(history);</span>
+
+<span class="fc" id="L99">        return updatedPoint;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserServiceClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Backend For Frontend (BFF)</a> &gt; <a href="index.source.html" class="el_package">com.example.microservices.bff.client</a> &gt; <span class="el_source">UserServiceClient.java</span></div><h1>UserServiceClient.java</h1><pre class="source lang-java linenums">package com.example.microservices.bff.client;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+/**
+ * ユーザーサービスクライアント
+ */
+@ApplicationScoped
+public class UserServiceClient {
+
+<span class="nc" id="L20">    private static final String USER_SERVICE_URL = System.getenv().getOrDefault(&quot;USER_SERVICE_URL&quot;, &quot;http://localhost:8080&quot;);</span>
+    private final Client client;
+
+<span class="nc" id="L23">    public UserServiceClient() {</span>
+<span class="nc" id="L24">        this.client = ClientBuilder.newClient();</span>
+<span class="nc" id="L25">    }</span>
+
+    /**
+     * ユーザー情報取得
+     */
+    public Response getUser(UUID userId) {
+<span class="nc" id="L31">        WebTarget target = client.target(USER_SERVICE_URL)</span>
+<span class="nc" id="L32">                .path(&quot;/user-service/api/users/&quot; + userId);</span>
+<span class="nc" id="L33">        return target.request(MediaType.APPLICATION_JSON).get();</span>
+    }
+
+    /**
+     * ユーザーアカウント情報取得（ユーザー情報 + ポイント）
+     */
+    public Response getUserAccount(UUID userId) {
+<span class="nc" id="L40">        WebTarget target = client.target(USER_SERVICE_URL)</span>
+<span class="nc" id="L41">                .path(&quot;/user-service/api/users/&quot; + userId + &quot;/account&quot;);</span>
+<span class="nc" id="L42">        return target.request(MediaType.APPLICATION_JSON).get();</span>
+    }
+
+    /**
+     * 全ユーザー取得
+     */
+    public Response getAllUsers() {
+<span class="nc" id="L49">        WebTarget target = client.target(USER_SERVICE_URL)</span>
+<span class="nc" id="L50">                .path(&quot;/user-service/api/users&quot;);</span>
+<span class="nc" id="L51">        return target.request(MediaType.APPLICATION_JSON).get();</span>
+    }
+
+    /**
+     * ユーザー作成
+     */
+    public Response createUser(Map&lt;String, Object&gt; userData) {
+<span class="nc" id="L58">        WebTarget target = client.target(USER_SERVICE_URL)</span>
+<span class="nc" id="L59">                .path(&quot;/user-service/api/users&quot;);</span>
+<span class="nc" id="L60">        return target.request(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L61">                .post(Entity.entity(userData, MediaType.APPLICATION_JSON));</span>
+    }
+
+    /**
+     * ユーザー更新
+     */
+    public Response updateUser(UUID userId, Map&lt;String, Object&gt; userData) {
+<span class="nc" id="L68">        WebTarget target = client.target(USER_SERVICE_URL)</span>
+<span class="nc" id="L69">                .path(&quot;/user-service/api/users/&quot; + userId);</span>
+<span class="nc" id="L70">        return target.request(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L71">                .put(Entity.entity(userData, MediaType.APPLICATION_JSON));</span>
+    }
+
+    /**
+     * ユーザー削除
+     */
+    public Response deleteUser(UUID userId) {
+<span class="nc" id="L78">        WebTarget target = client.target(USER_SERVICE_URL)</span>
+<span class="nc" id="L79">                .path(&quot;/user-service/api/users/&quot; + userId);</span>
+<span class="nc" id="L80">        return target.request(MediaType.APPLICATION_JSON).delete();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

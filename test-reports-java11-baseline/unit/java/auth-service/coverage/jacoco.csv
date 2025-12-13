@@ -1,0 +1,8 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Auth Service,com.example.microservices.auth.rest,RestApplication,3,0,0,0,1,0,1,0,1,0
+Auth Service,com.example.microservices.auth.rest,AuthResource,492,0,46,0,139,0,30,0,7,0
+Auth Service,com.example.microservices.auth.model,LoginRequest,0,42,0,0,0,19,0,9,0,9
+Auth Service,com.example.microservices.auth.model,SessionToken,5,50,0,0,1,22,1,12,1,12
+Auth Service,com.example.microservices.auth.repository,AuthRepository,475,0,52,0,113,0,38,0,12,0
+Auth Service,com.example.microservices.auth.util,JwtUtil,10,75,4,4,2,20,4,6,0,6
+Auth Service,com.example.microservices.auth.service,AuthService,0,31,0,0,0,9,0,5,0,5

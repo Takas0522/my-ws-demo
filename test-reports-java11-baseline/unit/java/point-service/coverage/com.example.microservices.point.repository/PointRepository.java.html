@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PointRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Point Service</a> &gt; <a href="index.source.html" class="el_package">com.example.microservices.point.repository</a> &gt; <span class="el_source">PointRepository.java</span></div><h1>PointRepository.java</h1><pre class="source lang-java linenums">package com.example.microservices.point.repository;
+
+import com.example.microservices.point.model.Point;
+import javax.annotation.Resource;
+import javax.enterprise.context.ApplicationScoped;
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * ポイント残高リポジトリ
+ */
+@ApplicationScoped
+<span class="nc" id="L15">public class PointRepository {</span>
+
+    @Resource(lookup = &quot;java:app/jdbc/pointServiceDB&quot;)
+    private DataSource dataSource;
+
+    /**
+     * ユーザーIDでポイント残高を取得
+     */
+    public Optional&lt;Point&gt; findByUserId(UUID userId) throws SQLException {
+<span class="nc" id="L24">        String sql = &quot;SELECT user_id, balance, last_updated FROM points WHERE user_id = ?&quot;;</span>
+        
+<span class="nc" id="L26">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L27">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L29">            stmt.setObject(1, userId);</span>
+<span class="nc" id="L30">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L32">                    return Optional.of(mapResultSetToPoint(rs));</span>
+                }
+<span class="nc bnc" id="L34" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L35" title="All 4 branches missed.">        }</span>
+<span class="nc" id="L36">        return Optional.empty();</span>
+    }
+
+    /**
+     * ポイント残高を更新
+     */
+    public Point updateBalance(UUID userId, Integer newBalance) throws SQLException {
+<span class="nc" id="L43">        String sql = &quot;UPDATE points SET balance = ?, last_updated = NOW() WHERE user_id = ? RETURNING user_id, balance, last_updated&quot;;</span>
+        
+<span class="nc" id="L45">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L46">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L48">            stmt.setInt(1, newBalance);</span>
+<span class="nc" id="L49">            stmt.setObject(2, userId);</span>
+            
+<span class="nc" id="L51">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L53">                    return mapResultSetToPoint(rs);</span>
+                }
+<span class="nc bnc" id="L55" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L56" title="All 4 branches missed.">        }</span>
+<span class="nc" id="L57">        throw new SQLException(&quot;Failed to update balance for user: &quot; + userId);</span>
+    }
+
+    /**
+     * 新規ポイント残高を作成
+     */
+    public Point create(UUID userId, Integer initialBalance) throws SQLException {
+<span class="nc" id="L64">        String sql = &quot;INSERT INTO points (user_id, balance, last_updated) VALUES (?, ?, NOW()) RETURNING user_id, balance, last_updated&quot;;</span>
+        
+<span class="nc" id="L66">        try (Connection conn = dataSource.getConnection();</span>
+<span class="nc" id="L67">             PreparedStatement stmt = conn.prepareStatement(sql)) {</span>
+            
+<span class="nc" id="L69">            stmt.setObject(1, userId);</span>
+<span class="nc" id="L70">            stmt.setInt(2, initialBalance);</span>
+            
+<span class="nc" id="L72">            try (ResultSet rs = stmt.executeQuery()) {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">                if (rs.next()) {</span>
+<span class="nc" id="L74">                    return mapResultSetToPoint(rs);</span>
+                }
+<span class="nc bnc" id="L76" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L77" title="All 4 branches missed.">        }</span>
+<span class="nc" id="L78">        throw new SQLException(&quot;Failed to create point record for user: &quot; + userId);</span>
+    }
+
+    private Point mapResultSetToPoint(ResultSet rs) throws SQLException {
+<span class="nc" id="L82">        Point point = new Point();</span>
+<span class="nc" id="L83">        point.setUserId((UUID) rs.getObject(&quot;user_id&quot;));</span>
+<span class="nc" id="L84">        point.setBalance(rs.getInt(&quot;balance&quot;));</span>
+<span class="nc" id="L85">        Timestamp timestamp = rs.getTimestamp(&quot;last_updated&quot;);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (timestamp != null) {</span>
+<span class="nc" id="L87">            point.setLastUpdated(timestamp.toLocalDateTime());</span>
+        }
+<span class="nc" id="L89">        return point;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

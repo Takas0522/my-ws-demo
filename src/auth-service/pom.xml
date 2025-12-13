@@ -165,7 +165,7 @@
                     <excludes>
                         <exclude>**/*IT.java</exclude>
                     </excludes>
-                    <reportsDirectory>${project.basedir}/../../temp/test-reports/unit/java/auth-service</reportsDirectory>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -186,7 +186,7 @@
                             <goal>report</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.basedir}/../../temp/test-reports/unit/java/auth-service/coverage</outputDirectory>
+                            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -200,7 +200,7 @@
                         <include>**/*IT.java</include>
                     </includes>
                     <testSourceDirectory>${project.basedir}/src/integration-test/java</testSourceDirectory>
-                    <reportsDirectory>${project.basedir}/../../temp/test-reports/integration/java/auth-service</reportsDirectory>
+                    <reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
                 </configuration>
                 <executions>
                     <execution>
