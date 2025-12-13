@@ -4,11 +4,11 @@ import com.example.microservices.bff.client.AuthServiceClient;
 import com.example.microservices.bff.client.PointServiceClient;
 import com.example.microservices.bff.client.UserServiceClient;
 
-import javax.inject.Inject;
-import javax.json.JsonObject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.json.JsonObject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -299,7 +299,7 @@ public class BffResource {
                 return Response.status(pointResponse.getStatus())
                         .entity(body)
                         .build();
-            } catch (javax.ws.rs.ProcessingException e) {
+            } catch (jakarta.ws.rs.ProcessingException e) {
                 // Point Service接続エラー（停止時など）
                 return Response.status(Response.Status.SERVICE_UNAVAILABLE)
                         .entity(createErrorMap("Service Unavailable"))
@@ -353,7 +353,7 @@ public class BffResource {
                 return Response.status(pointResponse.getStatus())
                         .entity(body)
                         .build();
-            } catch (javax.ws.rs.ProcessingException e) {
+            } catch (jakarta.ws.rs.ProcessingException e) {
                 // Point Service接続エラー（停止時など）
                 return Response.status(Response.Status.SERVICE_UNAVAILABLE)
                         .entity(createErrorMap("Service Unavailable"))
