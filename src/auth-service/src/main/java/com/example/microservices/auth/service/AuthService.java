@@ -1,7 +1,7 @@
 package com.example.microservices.auth.service;
 
-import org.mindrot.jbcrypt.BCrypt;
-import javax.enterprise.context.ApplicationScoped;
+import at.favre.lib.crypto.bcrypt.BCrypt;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.security.SecureRandom;
 import java.util.Base64;
 
@@ -18,7 +18,7 @@ public class AuthService {
      * パスワードをハッシュ化
      */
     public String hashPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt(10));
+        return BCrypt.withDefaults().hashToString(10, password.toCharArray());
     }
 
     /**
@@ -26,7 +26,8 @@ public class AuthService {
      */
     public boolean verifyPassword(String password, String hashedPassword) {
         try {
-            return BCrypt.checkpw(password, hashedPassword);
+            BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), hashedPassword);
+            return result.verified;
         } catch (IllegalArgumentException e) {
             return false;
         }
