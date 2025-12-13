@@ -11,7 +11,16 @@ echo ""
 
 # Check Java version
 echo "📌 Checking Java version..."
-export JAVA_HOME=/usr/lib/jvm/temurin-21-jdk-amd64
+# Try to use JAVA_HOME if already set, otherwise look for Java 21
+if [ -z "$JAVA_HOME" ]; then
+    if [ -d "/usr/lib/jvm/temurin-21-jdk-amd64" ]; then
+        export JAVA_HOME=/usr/lib/jvm/temurin-21-jdk-amd64
+    elif [ -d "/usr/lib/jvm/java-21-openjdk-amd64" ]; then
+        export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+    else
+        echo "⚠️  Java 21 not found. Please set JAVA_HOME to Java 21 installation."
+    fi
+fi
 export PATH=$JAVA_HOME/bin:$PATH
 java -version
 echo ""
@@ -42,20 +51,28 @@ for service in "${services[@]}"; do
     
     cd "src/$service"
     
-    # Clean build with tests
-    mvn clean test -q
+    # Clean build with tests (show summary but not verbose Maven output)
+    echo "Building..."
+    mvn clean test -B 2>&1 | grep -E "(BUILD SUCCESS|BUILD FAILURE|Tests run:|ERROR)" || true
     
-    # Count tests
+    # Count tests and check results
     if [ -d "target/surefire-reports" ]; then
         test_count=$(find target/surefire-reports -name "TEST-*.xml" | wc -l)
-        echo "✅ $service: $test_count test classes executed"
-        total_tests=$((total_tests + test_count))
         
-        # Check for failures
-        failures=$(grep -r "failures=" target/surefire-reports/TEST-*.xml | grep -v 'failures="0"' | wc -l || true)
-        if [ "$failures" -gt 0 ]; then
-            echo "❌ $service: Test failures detected!"
-            total_failures=$((total_failures + 1))
+        # Parse actual test execution counts from Maven Surefire
+        if [ -f "target/surefire-reports/TEST-*.xml" ]; then
+            # Sum up tests from all XML files
+            tests_executed=$(grep -h 'testsuite' target/surefire-reports/TEST-*.xml | grep -oP 'tests="\K[0-9]+' | awk '{s+=$1} END {print s}')
+            failures=$(grep -h 'testsuite' target/surefire-reports/TEST-*.xml | grep -oP 'failures="\K[0-9]+' | awk '{s+=$1} END {print s}')
+            errors=$(grep -h 'testsuite' target/surefire-reports/TEST-*.xml | grep -oP 'errors="\K[0-9]+' | awk '{s+=$1} END {print s}')
+            
+            echo "✅ $service: $tests_executed tests executed in $test_count test classes"
+            total_tests=$((total_tests + tests_executed))
+            
+            if [ "$failures" -gt 0 ] || [ "$errors" -gt 0 ]; then
+                echo "❌ $service: $failures failures, $errors errors detected!"
+                total_failures=$((total_failures + 1))
+            fi
         fi
     fi
     
