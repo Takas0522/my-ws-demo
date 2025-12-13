@@ -3,7 +3,7 @@
 <resources>
     <!-- JDBC Connection Pool -->
     <jdbc-connection-pool name="AuthServicePool"
-                          res-type="javax.sql.DataSource"
+                          res-type="jakarta.sql.DataSource"
                           datasource-classname="org.postgresql.ds.PGSimpleDataSource">
         <property name="serverName" value="${ENV=DB_AUTH_SERVICE_HOST}"/>
         <property name="portNumber" value="${ENV=DB_AUTH_SERVICE_PORT}"/>

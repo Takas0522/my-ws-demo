@@ -8,12 +8,12 @@ import com.example.microservices.auth.repository.AuthRepository;
 import com.example.microservices.auth.service.AuthService;
 import com.example.microservices.auth.util.JwtUtil;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.HashMap;

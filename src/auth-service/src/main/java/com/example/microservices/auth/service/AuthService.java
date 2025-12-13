@@ -1,7 +1,7 @@
 package com.example.microservices.auth.service;
 
 import org.mindrot.jbcrypt.BCrypt;
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.security.SecureRandom;
 import java.util.Base64;
 
