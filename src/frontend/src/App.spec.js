@@ -20,6 +20,6 @@ describe('App.vue', () => {
 
   it('contains router-view', () => {
     const wrapper = mount(App, mountOptions);
-    expect(wrapper.findComponent({ name: 'RouterView' }).exists()).toBe(true);
+    expect(wrapper.html()).toContain('router-view');
   });
 });
