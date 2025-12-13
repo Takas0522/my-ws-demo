@@ -3,7 +3,7 @@ package com.example.microservices.auth.repository;
 import com.example.microservices.auth.model.SessionToken;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.sql.DataSource;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Optional;
 import java.util.UUID;
