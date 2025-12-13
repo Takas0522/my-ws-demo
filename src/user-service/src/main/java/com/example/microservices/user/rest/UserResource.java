@@ -3,10 +3,10 @@ package com.example.microservices.user.rest;
 import com.example.microservices.user.model.User;
 import com.example.microservices.user.repository.UserRepository;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
