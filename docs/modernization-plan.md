@@ -24,7 +24,7 @@
 | Payara Micro | 6.2024.10 | Jakarta EE 10対応 |
 | Jakarta EE | 10.0.0 | jakarta.* パッケージ |
 | Jersey | 3.1.x | Jakarta namespace対応 |
-| jbcrypt | 0.4m | 互換性を保持した2018年版 |
+| bcrypt | 0.10.2 (at.favre.lib) | 互換APIを持つモダン実装 |
 | PostgreSQL Driver | 42.7.x | Java 21対応版 |
 | TestContainers | 1.19.x | 維持 |
 
@@ -36,30 +36,31 @@
 
 #### 現状分析
 
-- **現在**: jbcrypt 0.4（2014年版、最終更新2014年）
-- **目標**: jbcrypt 0.4m（2018年版、Maven Centralで公開）
+- **現在**: org.mindrot:jbcrypt 0.4（2014年版、最終更新2014年）
+- **目標**: at.favre.lib:bcrypt 0.10.2（モダン実装、Maven Centralで公開）
 - **使用箇所**: auth-serviceのパスワードハッシュ生成・検証
 
 #### 互換性評価
 
 **✅ 完全互換**
 
-jbcrypt 0.4mは0.4の後方互換性を保持しており、以下の点で安全に移行可能：
+at.favre.lib:bcryptは、org.mindrot:jbcryptと同じBCryptアルゴリズムを実装しており、以下の点で安全に移行可能：
 
 1. **ハッシュアルゴリズムの互換性**
    - BCryptアルゴリズム自体は変更なし
    - 既存の`BCrypt.hashpw()`と`BCrypt.checkpw()`のAPIは完全互換
    - 既存DBに保存されたパスワードハッシュは引き続き検証可能
 
-2. **主な変更点（0.4 → 0.4m）**
-   - Maven Centralへの正式公開（groupId: `at.favre.lib`）
+2. **主な変更点（org.mindrot → at.favre.lib）**
+   - 完全な再実装（より保守されている現代的なライブラリ）
    - Java 8以降への最適化
    - スレッドセーフ性の改善
-   - マイナーなバグ修正
+   - セマンティックバージョニング採用
+   - アクティブなメンテナンス（定期的な更新）
 
 3. **影響範囲**
    - auth-service: `src/auth-service/pom.xml`の依存関係のみ
-   - コード変更: **不要**
+   - コード変更: **不要**（パッケージ名は`org.mindrot`のまま）
    - データマイグレーション: **不要**
 
 #### 移行手順
@@ -72,7 +73,7 @@ jbcrypt 0.4mは0.4の後方互換性を保持しており、以下の点で安�
     <version>0.4</version>
 </dependency>
 
-<!-- pom.xml: 変更後 -->
+<!-- pom.xml: 変更後（推奨） -->
 <dependency>
     <groupId>at.favre.lib</groupId>
     <artifactId>bcrypt</artifactId>
@@ -80,7 +81,7 @@ jbcrypt 0.4mは0.4の後方互換性を保持しており、以下の点で安�
 </dependency>
 ```
 
-**注**: 0.4mはgroupIdが`at.favre.lib`、artifactIdが`bcrypt`に変更されているため、推奨は最新の`at.favre.lib:bcrypt`（セマンティックバージョニング採用）です。ただし、APIは完全互換です。
+**注**: at.favre.lib:bcryptは、org.mindrot:jbcryptのAPIと完全互換ですが、より保守されており、Java 21でも継続的にサポートされる可能性が高いため推奨します。import文やコードの変更は不要です。
 
 #### 検証計画
 
@@ -509,7 +510,7 @@ main (production)
    - web.xml、glassfish-resources.xmlの更新
 
 3. **feature/java21-phase3-dependencies**
-   - jbcrypt 0.4 → 0.4m (at.favre.lib:bcrypt推奨)
+   - org.mindrot:jbcrypt 0.4 → at.favre.lib:bcrypt 0.10.2
    - PostgreSQL Driver最新版への更新
    - その他依存ライブラリの最適化
 
@@ -714,7 +715,7 @@ psql -h localhost -p 5432 -U postgres user_service_db < backup_user_service.sql
 本調査により、Java 21 + Payara 6 + Jakarta EE 10への移行は技術的に実行可能であり、以下の点が明確になりました：
 
 ### ✅ 移行可能な項目
-- jbcrypt 0.4 → 0.4m（完全互換、コード変更不要）
+- bcryptライブラリ（org.mindrot:jbcrypt 0.4 → at.favre.lib:bcrypt 0.10.2）（完全互換、コード変更不要）
 - TestContainersの継続利用（APIは変更なし）
 - E2E環境の維持（フロー変更なし）
 
