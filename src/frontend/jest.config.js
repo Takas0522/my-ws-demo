@@ -19,5 +19,17 @@ module.exports = {
     'src/**/*.{js,vue}',
     '!src/main.js',
     '!**/node_modules/**'
-  ]
+  ],
+  coverageDirectory: '../../test-reports/unit/frontend/coverage',
+  coverageReporters: ['html', 'text', 'lcov'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!(@vue|vue-router)/)'
+  ],
+  globals: {
+    'vue-jest': {
+      compilerOptions: {
+        isCustomElement: (tag) => tag.startsWith('router-')
+      }
+    }
+  }
 };
