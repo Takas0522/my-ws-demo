@@ -69,24 +69,66 @@ Java 21 + Payara 6 + PostgreSQL + Vue 3 で構築されたマイクロサービ�
 `.env`ファイルはClone時は存在しませんので、 `.env.sample` をコピーしてリネームしてお使いください。
 開発時のDBはDevContainerで提供されます。シードデータもDevContainer展開時に登録されます。
 
+**Java 21対応**: Payara 6 + Jakarta EE 10 をJava 21で実行するため、以下の`--add-opens`オプションが必要です。
+
 #### user-service
 ```bash
-cd src/user-service && set -a && source <(grep -v '^#' .env) && set +a && mvn clean package && java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar /opt/payara-micro.jar --deploy target/user-service.war --port 8080
+cd src/user-service && set -a && source <(grep -v '^#' .env) && set +a && mvn clean package && \
+java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED \
+     --add-opens java.base/java.lang=ALL-UNNAMED \
+     --add-opens java.base/java.net=ALL-UNNAMED \
+     --add-opens java.base/java.nio=ALL-UNNAMED \
+     --add-opens java.base/java.util=ALL-UNNAMED \
+     --add-opens java.base/sun.nio.ch=ALL-UNNAMED \
+     --add-opens java.management/sun.management=ALL-UNNAMED \
+     --add-opens java.base/sun.net.www.protocol.jrt=ALL-UNNAMED \
+     -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 \
+     -jar /opt/payara-micro.jar --deploy target/user-service.war --port 8080
 ```
 
 #### auth-service
 ```bash
-cd src/auth-service && set -a && source <(grep -v '^#' .env) && set +a && mvn clean package && java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -jar /opt/payara-micro.jar --deploy target/auth-service.war --port 8081
+cd src/auth-service && set -a && source <(grep -v '^#' .env) && set +a && mvn clean package && \
+java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED \
+     --add-opens java.base/java.lang=ALL-UNNAMED \
+     --add-opens java.base/java.net=ALL-UNNAMED \
+     --add-opens java.base/java.nio=ALL-UNNAMED \
+     --add-opens java.base/java.util=ALL-UNNAMED \
+     --add-opens java.base/sun.nio.ch=ALL-UNNAMED \
+     --add-opens java.management/sun.management=ALL-UNNAMED \
+     --add-opens java.base/sun.net.www.protocol.jrt=ALL-UNNAMED \
+     -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 \
+     -jar /opt/payara-micro.jar --deploy target/auth-service.war --port 8081
 ```
 
 #### point-service
 ```bash
-cd src/point-service && set -a && source <(grep -v '^#' .env) && set +a && mvn clean package && java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007 -jar /opt/payara-micro.jar --deploy target/point-service.war --port 8082
+cd src/point-service && set -a && source <(grep -v '^#' .env) && set +a && mvn clean package && \
+java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED \
+     --add-opens java.base/java.lang=ALL-UNNAMED \
+     --add-opens java.base/java.net=ALL-UNNAMED \
+     --add-opens java.base/java.nio=ALL-UNNAMED \
+     --add-opens java.base/java.util=ALL-UNNAMED \
+     --add-opens java.base/sun.nio.ch=ALL-UNNAMED \
+     --add-opens java.management/sun.management=ALL-UNNAMED \
+     --add-opens java.base/sun.net.www.protocol.jrt=ALL-UNNAMED \
+     -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007 \
+     -jar /opt/payara-micro.jar --deploy target/point-service.war --port 8082
 ```
 
 #### bff
 ```bash
-cd src/bff && set -a && source <(grep -v '^#' .env) && set +a && mvn clean package && java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008 -jar /opt/payara-micro.jar --deploy target/bff.war --port 8090
+cd src/bff && set -a && source <(grep -v '^#' .env) && set +a && mvn clean package && \
+java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED \
+     --add-opens java.base/java.lang=ALL-UNNAMED \
+     --add-opens java.base/java.net=ALL-UNNAMED \
+     --add-opens java.base/java.nio=ALL-UNNAMED \
+     --add-opens java.base/java.util=ALL-UNNAMED \
+     --add-opens java.base/sun.nio.ch=ALL-UNNAMED \
+     --add-opens java.management/sun.management=ALL-UNNAMED \
+     --add-opens java.base/sun.net.www.protocol.jrt=ALL-UNNAMED \
+     -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008 \
+     -jar /opt/payara-micro.jar --deploy target/bff.war --port 8090
 ```
 
 #### frontend

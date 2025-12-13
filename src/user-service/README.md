@@ -144,10 +144,33 @@ cd /workspaces/my-ws-demo/src/user-service
 mvn clean package
 ```
 
-### 起動
+### 起動（Java 21対応）
 ```bash
 cd /workspaces/my-ws-demo/src/user-service
-java -jar /opt/payara-micro.jar --deploy target/user-service.war --port 8080
+java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED \
+     --add-opens java.base/java.lang=ALL-UNNAMED \
+     --add-opens java.base/java.net=ALL-UNNAMED \
+     --add-opens java.base/java.nio=ALL-UNNAMED \
+     --add-opens java.base/java.util=ALL-UNNAMED \
+     --add-opens java.base/sun.nio.ch=ALL-UNNAMED \
+     --add-opens java.management/sun.management=ALL-UNNAMED \
+     --add-opens java.base/sun.net.www.protocol.jrt=ALL-UNNAMED \
+     -jar /opt/payara-micro.jar --deploy target/user-service.war --port 8080
+```
+
+### デバッグモードで起動（デバッグポート: 5005）
+```bash
+cd /workspaces/my-ws-demo/src/user-service
+java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED \
+     --add-opens java.base/java.lang=ALL-UNNAMED \
+     --add-opens java.base/java.net=ALL-UNNAMED \
+     --add-opens java.base/java.nio=ALL-UNNAMED \
+     --add-opens java.base/java.util=ALL-UNNAMED \
+     --add-opens java.base/sun.nio.ch=ALL-UNNAMED \
+     --add-opens java.management/sun.management=ALL-UNNAMED \
+     --add-opens java.base/sun.net.www.protocol.jrt=ALL-UNNAMED \
+     -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 \
+     -jar /opt/payara-micro.jar --deploy target/user-service.war --port 8080
 ```
 
 ## 環境変数

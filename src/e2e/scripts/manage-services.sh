@@ -63,20 +63,34 @@ start_service() {
     # サービスを起動（環境変数ファイルを明示的に渡す）
     cd "$service_dir"
     
+    # Java 21で必要なモジュールアクセスオプション
+    JAVA_OPTS="--add-opens java.base/jdk.internal.loader=ALL-UNNAMED"
+    JAVA_OPTS="$JAVA_OPTS --add-opens java.base/java.lang=ALL-UNNAMED"
+    JAVA_OPTS="$JAVA_OPTS --add-opens java.base/java.net=ALL-UNNAMED"
+    JAVA_OPTS="$JAVA_OPTS --add-opens java.base/java.nio=ALL-UNNAMED"
+    JAVA_OPTS="$JAVA_OPTS --add-opens java.base/java.util=ALL-UNNAMED"
+    JAVA_OPTS="$JAVA_OPTS --add-opens java.base/sun.nio.ch=ALL-UNNAMED"
+    JAVA_OPTS="$JAVA_OPTS --add-opens java.management/sun.management=ALL-UNNAMED"
+    JAVA_OPTS="$JAVA_OPTS --add-opens java.base/sun.net.www.protocol.jrt=ALL-UNNAMED"
+    
     # 環境変数をJavaに渡すため、envコマンドで起動
     if [ -f "$env_file" ]; then
         # .envファイルを読み込んでenvコマンドで渡す
         nohup env $(cat "$env_file" | grep -v '^#' | xargs) \
-            java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:$debug_port \
+            java $JAVA_OPTS \
+            -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:$debug_port \
             -jar /opt/payara-micro.jar \
             --deploy "$war_file" \
             --port $service_port \
+            --nocluster \
             > "$service_dir/e2e-test.log" 2>&1 &
     else
-        nohup java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:$debug_port \
+        nohup java $JAVA_OPTS \
+            -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:$debug_port \
             -jar /opt/payara-micro.jar \
             --deploy "$war_file" \
             --port $service_port \
+            --nocluster \
             > "$service_dir/e2e-test.log" 2>&1 &
     fi
     
