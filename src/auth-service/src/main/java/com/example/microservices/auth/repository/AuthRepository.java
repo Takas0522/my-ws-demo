@@ -27,17 +27,36 @@ public class AuthRepository {
     }
 
     /**
+     * 設定値を取得（システムプロパティ優先、次に環境変数、最後にデフォルト値）
+     * テスト時にはシステムプロパティで動的な値を設定可能
+     */
+    private String getConfigValue(String key, String defaultValue) {
+        // システムプロパティを優先（テスト用）
+        String sysProp = System.getProperty(key);
+        if (sysProp != null && !sysProp.isEmpty()) {
+            return sysProp;
+        }
+        // 次に環境変数
+        String envVar = System.getenv(key);
+        if (envVar != null && !envVar.isEmpty()) {
+            return envVar;
+        }
+        // デフォルト値
+        return defaultValue;
+    }
+
+    /**
      * ユーザー名からユーザーIDを取得
      */
     public Optional<UUID> getUserIdByUsername(String username) throws SQLException {
         // ユーザーサービスのデータベースに接続してユーザーIDを取得
         // 本来はマイクロサービス間通信で取得すべきですが、簡易的にDB直接接続
-        // 環境変数から接続情報を取得（E2Eテスト対応）
-        String host = System.getenv().getOrDefault("USER_SERVICE_DB_HOST", "localhost");
-        String port = System.getenv().getOrDefault("USER_SERVICE_DB_PORT", "5432");
-        String dbName = System.getenv().getOrDefault("USER_SERVICE_DB_NAME", "user_service_db");
-        String dbUser = System.getenv().getOrDefault("USER_SERVICE_DB_USER", "postgres");
-        String dbPassword = System.getenv().getOrDefault("USER_SERVICE_DB_PASSWORD", "postgres");
+        // 設定値を取得（システムプロパティまたは環境変数から）
+        String host = getConfigValue("USER_SERVICE_DB_HOST", "localhost");
+        String port = getConfigValue("USER_SERVICE_DB_PORT", "5432");
+        String dbName = getConfigValue("USER_SERVICE_DB_NAME", "user_service_db");
+        String dbUser = getConfigValue("USER_SERVICE_DB_USER", "postgres");
+        String dbPassword = getConfigValue("USER_SERVICE_DB_PASSWORD", "postgres");
         
         String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", host, port, dbName);
         String sql = "SELECT id FROM users WHERE username = ?";
@@ -61,12 +80,12 @@ public class AuthRepository {
      */
     public Optional<String> getUsernameByUserId(UUID userId) throws SQLException {
         // ユーザーサービスのデータベースに接続してユーザー名を取得
-        // 環境変数から接続情報を取得（E2Eテスト対応）
-        String host = System.getenv().getOrDefault("USER_SERVICE_DB_HOST", "localhost");
-        String port = System.getenv().getOrDefault("USER_SERVICE_DB_PORT", "5432");
-        String dbName = System.getenv().getOrDefault("USER_SERVICE_DB_NAME", "user_service_db");
-        String dbUser = System.getenv().getOrDefault("USER_SERVICE_DB_USER", "postgres");
-        String dbPassword = System.getenv().getOrDefault("USER_SERVICE_DB_PASSWORD", "postgres");
+        // 設定値を取得（システムプロパティまたは環境変数から）
+        String host = getConfigValue("USER_SERVICE_DB_HOST", "localhost");
+        String port = getConfigValue("USER_SERVICE_DB_PORT", "5432");
+        String dbName = getConfigValue("USER_SERVICE_DB_NAME", "user_service_db");
+        String dbUser = getConfigValue("USER_SERVICE_DB_USER", "postgres");
+        String dbPassword = getConfigValue("USER_SERVICE_DB_PASSWORD", "postgres");
         
         String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", host, port, dbName);
         String sql = "SELECT username FROM users WHERE id = ?";
