@@ -1,6 +1,10 @@
 # マイクロサービス風味アプリケーション
 
-Java 11 + Payara + PostgreSQL + Vue 3 で構築されたマイクロサービス風味のアーキテクチャのアプリケーション
+Java 21 + Payara 6 + PostgreSQL + Vue 3 で構築されたマイクロサービス風味のアーキテクチャのアプリケーション
+
+> **🚀 Java 21 Migration Completed!**  
+> このアプリケーションは Java 11 から Java 21 (LTS) に正常に移行されました。  
+> 詳細は [移行結果ドキュメント](docs/modernization-result.md) と [移行サマリー](MIGRATION_SUMMARY.md) を参照してください。
 
 **注意**:
 - 初回実行時は5〜7分かかります（Docker イメージの取得、サービスの起動）
@@ -23,6 +27,28 @@ Java 11 + Payara + PostgreSQL + Vue 3 で構築されたマイクロサービス
 5. [データベース構造](docs/05_データベース構造.md) - ER図とテーブル定義
 6. [画面フロー図](docs/06_画面フロー図.md) - フロントエンドの画面遷移
 7. [初期Seedデータ](docs/07_初期Seedデータ.md) - テストユーザーとSeedデータの詳細
+8. **[Java 21 移行結果](docs/modernization-result.md)** - Java 11 から Java 21 への移行の詳細レポート（2025年12月）
+9. **[移行サマリー](MIGRATION_SUMMARY.md)** - 移行プロジェクトのエグゼクティブサマリー
+
+### 技術スタック
+
+#### バックエンド
+- **Java**: 21 (LTS - 2029年9月までサポート)
+- **Jakarta EE**: 10
+- **Payara Micro**: 6.2024.10
+- **Jersey**: 3.1.5 (JAX-RS implementation)
+- **PostgreSQL**: 16
+
+#### フロントエンド
+- **Vue.js**: 3
+- **Vite**: Build tool
+
+#### テスト
+- **JUnit**: 5.9.3 (ユニット/統合テスト)
+- **Mockito**: 5.3.1 (モッキング)
+- **Playwright**: E2Eテスト
+- **Cucumber**: BDDテスト
+- **TestContainers**: 統合テスト用データベース
 
 ## �🐛 デバッグ実行
 
