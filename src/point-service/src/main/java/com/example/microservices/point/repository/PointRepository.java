@@ -1,8 +1,8 @@
 package com.example.microservices.point.repository;
 
 import com.example.microservices.point.model.Point;
-import javax.annotation.Resource;
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.annotation.Resource;
+import jakarta.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Optional;

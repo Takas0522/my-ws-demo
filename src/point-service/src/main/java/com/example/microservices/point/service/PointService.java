@@ -5,8 +5,8 @@ import com.example.microservices.point.model.PointHistory;
 import com.example.microservices.point.repository.PointRepository;
 import com.example.microservices.point.repository.PointHistoryRepository;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
