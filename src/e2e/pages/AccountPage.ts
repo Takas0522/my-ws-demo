@@ -146,6 +146,8 @@ export class AccountPage extends BasePage {
    */
   async ログアウトボタンクリック(): Promise<void> {
     await this.クリック(this.logoutButton);
+    // ログインページへのリダイレクトを待つ
+    await this.page.waitForURL(/\/login|^\/$/, { timeout: 10000 });
     // localStorageがクリアされることを待つ
     await this.page.waitForTimeout(500);
   }
@@ -157,6 +159,21 @@ export class AccountPage extends BasePage {
     await this.page.evaluate(() => {
       localStorage.removeItem('authToken');
     });
+  }
+
+  /**
+   * localStorageのトークンをクリアする（テスト用メソッド名）
+   */
+  async ローカルストレージトークンクリア(): Promise<void> {
+    await this.トークンクリア();
+  }
+
+  /**
+   * localStorageのトークンを取得する
+   * @returns トークン文字列またはnull
+   */
+  async ローカルストレージトークン取得(): Promise<string | null> {
+    return await this.page.evaluate(() => localStorage.getItem('authToken'));
   }
 
   /**

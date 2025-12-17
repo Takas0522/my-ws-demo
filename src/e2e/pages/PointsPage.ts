@@ -56,8 +56,10 @@ export class PointsPage extends BasePage {
   async 現在のポイント残高取得(): Promise<string> {
     await this.要素表示待機(this.currentBalance);
     const text = await this.テキスト取得(this.currentBalance);
-    // "1500" や "1500 ポイント" から数値部分だけを抽出
-    const match = text.match(/(\d+)/);
+    
+    // "1,500" や "1500 ポイント" から数値部分だけを抽出（カンマを除去）
+    const cleanText = text.replace(/,/g, ''); // カンマを除去
+    const match = cleanText.match(/(\d+)/);
     return match ? match[1] : '0';
   }
 
@@ -106,6 +108,8 @@ export class PointsPage extends BasePage {
    */
   async ポイント履歴ボタンクリック(): Promise<void> {
     await this.クリック(this.pointHistoryButton);
+    // ポイント履歴ページへの遷移を待つ
+    await this.page.waitForURL('**/points/history', { timeout: 10000 });
     // SPAの描画を待つ
     await this.page.waitForTimeout(500);
   }
@@ -115,6 +119,8 @@ export class PointsPage extends BasePage {
    */
   async 戻るボタンクリック(): Promise<void> {
     await this.クリック(this.backButton);
+    // アカウントページへの遷移を待つ
+    await this.page.waitForURL('**/account', { timeout: 10000 });
     // SPAの描画を待つ
     await this.page.waitForTimeout(500);
   }
@@ -133,6 +139,8 @@ export class PointsPage extends BasePage {
    */
   async ログアウトボタンクリック(): Promise<void> {
     await this.クリック(this.logoutButton);
+    // ログインページへのリダイレクトを待つ
+    await this.page.waitForURL(/\/login|^\/$/, { timeout: 10000 });
     // localStorageがクリアされることを待つ
     await this.page.waitForTimeout(500);
   }
@@ -144,5 +152,12 @@ export class PointsPage extends BasePage {
     await this.page.evaluate(() => {
       localStorage.removeItem('authToken');
     });
+  }
+
+  /**
+   * localStorageのトークンをクリアする（テスト用メソッド名）
+   */
+  async ローカルストレージトークンクリア(): Promise<void> {
+    await this.トークンクリア();
   }
 }
