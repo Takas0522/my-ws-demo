@@ -51,7 +51,7 @@ cd src/bff && set -a && source <(grep -v '^#' .env) && set +a && mvn clean packa
 
 #### frontend
 ```bash
-cd src/frontend && npm run dev
+cd src/frontend && npm ci && npm run dev
 ```
 
 IDE (例: IntelliJ IDEA, VS Code) でリモートデバッガーを設定し、デバッグポートに接続してください。
