@@ -6,6 +6,7 @@
 * Unit/Integration/e2eのそれぞれのテストの生成を実施できる
 * Custom Agentの利用
 * (Opt)IssueへのCopilotの割り当て作業の実施
+* (Opt)Background Agent（GitWorktree）を使用した並行作業
 
 > [!NOTE]
 > 途中から参加する場合は `challenge3` ブランチから実施できます。
