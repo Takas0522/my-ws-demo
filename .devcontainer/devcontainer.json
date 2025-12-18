@@ -56,7 +56,7 @@
 	},
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "chmod +x .devcontainer/setup-auth-db.sh && .devcontainer/setup-auth-db.sh",
+	"postCreateCommand": "git submodule update --init --recursive && chmod +x .devcontainer/setup-auth-db.sh && .devcontainer/setup-auth-db.sh",
 
 	"containerEnv": {
 		"POSTGRES_PASSWORD": "postgres"
