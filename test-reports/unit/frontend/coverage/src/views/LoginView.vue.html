@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/views/PointView.vue</title>
+    <title>Code coverage report for src/views/LoginView.vue</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/views</a> PointView.vue</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/views</a> LoginView.vue</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.48% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>33/41</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.93% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>33/59</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/10</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>27/30</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
@@ -199,7 +199,8 @@
 <a name='L134'></a><a href='#L134'>134</a>
 <a name='L135'></a><a href='#L135'>135</a>
 <a name='L136'></a><a href='#L136'>136</a>
-<a name='L137'></a><a href='#L137'>137</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -299,174 +300,176 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">38x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">38x</span>
-<span class="cline-any cline-yes">38x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
-  &lt;div class="min-h-screen bg-gray-100"&gt;
-    &lt;!-- ヘッダー --&gt;
-    &lt;header class="bg-white shadow"&gt;
-      &lt;div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center"&gt;
-        &lt;h1 class="text-2xl font-bold text-gray-900"&gt;ポイント残高&lt;/h1&gt;
-        &lt;div class="flex space-x-4"&gt;
-          &lt;router-link
-            to="/account"
-            class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-200"
-          &gt;
-            アカウント
-          &lt;/router-link&gt;
-          &lt;button
-            @click="handleLogout"
-            class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200"
-          &gt;
-            ログアウト
-          &lt;/button&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/header&gt;
-&nbsp;
-    &lt;!-- メインコンテンツ --&gt;
-    &lt;main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"&gt;
-      &lt;div v-if="loading" class="flex justify-center items-center h-64"&gt;
-        &lt;div class="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500"&gt;&lt;/div&gt;
-      &lt;/div&gt;
-&nbsp;
-      &lt;div v-else-if="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded"&gt;
-        {{ errorMessage }}
-      &lt;/div&gt;
-&nbsp;
-      &lt;div v-else class="space-y-6"&gt;
-        &lt;!-- ポイント残高カード --&gt;
-        &lt;div class="bg-white shadow rounded-lg p-6"&gt;
-          &lt;h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center"&gt;
-            &lt;svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
-              &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /&gt;
-            &lt;/svg&gt;
-            現在のポイント残高
-          &lt;/h2&gt;
-          
-          &lt;div v-if="pointData" class="text-center"&gt;
-            &lt;div class="text-5xl font-bold text-blue-600 mb-2"&gt;
-              {{ pointData.balance?.toLocaleString() || 0 }}
-            &lt;/div&gt;
-            &lt;div class="text-gray-600"&gt;ポイント&lt;/div&gt;
-          &lt;/div&gt;
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
+  &lt;div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600"&gt;
+    &lt;div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md"&gt;
+      &lt;h1 class="text-3xl font-bold text-center text-gray-800 mb-6"&gt;ログイン&lt;/h1&gt;
+      
+      &lt;form @submit.prevent="handleLogin" class="space-y-4"&gt;
+        &lt;div&gt;
+          &lt;label for="userId" class="block text-sm font-medium text-gray-700 mb-2"&gt;
+            ユーザーID / ユーザー名
+          &lt;/label&gt;
+          &lt;input
+            id="userId"
+            v-model="userId"
+            type="text"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="tanaka_taro または 05c66ceb-..."
+          /&gt;
         &lt;/div&gt;
 &nbsp;
-        &lt;!-- アクションボタン --&gt;
-        &lt;div class="bg-white shadow rounded-lg p-6"&gt;
-          &lt;router-link
-            to="/points/history"
-            class="block w-full bg-blue-500 text-white text-center px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-200"
-          &gt;
-            ポイント履歴を見る
-          &lt;/router-link&gt;
+        &lt;div&gt;
+          &lt;label for="password" class="block text-sm font-medium text-gray-700 mb-2"&gt;
+            パスワード
+          &lt;/label&gt;
+          &lt;input
+            id="password"
+            v-model="password"
+            type="password"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="password123"
+          /&gt;
         &lt;/div&gt;
 &nbsp;
-        &lt;!-- 情報カード --&gt;
-        &lt;div class="bg-blue-50 border-l-4 border-blue-500 p-4"&gt;
-          &lt;div class="flex"&gt;
-            &lt;div class="flex-shrink-0"&gt;
-              &lt;svg class="h-5 w-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20"&gt;
-                &lt;path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /&gt;
-              &lt;/svg&gt;
-            &lt;/div&gt;
-            &lt;div class="ml-3"&gt;
-              &lt;p class="text-sm text-blue-700"&gt;
-                ポイントは様々なサービスでご利用いただけます。
-              &lt;/p&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
+        &lt;div v-if="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded"&gt;
+          {{ errorMessage }}
         &lt;/div&gt;
+&nbsp;
+        &lt;button
+          type="submit"
+          :disabled="loading"
+          class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200 disabled:bg-gray-400"
+        &gt;
+          {{ loading ? 'ログイン中...' : 'ログイン' }}
+        &lt;/button&gt;
+      &lt;/form&gt;
+&nbsp;
+      &lt;div class="mt-6 p-4 bg-gray-50 rounded-lg"&gt;
+        &lt;p class="text-sm text-gray-600 mb-2"&gt;テストユーザー:&lt;/p&gt;
+        &lt;ul class="text-xs text-gray-500 space-y-1"&gt;
+          &lt;li&gt;• ユーザー名: tanaka_taro (田中太郎)&lt;/li&gt;
+          &lt;li&gt;• ユーザー名: suzuki_hanako (鈴木花子)&lt;/li&gt;
+          &lt;li&gt;• ユーザー名: yamada_jiro (山田次郎)&lt;/li&gt;
+          &lt;li&gt;• UUID: 05c66ceb-6ddc-4ada-b736-08702615ff48 (田中太郎)&lt;/li&gt;
+          &lt;li&gt;• パスワード: password123&lt;/li&gt;
+        &lt;/ul&gt;
       &lt;/div&gt;
-    &lt;/main&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/template&gt;
 &nbsp;
 &lt;script&gt;
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService } from '../services/api'
-import { pointApi } from '../services/pointApi'
 &nbsp;
 export default {
-  name: 'PointView',
+  name: 'LoginView',
   setup() {
     const router = useRouter()
-    const pointData = ref(null)
-    const loading = ref(true)
+    const userId = ref('')
+    const password = ref('')
     const errorMessage = ref('')
+    const loading = ref(false)
 &nbsp;
-    const loadPointData = async () =&gt; {
-      loading.value = true
+    const handleLogin = async () =&gt; {
       errorMessage.value = ''
+      loading.value = true
 &nbsp;
       try {
-        const data = await pointApi.getPoints()
-        pointData.value = data
+        console.log('[LOGIN] Step 1: Login attempt with:', userId.value)
+        const response = await authService.login(userId.value, password.value)
+        console.log('[LOGIN] Step 2: Login response received:', { userId: response.userId, hasToken: !!response.token, tokenLength: response.token?.length })
+        
+        try {
+          // トークンとユーザーIDを保存
+          console.log('[LOGIN] Step 3: Saving token to localStorage...')
+          localStorage.setItem('authToken', response.token)
+          console.log('[LOGIN] Step 4: authToken saved successfully')
+          
+          localStorage.setItem('userId', response.userId)
+          console.log('[LOGIN] Step 5: userId saved successfully')
+          
+          // アカウント画面へ遷移
+          console.log('[LOGIN] Step 6: Attempting to navigate to /account')
+          await router.push('/account')
+          console.log('[LOGIN] Step 7: Navigation to /account completed')
+        } catch (innerError) {
+          console.error('[LOGIN] Inner error during token save or navigation:', innerError)
+          throw innerError
+        }
       } catch (error) {
-        if (error.response?.status === 503) {
-          errorMessage.value = 'ポイントサービスが一時的に利用できません。しばらくしてからお試しください。'
+        console.error('[LOGIN] Main catch block - Login error:', error)
+        console.error('[LOGIN] Error details:', { name: error.name, message: error.message })
+        // エラーメッセージを設定
+        if (error.response) {
+          // レスポンスがある場合
+          const data = error.response.data
+          if (typeof data === 'string') {
+            errorMessage.value = data
+          } else if (data &amp;&amp; data.error) {
+            errorMessage.value = data.error
+          } else if (data &amp;&amp; data.message) {
+            errorMessage.value = data.message
+          } else {
+            errorMessage.value = `ログインに失敗しました (${error.response.status})`
+          }
+        } else if (error.message) {
+          errorMessage.value = error.message
         } else {
-          errorMessage.value = error.response?.data?.error || 'ポイント情報の取得に失敗しました'
-        }<span class="branch-3 cbranch-no" title="branch not covered" ><span class="branch-2 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" ></span></span></span>
-      } f<span class="fstat-no" title="function not covered" >inally {<span class="cstat-no" title="statement not covered" ></span></span>
-        l<span class="fstat-no" title="function not covered" >oading.value = false<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span></span></span></span>
-      }<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
-    }<span class="missing-if-branch" title="else path not taken" >E</span>
-<span class="branch-1 cbranch-no" title="branch not covered" ></span>
-    const handleLogout = async () =&gt; {
-      try {
-        await authService.logout()
-      } catch (error) {
-        console.error('Logout error:', error)
+          errorMessage.value = 'ログインに失敗しました'
+        }
       } finally {
-        router.push('/login')
+        loading.value = false
       }
     }
 &nbsp;
-    onMounted(() =&gt; {
-      loadPointData()
-    })
-&nbsp;
     return {
-      pointData,
-      loading,
+      userId,
+      password,
       errorMessage,
-      handleLogout
+      loading,
+      handleLogin
     }
   }
 }
@@ -478,7 +481,7 @@ export default {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-30T12:29:47.835Z
+                at 2026-01-30T12:29:47.820Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
